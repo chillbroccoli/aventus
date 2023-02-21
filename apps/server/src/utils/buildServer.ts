@@ -1,0 +1,84 @@
+import fastifyCookie from "@fastify/cookie";
+import fastifyCors from "@fastify/cors";
+import fastifyJwt, { JWT } from "@fastify/jwt";
+import Fastify, { FastifyReply, FastifyRequest } from "fastify";
+import { APIRoutes } from "shared";
+import { JwtPayloadUser } from "shared/schemas";
+
+import { tagRoutes } from "../models/tag/tag.route";
+import { userRoutes } from "../models/user/user.route";
+import { paramsSchemas, tagSchemas, userSchemas } from "../utils/buildJsonSchemas";
+
+declare module "fastify" {
+  interface FastifyRequest {
+    jwt: JWT;
+  }
+  export interface FastifyInstance {
+    authenticate: any;
+    authenticateAdmin: any;
+  }
+}
+
+declare module "@fastify/jwt" {
+  interface FastifyJWT {
+    user: JwtPayloadUser;
+  }
+}
+
+export function buildServer() {
+  const server = Fastify();
+
+  for (const schema of [...paramsSchemas, ...userSchemas, ...tagSchemas]) {
+    server.addSchema(schema);
+  }
+
+  server.register(fastifyJwt, {
+    secret: process.env.JWT_SECRET as string,
+  });
+
+  server.register(fastifyCors, {
+    origin: process.env.CLIENT_URL as string,
+    credentials: true,
+  });
+
+  server.register(fastifyCookie, {
+    secret: process.env.COOKIE_SECRET as string,
+    hook: "onRequest",
+    parseOptions: {},
+  });
+
+  server.decorate("authenticate", async (request: FastifyRequest, reply: FastifyReply) => {
+    try {
+      return await request.jwtVerify();
+    } catch (err) {
+      return reply.send(err);
+    }
+  });
+
+  server.decorate("authenticateAdmin", async (request: FastifyRequest, reply: FastifyReply) => {
+    try {
+      const user = await request.jwtVerify<JwtPayloadUser>();
+
+      if (user.role !== "ADMIN") {
+        return reply.code(401).send({ message: "Unauthorized" });
+      }
+      return user;
+    } catch (err) {
+      return reply.send(err);
+    }
+  });
+
+  server.addHook("preHandler", (request, reply, next) => {
+    request.jwt = server.jwt;
+    return next();
+  });
+
+  server.get("/healthcheck", async () => {
+    return { status: "ok" };
+  });
+
+  server.register(tagRoutes, { prefix: APIRoutes.TAGS });
+  server.register(userRoutes, { prefix: APIRoutes.USERS });
+
+  return server;
+}
