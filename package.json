@@ -1,5 +1,5 @@
 {
-  "name": "my-turborepo",
+  "name": "aventus",
   "version": "0.0.0",
   "private": true,
   "workspaces": [
@@ -8,14 +8,19 @@
   ],
   "scripts": {
     "build": "turbo run build",
-    "dev": "turbo run dev",
+    "dev": "dotenv -- turbo dev",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "db:seed": "yarn workspace server db:seed",
+    "client": "yarn workspace client",
+    "server": "yarn workspace server"
   },
   "devDependencies": {
     "eslint-config-custom": "*",
-    "prettier": "latest",
-    "turbo": "latest"
+    "eslint-config-main": "*",
+    "prettier": "^2.8.4",
+    "turbo": "latest",
+    "dotenv-cli": "latest"
   },
   "engines": {
     "node": ">=14.0.0"
