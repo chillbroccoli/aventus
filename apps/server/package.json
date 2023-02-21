@@ -1,0 +1,49 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/main.ts",
+  "scripts": {
+    "dev": "nodemon --watch src --exec ts-node src/main.ts",
+    "build": "tsc",
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push --skip-generate",
+    "db:seed": "dotenv -e ../../.env -- prisma db seed"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fastify/cookie": "^8.3.0",
+    "@fastify/cors": "^8.2.0",
+    "@fastify/jwt": "^6.5.0",
+    "@fastify/swagger": "^8.3.1",
+    "@fastify/swagger-ui": "^1.4.0",
+    "@prisma/client": "^4.10.1",
+    "argon2": "^0.30.3",
+    "dayjs": "^1.11.7",
+    "fastify": "^4.13.0",
+    "fastify-zod": "^1.2.0",
+    "pino": "^8.10.0",
+    "pino-pretty": "^9.3.0",
+    "prisma": "^4.10.1",
+    "qs": "^6.11.0",
+    "query-string": "^8.1.0",
+    "shared": "*",
+    "zod": "^3.20.6",
+    "zod-to-json-schema": "^3.20.4"
+  },
+  "devDependencies": {
+    "@types/argon2": "^0.15.0",
+    "@types/node": "^18.14.0",
+    "@types/qs": "^6.9.7",
+    "dotenv-cli": "latest",
+    "nodemon": "^2.0.20",
+    "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^4.9.5"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  }
+}
