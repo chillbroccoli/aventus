@@ -3,6 +3,8 @@ import {
   PasswordInput,
   PasswordInputProps,
   Text,
+  Textarea,
+  TextareaProps,
   TextInput,
   TextInputProps,
 } from "@mantine/core";
@@ -45,6 +47,26 @@ export const Input = {
     return (
       <Flex direction="column">
         <PasswordInput {...props} {...register(props.name)} />
+        {error && (
+          <Text color="red" mt={4} fz="xs">
+            {error}
+          </Text>
+        )}
+      </Flex>
+    );
+  },
+
+  Textarea: function (props: TextareaProps & RequiredProps) {
+    const {
+      register,
+      formState: { errors },
+    } = useFormContext();
+
+    const error = get(errors, props.name)?.message;
+
+    return (
+      <Flex direction="column">
+        <Textarea {...props} {...register(props.name)} />
         {error && (
           <Text color="red" mt={4} fz="xs">
             {error}
