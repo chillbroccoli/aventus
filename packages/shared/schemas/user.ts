@@ -7,10 +7,16 @@ export const userCore = {
   avatar: z.string().optional(),
 };
 
-export const createUserSchema = z.object({
-  ...userCore,
-  password: z.string({ required_error: "Password is required" }).min(8),
-});
+export const createUserSchema = z
+  .object({
+    ...userCore,
+    password: z.string({ required_error: "Password is required" }).min(8),
+    confirmPassword: z.string({ required_error: "Confirm password is required" }).min(8),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
 
 export const loginUserSchema = z.object({
   email: z.string({ required_error: "Email is required" }).email("Invalid email"),
