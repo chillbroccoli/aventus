@@ -6,8 +6,8 @@ import { logger } from "../src/utils/logger";
 const prisma = new PrismaClient();
 
 const tags = [
-  "javaScript",
-  "typeScript",
+  "javascript",
+  "typescript",
   "react",
   "nextjs",
   "remix",
@@ -48,10 +48,10 @@ const tags = [
   "tailwind",
   "bootstrap",
   "bulma",
-  "material ui",
-  "chakra ui",
-  "ant design",
-  "react native",
+  "material-ui",
+  "chakra-ui",
+  "ant-design",
+  "react-native",
   "flutter",
   "ionic",
   "android",
