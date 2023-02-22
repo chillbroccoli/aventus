@@ -7,7 +7,7 @@
     "dev": "nodemon --watch src --exec ts-node src/main.ts",
     "build": "tsc",
     "db:generate": "prisma generate",
-    "db:push": "prisma db push --skip-generate",
+    "db:push": "dotenv -e ../../.env -- prisma db push",
     "db:seed": "dotenv -e ../../.env -- prisma db seed"
   },
   "keywords": [],
