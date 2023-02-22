@@ -11,11 +11,11 @@ type RequestOptions = {
   query?: ParsedQuery;
 };
 
-export class RequestError {
-  public name: string;
+export class RequestError extends Error {
   public status: number;
 
   constructor(public response: Response, public errors: Record<string, unknown>) {
+    super(response.statusText);
     this.name = "RequestError";
     this.status = response.status;
     this.response = response;
@@ -67,7 +67,7 @@ export class APIService {
 
     const data = await response.json().catch(() => ({}));
 
-    if (response.status >= 400) new RequestError(response, data);
+    if (response.status >= 400) throw new RequestError(response, data);
 
     return data;
   }
