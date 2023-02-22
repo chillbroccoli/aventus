@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, Button, createStyles, Flex, Text, Title } from "@mantine/core";
+import { Box, Button, createStyles, Flex, Title } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
@@ -39,18 +39,20 @@ export function LoginView() {
   return (
     <AuthLayout>
       <Flex direction="column" align="center">
-        <Title fw={600}>Welcome back</Title>
-        <Text fw={300}>
+        <Title order={1} fw={500} color="gray.8">
+          Welcome back
+        </Title>
+        <Title order={5} fw={300} color="gray.6">
           Don&apos;t have account?{" "}
           <Link href={ClientRoutes.REGISTER} className={classes.link}>
             Register
           </Link>
-        </Text>
+        </Title>
       </Flex>
 
-      <Flex direction="column" gap={10} mt={10}>
-        <FormProvider {...methods}>
-          <form onSubmit={methods.handleSubmit(onSubmit)}>
+      <FormProvider {...methods}>
+        <form onSubmit={methods.handleSubmit(onSubmit)}>
+          <Flex direction="column" gap={10} mt={10}>
             <Box>
               <Input.Text name="email" label="Email" required />
             </Box>
@@ -62,9 +64,9 @@ export function LoginView() {
                 Log in
               </Button>
             </Box>
-          </form>
-        </FormProvider>
-      </Flex>
+          </Flex>
+        </form>
+      </FormProvider>
     </AuthLayout>
   );
 }
