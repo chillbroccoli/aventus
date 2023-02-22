@@ -17,7 +17,7 @@ export const UserService = {
   },
 
   createOne: async (input: CreateUserInput) => {
-    const { password, ...rest } = input;
+    const { password, confirmPassword, ...rest } = input;
 
     const hashedPassword = await argon2.hash(password);
 
