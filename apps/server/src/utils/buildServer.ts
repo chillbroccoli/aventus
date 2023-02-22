@@ -5,9 +5,10 @@ import Fastify, { FastifyReply, FastifyRequest } from "fastify";
 import { APIRoutes } from "shared";
 import { JwtPayloadUser } from "shared/schemas";
 
+import { projectRoutes } from "../models/project/project.route";
 import { tagRoutes } from "../models/tag/tag.route";
 import { userRoutes } from "../models/user/user.route";
-import { paramsSchemas, tagSchemas, userSchemas } from "../utils/buildJsonSchemas";
+import { paramsSchemas, projectSchemas, tagSchemas, userSchemas } from "../utils/buildJsonSchemas";
 
 declare module "fastify" {
   interface FastifyRequest {
@@ -28,7 +29,7 @@ declare module "@fastify/jwt" {
 export function buildServer() {
   const server = Fastify();
 
-  for (const schema of [...paramsSchemas, ...userSchemas, ...tagSchemas]) {
+  for (const schema of [...paramsSchemas, ...userSchemas, ...tagSchemas, ...projectSchemas]) {
     server.addSchema(schema);
   }
 
@@ -79,6 +80,7 @@ export function buildServer() {
 
   server.register(tagRoutes, { prefix: APIRoutes.TAGS });
   server.register(userRoutes, { prefix: APIRoutes.USERS });
+  server.register(projectRoutes, { prefix: APIRoutes.PROJECTS });
 
   return server;
 }
