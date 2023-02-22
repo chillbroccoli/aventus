@@ -1,4 +1,4 @@
-import { createStyles, Flex, Text, UnstyledButton } from "@mantine/core";
+import { createStyles, Flex, ScrollArea, Text, UnstyledButton } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { ClientRoutes } from "shared/constants";
@@ -17,36 +17,45 @@ export function TagList() {
   });
 
   return (
-    <Flex direction="column">
-      {data &&
-        data.map((tag) => (
-          <UnstyledButton
-            key={tag.id}
-            className={classes.tagButton}
-            onClick={() =>
-              router.push(
-                RoutingService.getInterpolatedRoute([ClientRoutes.TAG, { tag: tag.name }])
-              )
-            }
-          >
-            <Flex align="center" p={4} mb={4}>
-              <Text># </Text>
-              <Text fw={300} color="gray.7" ml={6}>
-                {tag.name}
-              </Text>
-            </Flex>
-          </UnstyledButton>
-        ))}
-    </Flex>
+    <ScrollArea className={classes.container}>
+      <Flex direction="column">
+        {data &&
+          data.map((tag) => (
+            <UnstyledButton
+              key={tag.id}
+              px={4}
+              className={classes.tagButton}
+              onClick={() =>
+                router.push(
+                  RoutingService.getInterpolatedRoute([ClientRoutes.TAG, { tag: tag.name }])
+                )
+              }
+            >
+              <Flex align="center" p={4} mb={4}>
+                <Text># </Text>
+                <Text fw={300} ml={6}>
+                  {tag.name}
+                </Text>
+              </Flex>
+            </UnstyledButton>
+          ))}
+      </Flex>
+    </ScrollArea>
   );
 }
 
 const styles = createStyles((theme) => ({
+  container: {
+    height: 500,
+  },
+
   tagButton: {
     borderRadius: theme.radius.md,
+    color: theme.colors.gray[7],
+
     "&:hover": {
-      backgroundColor: theme.colors.teal[5],
-      transition: "background-color 0.2s ease-in-out",
+      color: theme.colors.teal[9],
+      backgroundColor: theme.colors.teal[1],
     },
   },
 }));
