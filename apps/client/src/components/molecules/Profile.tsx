@@ -1,4 +1,13 @@
-import { Avatar, Button, createStyles, Divider, Flex, Popover, Text } from "@mantine/core";
+import {
+  Avatar,
+  Button,
+  createStyles,
+  Divider,
+  Flex,
+  Popover,
+  Text,
+  UnstyledButton,
+} from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
@@ -34,9 +43,11 @@ export function Profile() {
     <Flex>
       <Popover width={225} position="bottom-end" shadow="md">
         <Popover.Target>
-          <Avatar src={me?.avatar} color="teal" alt="Avatar" className={classes.initials}>
-            {initials}
-          </Avatar>
+          <UnstyledButton>
+            <Avatar src={me?.avatar} color="teal" alt="Avatar" className={classes.initials}>
+              {initials}
+            </Avatar>
+          </UnstyledButton>
         </Popover.Target>
         <Popover.Dropdown>
           <Flex direction="column">
@@ -53,7 +64,7 @@ export function Profile() {
 
             {profileNav.map((item) => (
               <Link key={item.name} href={item.href} className={classes.link}>
-                Reading List
+                {item.name}
               </Link>
             ))}
 
@@ -72,6 +83,7 @@ export function Profile() {
 const styles = createStyles((theme) => ({
   initials: {
     textTransform: "uppercase",
+    border: `1px solid ${theme.colors.teal[5]}`,
   },
 
   link: {
