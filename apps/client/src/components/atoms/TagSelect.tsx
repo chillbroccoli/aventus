@@ -1,11 +1,11 @@
-import { MultiSelect } from "@mantine/core";
+import { Flex, MultiSelect, Text } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { Controller, useFormContext } from "react-hook-form";
 
 import { TagService } from "@/utils/services/TagService";
 
 export function TagSelect() {
-  const [value, setValue] = useState<string[]>([]);
+  const { control } = useFormContext();
 
   const { data } = useQuery({
     queryKey: ["tags"],
@@ -15,15 +15,29 @@ export function TagSelect() {
   const options = (data || [])?.map((tag) => ({ value: String(tag.id), label: tag.name }));
 
   return (
-    <MultiSelect
-      placeholder="Tags"
-      size="xl"
-      value={value}
-      onChange={setValue}
-      data={options}
-      searchable
-      clearable
-      required
+    <Controller
+      control={control}
+      name="tags"
+      render={({ field: { onChange, value, name }, fieldState: { error } }) => (
+        <Flex direction="column">
+          <MultiSelect
+            name={name}
+            placeholder="Tags"
+            size="xl"
+            value={value}
+            onChange={onChange}
+            data={options}
+            searchable
+            clearable
+            required
+          />
+          {error && (
+            <Text color="red" mt={4} fz="xs">
+              {error.message}
+            </Text>
+          )}
+        </Flex>
+      )}
     />
   );
 }
