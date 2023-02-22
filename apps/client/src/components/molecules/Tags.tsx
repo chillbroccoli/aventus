@@ -17,6 +17,6 @@ const styles = createStyles((theme) => ({
   main: {
     boxShadow: theme.shadows.lg,
     borderRadius: theme.radius.sm,
-    border: `1px solid ${theme.colors.gray[2]}`,
+    border: `1px solid ${theme.colors.gray[3]}`,
   },
 }));
