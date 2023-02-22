@@ -25,6 +25,10 @@ export const UserController = {
     const body = request.body;
 
     try {
+      if (body.password !== body.confirmPassword) {
+        return reply.code(400).send({ message: "Passwords do not match" });
+      }
+
       const user = await UserService.createOne(body);
 
       return reply.code(201).send(user);
@@ -113,19 +117,32 @@ export const UserController = {
     }
   },
 
+  logout: async (request: FastifyRequest, reply: FastifyReply) => {
+    return reply
+      .clearCookie("accessToken", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        domain: undefined,
+        path: "/",
+      })
+      .code(200)
+      .send({ success: true });
+  },
+
   me: async (request: FastifyRequest, reply: FastifyReply) => {
     const accessToken = request.cookies.accessToken;
 
     if (!accessToken) {
-      return reply.code(401).send({ message: "Unauthorized" });
+      return reply.code(200).send(null);
     }
 
     try {
       const user = request.jwt.verify(accessToken);
 
       return reply.code(200).send(user);
-    } catch (err) {
-      return reply.code(401).send({ message: "Unauthorized" });
+    } catch (err: any) {
+      return reply.code(400).send({ message: err.message });
     }
   },
 };
