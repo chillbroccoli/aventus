@@ -1,7 +1,10 @@
 import { Button, Container, createStyles, Flex, Grid, Title } from "@mantine/core";
+import Link from "next/link";
 import { useRouter } from "next/router";
+import { ClientRoutes } from "shared";
 
 import { MainLayout } from "@/components/layouts/MainLayout";
+import { ProjectsFeed } from "@/components/organisms/ProjectsFeed";
 
 export function TagView() {
   const { classes } = styles();
@@ -11,16 +14,20 @@ export function TagView() {
   return (
     <MainLayout>
       <Container size="lg" mt={20}>
-        <Grid gutter={10}>
+        <Grid gutter={60}>
           <Grid.Col span={3}>
             <Flex direction="column" className={classes.sidebar} p={10} px={14}>
               <Title transform="capitalize" mb={8}>
                 {router.query?.tag}
               </Title>
-              <Button color="teal">Create project</Button>
+              <Button component={Link} href={ClientRoutes.NEW_PROJECT} color="teal">
+                New Project
+              </Button>
             </Flex>
           </Grid.Col>
-          <Grid.Col span={7}>2</Grid.Col>
+          <Grid.Col span={7}>
+            <ProjectsFeed />
+          </Grid.Col>
           <Grid.Col span={2}></Grid.Col>
         </Grid>
       </Container>
@@ -31,5 +38,6 @@ export function TagView() {
 const styles = createStyles((theme) => ({
   sidebar: {
     boxShadow: theme.shadows.lg,
+    border: `1px solid ${theme.colors.gray[2]}`,
   },
 }));
