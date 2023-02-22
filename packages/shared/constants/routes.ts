@@ -1,8 +1,6 @@
 export enum APIRoutes {
-  HEALTHCHECK = "/healthcheck",
   TAGS = "/api/tags",
   PROJECTS = "/api/projects",
-  PROJECT = "/api/projects/:id",
   USERS = "/api/users",
   LOGIN = "/api/users/login",
   LOGOUT = "/api/users/logout",
@@ -19,4 +17,5 @@ export enum ClientRoutes {
   TAG = "/tags/:tag",
   PROJECT = "/projects/:id",
   NEW_PROJECT = "/projects/new",
+  MY_PROJECTS = "/projects/my-projects",
 }
