@@ -1,5 +1,6 @@
 import { buildJsonSchemas } from "fastify-zod";
 import {
+  createProjectSchema,
   createTagSchema,
   createUserSchema,
   loginResponseSchema,
@@ -39,5 +40,14 @@ export const { schemas: userSchemas, $ref: $userRef } = buildJsonSchemas(
   },
   {
     $id: "user",
+  }
+);
+
+export const { schemas: projectSchemas, $ref: $projectRef } = buildJsonSchemas(
+  {
+    createProjectSchema,
+  },
+  {
+    $id: "project",
   }
 );
