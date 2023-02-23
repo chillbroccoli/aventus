@@ -54,13 +54,13 @@ export function RegisterView() {
         <form onSubmit={methods.handleSubmit(onSubmit)}>
           <Flex direction="column" gap={10} mt={10}>
             <Box>
-              <Input.Text name="firstName" label="First Name" required />
-            </Box>
-            <Box>
-              <Input.Text name="lastName" label="Last Name" required />
+              <Input.Text name="name" label="Name" required />
             </Box>
             <Box>
               <Input.Text type="email" name="email" label="Email" required />
+            </Box>
+            <Box>
+              <Input.Text type="text" name="avatar" label="Avatar (URL)" />
             </Box>
             <Box>
               <Input.Password name="password" label="Password" required />
