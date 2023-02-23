@@ -6,6 +6,7 @@ export enum APIRoutes {
   ME = "/api/users/me",
   PROJECTS = "/api/projects",
   PROJECT = "/api/projects/:slug",
+  COMMENTS = "/api/projects/:slug/comments",
 }
 
 export enum ClientRoutes {
