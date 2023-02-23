@@ -8,7 +8,7 @@ import { JwtPayloadUser } from "shared/schemas";
 import { projectRoutes } from "../models/project/project.route";
 import { tagRoutes } from "../models/tag/tag.route";
 import { userRoutes } from "../models/user/user.route";
-import { paramsSchemas, projectSchemas, tagSchemas, userSchemas } from "../utils/buildJsonSchemas";
+import { jsonSchemas } from "../utils/buildJsonSchemas";
 
 declare module "fastify" {
   interface FastifyRequest {
@@ -29,12 +29,16 @@ declare module "@fastify/jwt" {
 export function buildServer() {
   const server = Fastify();
 
-  for (const schema of [...paramsSchemas, ...userSchemas, ...tagSchemas, ...projectSchemas]) {
+  for (const schema of jsonSchemas) {
     server.addSchema(schema);
   }
 
   server.register(fastifyJwt, {
     secret: process.env.JWT_SECRET as string,
+    cookie: {
+      cookieName: "accessToken",
+      signed: false,
+    },
   });
 
   server.register(fastifyCors, {
@@ -69,7 +73,7 @@ export function buildServer() {
     }
   });
 
-  server.addHook("preHandler", (request, reply, next) => {
+  server.addHook("onRequest", (request, reply, next) => {
     request.jwt = server.jwt;
     return next();
   });
