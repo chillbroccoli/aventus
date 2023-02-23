@@ -1,8 +1,9 @@
 import { z } from "zod";
 
 export const userCore = {
-  firstName: z.string({ required_error: "First name is required" }).min(2),
-  lastName: z.string({ required_error: "Last name is required" }).min(2),
+  name: z
+    .string({ required_error: "Name is required" })
+    .min(3, "Name must be at least 3 characters long"),
   email: z.string({ required_error: "Email is required" }).email("Invalid email"),
   avatar: z.string().optional(),
 };
