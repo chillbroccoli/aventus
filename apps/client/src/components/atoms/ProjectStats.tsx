@@ -1,7 +1,7 @@
 import { ActionIcon, Flex, Text } from "@mantine/core";
 import { IconBookmark, IconHeart, IconMessage2 } from "@tabler/icons";
 
-export function ProjectStats() {
+export function ProjectStats({ comments }: { comments?: number }) {
   return (
     <Flex direction="column" gap={20}>
       <Flex direction="column" align="center" justify="center">
@@ -17,7 +17,7 @@ export function ProjectStats() {
           <IconMessage2 size={26} />
         </ActionIcon>
         <Text fz="sm" color="gray.7">
-          0
+          {comments ?? 0}
         </Text>
       </Flex>
       <Flex direction="column" align="center" justify="center">
