@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import { userResponseSchema } from "./user";
+
 export const createProjectSchema = z.object({
   title: z
     .string({ required_error: "Title is required" })
@@ -20,14 +22,12 @@ export const projectResponseSchema = z.object({
   description: z.string(),
   content: z.string(),
   tags: z.array(z.object({ id: z.number(), name: z.string() })),
-  user: z.object({
-    id: z.number(),
-    name: z.string(),
-    email: z.string(),
-    avatar: z.string().optional(),
-  }),
+  user: userResponseSchema,
   createdAt: z.string(),
   updatedAt: z.string(),
+  _count: z.object({
+    comments: z.number(),
+  }),
 });
 
 export type CreateProjectInput = z.infer<typeof createProjectSchema>;
