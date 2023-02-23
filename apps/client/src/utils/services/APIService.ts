@@ -3,7 +3,7 @@ import qs from "qs";
 import { ParsedQuery } from "query-string";
 import { APIRoutes } from "shared";
 
-import { RouteWithParams } from "./RoutingService";
+import { RouteWithParams, RoutingService } from "./RoutingService";
 
 type RequestMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 type RequestOptions = {
@@ -50,7 +50,7 @@ export class APIService {
     method: RequestMethod,
     options: RequestOptions = {}
   ) {
-    const url = `${endpoint}?${qs.stringify(options?.query)}`;
+    const url = `${RoutingService.getInterpolatedRoute(endpoint)}?${qs.stringify(options?.query)}`;
 
     const requestBody = {
       headers: {
