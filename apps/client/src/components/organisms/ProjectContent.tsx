@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Badge,
   Box,
   createStyles,
@@ -10,6 +9,9 @@ import {
 } from "@mantine/core";
 import dayjs from "dayjs";
 import { ProjectResponse } from "shared";
+
+import { Avatar } from "../atoms/Avatar";
+import { Comments } from "./Comments";
 
 export function ProjectContent({ project }: { project: ProjectResponse }) {
   const { classes } = styles();
@@ -66,6 +68,8 @@ export function ProjectContent({ project }: { project: ProjectResponse }) {
           </TypographyStylesProvider>
         </Box>
       </Flex>
+
+      <Comments />
     </Box>
   );
 }
