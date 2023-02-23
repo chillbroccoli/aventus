@@ -1,10 +1,12 @@
-import { Avatar, Badge, Box, createStyles, Flex, Text, Title } from "@mantine/core";
+import { Badge, Box, createStyles, Flex, Text, Title } from "@mantine/core";
 import dayjs from "dayjs";
 import Link from "next/link";
 import { ClientRoutes, ProjectResponse } from "shared";
 
 import { trimLongText } from "@/utils/helpers/trimLongText";
 import { RoutingService } from "@/utils/services/RoutingService";
+
+import { Avatar } from "../atoms/Avatar";
 
 export function ProjectCard({ project }: { project: ProjectResponse }) {
   const { classes } = styles();
@@ -14,14 +16,7 @@ export function ProjectCard({ project }: { project: ProjectResponse }) {
   return (
     <Box className={classes.main} px={20} py={10}>
       <Flex align="center">
-        <Avatar
-          mr={6}
-          size="lg"
-          src={user.avatar}
-          color="teal"
-          alt="Avatar"
-          className={classes.avatar}
-        />
+        <Avatar mr={6} size="lg" src={user.avatar} color="teal" alt="Avatar" />
 
         <Flex direction="column">
           <Text transform="capitalize" fw={500} color="gray.8">
@@ -64,11 +59,6 @@ export function ProjectCard({ project }: { project: ProjectResponse }) {
 }
 
 const styles = createStyles((theme) => ({
-  avatar: {
-    textTransform: "uppercase",
-    border: `1px solid ${theme.colors.teal[5]}`,
-  },
-
   link: {
     color: theme.colors.gray[7],
     textDecoration: "none",
