@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { CreateProjectInput } from "shared";
-import { JwtPayloadUser } from "shared/schemas";
+import { JwtPayloadUser, ParamsWithSlug } from "shared/schemas";
 
 import { logger } from "../../utils/logger";
 import { ProjectService } from "./project.service";
@@ -11,6 +11,23 @@ export const ProjectController = {
       const projects = await ProjectService.findAll();
 
       return reply.code(200).send(projects);
+    } catch (err: any) {
+      logger.error(err);
+      return reply.code(400).send({ message: err.message });
+    }
+  },
+
+  findOne: async (request: FastifyRequest<{ Params: ParamsWithSlug }>, reply: FastifyReply) => {
+    const { slug } = request.params;
+
+    try {
+      const project = await ProjectService.findOne(slug);
+
+      if (!project) {
+        return reply.code(404).send({ message: "Project not found" });
+      }
+
+      return reply.code(200).send(project);
     } catch (err: any) {
       logger.error(err);
       return reply.code(400).send({ message: err.message });
