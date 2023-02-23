@@ -54,7 +54,7 @@ export function RegisterView() {
         <form onSubmit={methods.handleSubmit(onSubmit)}>
           <Flex direction="column" gap={10} mt={10}>
             <Box>
-              <Input.Text name="name" label="Name" required />
+              <Input.Text name="name" label="Username" required />
             </Box>
             <Box>
               <Input.Text type="email" name="email" label="Email" required />
