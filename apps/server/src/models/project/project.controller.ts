@@ -1,8 +1,9 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { CreateProjectInput } from "shared";
-import { JwtPayloadUser, ParamsWithSlug } from "shared/schemas";
+import { ParamsWithSlug } from "shared/schemas";
 
 import { logger } from "../../utils/logger";
+import { CreateCommentInput } from "./../../../../../packages/shared/schemas/comment";
 import { ProjectService } from "./project.service";
 
 export const ProjectController = {
@@ -38,7 +39,7 @@ export const ProjectController = {
     const body = request.body;
 
     try {
-      const user = await request.jwtVerify<JwtPayloadUser>();
+      const user = request.user;
 
       if (!user) {
         return reply.code(401).send({ message: "Unauthorized" });
@@ -55,7 +56,7 @@ export const ProjectController = {
 
   getUsersProjects: async (request: FastifyRequest, reply: FastifyReply) => {
     try {
-      const user = await request.jwtVerify<JwtPayloadUser>();
+      const user = request.user;
 
       if (!user) {
         return reply.code(401).send({ message: "Unauthorized" });
@@ -64,6 +65,42 @@ export const ProjectController = {
       const projects = await ProjectService.getUsersProjects(user.id);
 
       return reply.code(200).send(projects);
+    } catch (err: any) {
+      logger.error(err);
+      return reply.code(400).send({ message: err.message });
+    }
+  },
+
+  getComments: async (request: FastifyRequest<{ Params: ParamsWithSlug }>, reply: FastifyReply) => {
+    const { slug } = request.params;
+
+    try {
+      const comments = await ProjectService.getComments(slug);
+
+      return reply.code(200).send(comments);
+    } catch (err: any) {
+      logger.error(err);
+      return reply.code(400).send({ message: err.message });
+    }
+  },
+
+  createComment: async (
+    request: FastifyRequest<{ Params: ParamsWithSlug; Body: CreateCommentInput }>,
+    reply: FastifyReply
+  ) => {
+    const { slug } = request.params;
+    const body = request.body;
+
+    try {
+      const user = request.user;
+
+      if (!user) {
+        return reply.code(401).send({ message: "Unauthorized" });
+      }
+
+      const comment = await ProjectService.createComment({ ...body, userId: user.id, slug });
+
+      return reply.code(201).send(comment);
     } catch (err: any) {
       logger.error(err);
       return reply.code(400).send({ message: err.message });
