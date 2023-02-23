@@ -16,7 +16,6 @@ import { ClientRoutes } from "shared";
 
 import { useMe } from "@/hooks/useMe";
 import { profileNav } from "@/utils/constants";
-import { getInitials } from "@/utils/helpers/getInitials";
 import { UserService } from "@/utils/services/UserService";
 
 export function Profile() {
@@ -37,23 +36,19 @@ export function Profile() {
 
   if (!me) return null;
 
-  const initials = getInitials(me.firstName, me.lastName);
-
   return (
     <Flex>
       <Popover width={225} position="bottom-end" shadow="md">
         <Popover.Target>
           <UnstyledButton>
-            <Avatar src={me?.avatar} color="teal" alt="Avatar" className={classes.initials}>
-              {initials}
-            </Avatar>
+            <Avatar src={me?.avatar} color="teal" alt="Avatar" className={classes.avatar} />
           </UnstyledButton>
         </Popover.Target>
         <Popover.Dropdown>
           <Flex direction="column">
             <Flex direction="column">
               <Text transform="capitalize" fw={500} color="gray.8">
-                {me.firstName} {me.lastName}
+                {me.name}
               </Text>
               <Text fz="xs" fw={300} color="gray.6">
                 {me.email}
@@ -81,7 +76,7 @@ export function Profile() {
 }
 
 const styles = createStyles((theme) => ({
-  initials: {
+  avatar: {
     textTransform: "uppercase",
     border: `1px solid ${theme.colors.teal[5]}`,
   },
