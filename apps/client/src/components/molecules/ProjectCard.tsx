@@ -3,16 +3,13 @@ import dayjs from "dayjs";
 import Link from "next/link";
 import { ClientRoutes, ProjectResponse } from "shared";
 
-import { getInitials } from "@/utils/helpers/getInitials";
 import { trimLongText } from "@/utils/helpers/trimLongText";
 import { RoutingService } from "@/utils/services/RoutingService";
 
 export function ProjectCard({ project }: { project: ProjectResponse }) {
   const { classes } = styles();
 
-  const { id, title, description, tags, updatedAt, user } = project;
-
-  const initials = getInitials(user.firstName, user.lastName);
+  const { slug, title, description, tags, updatedAt, user } = project;
 
   return (
     <Box className={classes.main} px={20} py={10}>
@@ -23,14 +20,12 @@ export function ProjectCard({ project }: { project: ProjectResponse }) {
           src={user.avatar}
           color="teal"
           alt="Avatar"
-          className={classes.initials}
-        >
-          {initials}
-        </Avatar>
+          className={classes.avatar}
+        />
 
         <Flex direction="column">
           <Text transform="capitalize" fw={500} color="gray.8">
-            {user.firstName} {user.lastName}
+            {user.name}
           </Text>
           <Text fz="xs" fw={300} color="gray.6">
             {dayjs(updatedAt).format("MMM DD, YYYY")}
@@ -41,7 +36,7 @@ export function ProjectCard({ project }: { project: ProjectResponse }) {
       <Flex direction="column" mt={14}>
         <Box>
           <Link
-            href={RoutingService.getInterpolatedRoute([ClientRoutes.PROJECT, { id: String(id) }])}
+            href={RoutingService.getInterpolatedRoute([ClientRoutes.PROJECT, { slug }])}
             className={classes.link}
           >
             <Title order={3} fw={600}>
@@ -69,7 +64,7 @@ export function ProjectCard({ project }: { project: ProjectResponse }) {
 }
 
 const styles = createStyles((theme) => ({
-  initials: {
+  avatar: {
     textTransform: "uppercase",
     border: `1px solid ${theme.colors.teal[5]}`,
   },
