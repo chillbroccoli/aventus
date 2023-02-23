@@ -16,13 +16,13 @@ export const createProjectSchema = z.object({
 export const projectResponseSchema = z.object({
   id: z.number(),
   title: z.string(),
+  slug: z.string(),
   description: z.string(),
   content: z.string(),
   tags: z.array(z.object({ id: z.number(), name: z.string() })),
   user: z.object({
     id: z.number(),
-    firstName: z.string(),
-    lastName: z.string(),
+    name: z.string(),
     email: z.string(),
     avatar: z.string().optional(),
   }),
