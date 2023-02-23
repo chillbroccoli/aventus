@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
 
-import { $paramsRef, $projectRef } from "../../utils/buildJsonSchemas";
+import { $commentRef, $paramsRef, $projectRef } from "../../utils/buildJsonSchemas";
 import { ProjectController } from "./project.controller";
 
 export async function projectRoutes(server: FastifyInstance) {
@@ -11,15 +11,46 @@ export async function projectRoutes(server: FastifyInstance) {
     {
       schema: {
         params: $paramsRef("paramsWithSlugSchema"),
+        response: {
+          200: $projectRef("projectResponseSchema"),
+        },
       },
     },
     ProjectController.findOne
   );
 
+  server.get(
+    "/:slug/comments",
+    {
+      schema: {
+        params: $paramsRef("paramsWithSlugSchema"),
+        response: {
+          200: {
+            type: "array",
+            items: $commentRef("commentResponse"),
+          },
+        },
+      },
+    },
+    ProjectController.getComments
+  );
+
+  server.post(
+    "/:slug/comments",
+    {
+      onRequest: [server.authenticate],
+      schema: {
+        params: $paramsRef("paramsWithSlugSchema"),
+        body: $commentRef("createCommentSchema"),
+      },
+    },
+    ProjectController.createComment
+  );
+
   server.post(
     "/",
     {
-      preHandler: [server.authenticate],
+      onRequest: [server.authenticate],
       schema: {
         body: $projectRef("createProjectSchema"),
       },
@@ -29,7 +60,7 @@ export async function projectRoutes(server: FastifyInstance) {
 
   server.get(
     "/my-projects",
-    { preHandler: [server.authenticate] },
+    { onRequest: [server.authenticate] },
     ProjectController.getUsersProjects
   );
 }
