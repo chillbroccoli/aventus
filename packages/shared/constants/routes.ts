@@ -1,10 +1,11 @@
 export enum APIRoutes {
   TAGS = "/api/tags",
-  PROJECTS = "/api/projects",
   USERS = "/api/users",
   LOGIN = "/api/users/login",
   LOGOUT = "/api/users/logout",
   ME = "/api/users/me",
+  PROJECTS = "/api/projects",
+  PROJECT = "/api/projects/:slug",
 }
 
 export enum ClientRoutes {
@@ -15,7 +16,7 @@ export enum ClientRoutes {
   READING_LIST = "/reading-list",
   TAGS = "/tags",
   TAG = "/tags/:tag",
-  PROJECT = "/projects/:id",
+  PROJECT = "/projects/:slug",
   NEW_PROJECT = "/projects/new",
   MY_PROJECTS = "/projects/my-projects",
 }
