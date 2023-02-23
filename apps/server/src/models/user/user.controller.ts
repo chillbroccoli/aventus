@@ -96,9 +96,9 @@ export const UserController = {
         return reply.code(401).send({ message: "Invalid password" });
       }
 
-      const { id, firstName, lastName, email, avatar, role } = user;
+      const { id, name, email, avatar, role } = user;
 
-      const accessToken = request.jwt.sign({ id, firstName, lastName, email, avatar, role });
+      const accessToken = request.jwt.sign({ id, name, email, avatar, role });
 
       return reply
         .setCookie("accessToken", accessToken, {
