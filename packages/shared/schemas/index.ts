@@ -1,3 +1,4 @@
+export * from "./comment";
 export * from "./params";
 export * from "./project";
 export * from "./tag";
