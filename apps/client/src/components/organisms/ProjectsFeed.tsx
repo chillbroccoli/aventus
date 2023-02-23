@@ -1,20 +1,15 @@
 import { Box, Flex } from "@mantine/core";
-import { useQuery } from "@tanstack/react-query";
-
-import { ProjectService } from "@/utils/services/ProjectService";
+import { ProjectResponse } from "shared";
 
 import { ProjectCard } from "../molecules/ProjectCard";
 
-export function ProjectsFeed() {
-  const { data } = useQuery({
-    queryKey: ["projects"],
-    queryFn: ProjectService.findAll,
-  });
-
+export function ProjectsFeed({ data }: { data: ProjectResponse[] }) {
   return (
     <Box>
       <Flex direction="column" gap={20}>
-        {data && data.map((project) => <ProjectCard key={project.id} project={project} />)}
+        {data.map((project) => (
+          <ProjectCard key={project.id} project={project} />
+        ))}
       </Flex>
     </Box>
   );
