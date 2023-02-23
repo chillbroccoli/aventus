@@ -1,4 +1,5 @@
 import { CreateProjectInput } from "shared";
+import slugify from "slugify";
 
 import { prisma } from "../../utils/db";
 
@@ -12,6 +13,20 @@ export const ProjectService = {
     });
 
     return projects;
+  },
+
+  findOne: async (slug: string) => {
+    const project = await prisma.project.findUnique({
+      where: {
+        slug,
+      },
+      include: {
+        tags: true,
+        user: true,
+      },
+    });
+
+    return project;
   },
 
   createOne: async (body: CreateProjectInput & { userId: number }) => {
@@ -28,6 +43,7 @@ export const ProjectService = {
     const project = await prisma.project.create({
       data: {
         title: body.title,
+        slug: slugify(body.title, { lower: true, replacement: "-" }),
         description: body.description,
         content: body.content,
         tags: {
