@@ -1,13 +1,4 @@
-import {
-  Avatar,
-  Button,
-  createStyles,
-  Divider,
-  Flex,
-  Popover,
-  Text,
-  UnstyledButton,
-} from "@mantine/core";
+import { Button, createStyles, Divider, Flex, Popover, Text, UnstyledButton } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
@@ -17,6 +8,8 @@ import { ClientRoutes } from "shared";
 import { useMe } from "@/hooks/useMe";
 import { profileNav } from "@/utils/constants";
 import { UserService } from "@/utils/services/UserService";
+
+import { Avatar } from "../atoms/Avatar";
 
 export function Profile() {
   const { me } = useMe();
@@ -41,7 +34,7 @@ export function Profile() {
       <Popover width={225} position="bottom-end" shadow="md">
         <Popover.Target>
           <UnstyledButton>
-            <Avatar src={me?.avatar} color="teal" alt="Avatar" className={classes.avatar} />
+            <Avatar src={me?.avatar} />
           </UnstyledButton>
         </Popover.Target>
         <Popover.Dropdown>
@@ -76,11 +69,6 @@ export function Profile() {
 }
 
 const styles = createStyles((theme) => ({
-  avatar: {
-    textTransform: "uppercase",
-    border: `1px solid ${theme.colors.teal[5]}`,
-  },
-
   link: {
     color: theme.colors.gray[7],
     textDecoration: "none",
