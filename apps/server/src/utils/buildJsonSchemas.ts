@@ -6,6 +6,7 @@ import {
   loginResponseSchema,
   loginUserSchema,
   paramsWithIdSchema,
+  paramsWithSlugSchema,
   tagResponseSchema,
   updateTagSchema,
   userResponseSchema,
@@ -14,6 +15,7 @@ import {
 export const { schemas: paramsSchemas, $ref: $paramsRef } = buildJsonSchemas(
   {
     paramsWithIdSchema,
+    paramsWithSlugSchema,
   },
   {
     $id: "params",
