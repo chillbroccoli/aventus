@@ -1,9 +1,8 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { CreateProjectInput } from "shared";
-import { ParamsWithSlug } from "shared/schemas";
+import { CreateCommentInput, ParamsWithSlug } from "shared/schemas";
 
 import { logger } from "../../utils/logger";
-import { CreateCommentInput } from "./../../../../../packages/shared/schemas/comment";
 import { ProjectService } from "./project.service";
 
 export const ProjectController = {
