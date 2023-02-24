@@ -50,7 +50,7 @@ export function ProjectContent({ project }: { project: ProjectResponse }) {
 
         <Flex mt={8} gap={10}>
           {tags.map((tag) => (
-            <Badge key={tag.id} variant="outline" size="sm" radius="md">
+            <Badge key={tag.id} variant="outline" radius="md">
               # {tag.name}
             </Badge>
           ))}
@@ -62,7 +62,7 @@ export function ProjectContent({ project }: { project: ProjectResponse }) {
           </Text>
         </Box>
 
-        <Box mt={20}>
+        <Box>
           <TypographyStylesProvider>
             <div dangerouslySetInnerHTML={{ __html: content }}></div>
           </TypographyStylesProvider>
