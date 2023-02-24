@@ -9,6 +9,11 @@ export const ProjectService = {
       include: {
         tags: true,
         user: true,
+        likes: true,
+        bookmarks: true,
+      },
+      orderBy: {
+        createdAt: "desc",
       },
     });
 
@@ -24,6 +29,8 @@ export const ProjectService = {
         id: true,
         slug: true,
         tags: true,
+        likes: true,
+        bookmarks: true,
         user: {
           select: {
             id: true,
@@ -43,6 +50,27 @@ export const ProjectService = {
         _count: {
           select: {
             comments: true,
+          },
+        },
+      },
+    });
+
+    return project;
+  },
+
+  getProjectStats: async (slug: string) => {
+    const project = await prisma.project.findUnique({
+      where: {
+        slug,
+      },
+      select: {
+        likes: true,
+        bookmarks: true,
+        _count: {
+          select: {
+            comments: true,
+            likes: true,
+            bookmarks: true,
           },
         },
       },
@@ -79,6 +107,8 @@ export const ProjectService = {
       },
       include: {
         tags: true,
+        likes: true,
+        bookmarks: true,
       },
     });
 
@@ -92,10 +122,28 @@ export const ProjectService = {
       },
       include: {
         tags: true,
+        likes: true,
+        bookmarks: true,
+      },
+      orderBy: {
+        createdAt: "desc",
       },
     });
 
     return projects;
+  },
+
+  findOneComment: async (id: string) => {
+    const comment = await prisma.comment.findUnique({
+      where: {
+        id: Number(id),
+      },
+      include: {
+        user: true,
+      },
+    });
+
+    return comment;
   },
 
   createComment: async (input: CreateCommentInput & { userId: number; slug: string }) => {
@@ -118,6 +166,16 @@ export const ProjectService = {
     return comment;
   },
 
+  deleteComment: async (id: string) => {
+    const comment = await prisma.comment.delete({
+      where: {
+        id: Number(id),
+      },
+    });
+
+    return comment;
+  },
+
   getComments: async (slug: string) => {
     const comments = await prisma.comment.findMany({
       where: {
@@ -128,8 +186,99 @@ export const ProjectService = {
       include: {
         user: true,
       },
+      orderBy: {
+        createdAt: "desc",
+      },
     });
 
     return comments;
+  },
+
+  likeProject: async (slug: string, userId: number) => {
+    const project = await prisma.project.findUnique({
+      where: {
+        slug,
+      },
+      include: {
+        likes: true,
+      },
+    });
+
+    if (!project) {
+      throw new Error("Project not found");
+    }
+
+    const isLiked = project.likes.find((like) => like.userId === userId);
+
+    if (isLiked) {
+      const like = await prisma.like.delete({
+        where: {
+          id: isLiked.id,
+        },
+      });
+
+      return like;
+    } else {
+      const like = await prisma.like.create({
+        data: {
+          user: {
+            connect: {
+              id: userId,
+            },
+          },
+          project: {
+            connect: {
+              slug,
+            },
+          },
+        },
+      });
+
+      return like;
+    }
+  },
+
+  bookmarkProject: async (slug: string, userId: number) => {
+    const project = await prisma.project.findUnique({
+      where: {
+        slug,
+      },
+      include: {
+        bookmarks: true,
+      },
+    });
+
+    if (!project) {
+      throw new Error("Project not found");
+    }
+
+    const isBookmarked = project.bookmarks.find((bookmark) => bookmark.userId === userId);
+
+    if (isBookmarked) {
+      const bookmark = await prisma.bookmark.delete({
+        where: {
+          id: isBookmarked.id,
+        },
+      });
+
+      return bookmark;
+    } else {
+      const bookmark = await prisma.bookmark.create({
+        data: {
+          user: {
+            connect: {
+              id: userId,
+            },
+          },
+          project: {
+            connect: {
+              slug,
+            },
+          },
+        },
+      });
+
+      return bookmark;
+    }
   },
 };
