@@ -20,6 +20,19 @@ export async function projectRoutes(server: FastifyInstance) {
   );
 
   server.get(
+    "/:slug/stats",
+    {
+      schema: {
+        params: $paramsRef("paramsWithSlugSchema"),
+        response: {
+          200: $projectRef("projectStatsSchema"),
+        },
+      },
+    },
+    ProjectController.getProjectStats
+  );
+
+  server.get(
     "/:slug/comments",
     {
       schema: {
@@ -45,6 +58,39 @@ export async function projectRoutes(server: FastifyInstance) {
       },
     },
     ProjectController.createComment
+  );
+
+  server.post(
+    "/:slug/like",
+    {
+      onRequest: [server.authenticate],
+      schema: {
+        params: $paramsRef("paramsWithSlugSchema"),
+      },
+    },
+    ProjectController.likeProject
+  );
+
+  server.post(
+    "/:slug/bookmark",
+    {
+      onRequest: [server.authenticate],
+      schema: {
+        params: $paramsRef("paramsWithSlugSchema"),
+      },
+    },
+    ProjectController.bookmarkProject
+  );
+
+  server.delete(
+    "/:slug/comments/:id",
+    {
+      onRequest: [server.authenticate],
+      schema: {
+        params: $paramsRef("paramsWithIdAndSlugSchema"),
+      },
+    },
+    ProjectController.deleteComment
   );
 
   server.post(
