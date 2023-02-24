@@ -36,7 +36,7 @@ export function buildServer() {
   server.register(fastifyJwt, {
     secret: process.env.JWT_SECRET as string,
     cookie: {
-      cookieName: "accessToken",
+      cookieName: process.env.COOKIE_NAME as string,
       signed: false,
     },
   });
