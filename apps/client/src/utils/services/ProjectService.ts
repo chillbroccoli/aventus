@@ -1,5 +1,6 @@
 import {
   APIRoutes,
+  BookmarkResponse,
   CreateProjectInput,
   LikeResponse,
   ProjectResponse,
@@ -31,5 +32,11 @@ export const ProjectService = {
     return (await APIService.post([APIRoutes.LIKE_PROJECT, { slug }], {
       body: {},
     })) as LikeResponse;
+  },
+
+  bookmarkProject: async (slug: string) => {
+    return (await APIService.post([APIRoutes.BOOKMARK_PROJECT, { slug }], {
+      body: {},
+    })) as BookmarkResponse;
   },
 };
