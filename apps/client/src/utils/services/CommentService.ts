@@ -12,4 +12,10 @@ export const CommentService = {
       body,
     });
   },
+
+  deleteOne: async (slug: string, id: number) => {
+    return await APIService.delete([APIRoutes.COMMENT, { slug, id: String(id) }], {
+      body: {},
+    });
+  },
 };
