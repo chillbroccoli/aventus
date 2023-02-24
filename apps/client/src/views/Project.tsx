@@ -22,7 +22,7 @@ export function ProjectView() {
       <Container size="lg" mt={20} pb={20}>
         <Grid gutter={10}>
           <Grid.Col span={1}>
-            <ProjectStats comments={data?._count?.comments} />
+            <ProjectStats />
           </Grid.Col>
           <Grid.Col span={9}>{data && <ProjectContent project={data} />}</Grid.Col>
           <Grid.Col span={2}>3</Grid.Col>
