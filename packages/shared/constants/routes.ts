@@ -10,6 +10,7 @@ export enum APIRoutes {
   COMMENT = "/api/projects/:slug/comments/:id",
   PROJECT_STATS = "/api/projects/:slug/stats",
   LIKE_PROJECT = "/api/projects/:slug/like",
+  BOOKMARK_PROJECT = "/api/projects/:slug/bookmark",
 }
 
 export enum ClientRoutes {
