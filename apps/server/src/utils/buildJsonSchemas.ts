@@ -1,3 +1,4 @@
+import { FastifyInstance } from "fastify";
 import { buildJsonSchemas } from "fastify-zod";
 import {
   commentResponse,
@@ -7,9 +8,11 @@ import {
   createUserSchema,
   loginResponseSchema,
   loginUserSchema,
+  paramsWithIdAndSlugSchema,
   paramsWithIdSchema,
   paramsWithSlugSchema,
   projectResponseSchema,
+  projectStatsSchema,
   tagResponseSchema,
   updateTagSchema,
   userResponseSchema,
@@ -19,6 +22,7 @@ export const { schemas: paramsSchemas, $ref: $paramsRef } = buildJsonSchemas(
   {
     paramsWithIdSchema,
     paramsWithSlugSchema,
+    paramsWithIdAndSlugSchema,
   },
   {
     $id: "params",
@@ -52,6 +56,7 @@ export const { schemas: projectSchemas, $ref: $projectRef } = buildJsonSchemas(
   {
     createProjectSchema,
     projectResponseSchema,
+    projectStatsSchema,
   },
   {
     $id: "project",
@@ -68,10 +73,16 @@ export const { schemas: commentSchemas, $ref: $commentRef } = buildJsonSchemas(
   }
 );
 
-export const jsonSchemas = [
+const jsonSchemas = [
   ...paramsSchemas,
   ...userSchemas,
   ...tagSchemas,
   ...projectSchemas,
   ...commentSchemas,
 ];
+
+export async function addSchemas(server: FastifyInstance) {
+  for (const schema of jsonSchemas) {
+    server.addSchema(schema);
+  }
+}
