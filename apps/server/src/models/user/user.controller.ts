@@ -131,14 +131,12 @@ export const UserController = {
   },
 
   me: async (request: FastifyRequest, reply: FastifyReply) => {
-    const accessToken = request.cookies.accessToken;
-
-    if (!accessToken) {
-      return reply.code(200).send(null);
-    }
-
     try {
-      const user = request.jwt.verify(accessToken);
+      const user = request.user;
+
+      if (!user) {
+        return reply.code(200).send(null);
+      }
 
       return reply.code(200).send(user);
     } catch (err: any) {
