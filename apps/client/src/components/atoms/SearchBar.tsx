@@ -1,5 +1,5 @@
 import { Box, TextInput, useMantineTheme } from "@mantine/core";
-import { IconSearch } from "@tabler/icons";
+import { IconSearch } from "@tabler/icons-react";
 
 export function SearchBar() {
   const theme = useMantineTheme();
