@@ -101,7 +101,7 @@ export const UserController = {
       const accessToken = request.jwt.sign({ id, name, email, avatar, role });
 
       return reply
-        .setCookie("accessToken", accessToken, {
+        .setCookie(process.env.COOKIE_NAME as string, accessToken, {
           maxAge: 1000 * 60 * 60 * 24 * 30,
           httpOnly: true,
           secure: process.env.NODE_ENV === "production",
