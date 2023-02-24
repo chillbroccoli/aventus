@@ -7,7 +7,7 @@ export async function userRoutes(server: FastifyInstance) {
   server.get(
     "/",
     {
-      onRequest: [server.authenticateAdmin],
+      onRequest: [server.checkAdmin],
       schema: {
         response: {
           200: {
@@ -51,7 +51,7 @@ export async function userRoutes(server: FastifyInstance) {
   server.delete(
     "/:id",
     {
-      onRequest: [server.authenticateAdmin],
+      onRequest: [server.checkAdmin],
       schema: {
         params: $paramsRef("paramsWithIdSchema"),
         response: {

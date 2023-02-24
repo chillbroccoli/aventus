@@ -16,7 +16,7 @@ declare module "fastify" {
   }
   export interface FastifyInstance {
     authenticate: any;
-    authenticateAdmin: any;
+    checkAdmin: any;
   }
 }
 
@@ -60,7 +60,7 @@ export function buildServer() {
     }
   });
 
-  server.decorate("authenticateAdmin", async (request: FastifyRequest, reply: FastifyReply) => {
+  server.decorate("checkAdmin", async (request: FastifyRequest, reply: FastifyReply) => {
     try {
       const user = await request.jwtVerify<JwtPayloadUser>();
 
