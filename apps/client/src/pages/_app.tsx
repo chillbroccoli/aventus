@@ -10,7 +10,7 @@ const queryClient = new QueryClient();
 import { GlobalStyles } from "@/styles/global";
 
 const poppins = Poppins({
-  weight: ["300", "400", "500", "600", "700", "800", "900"],
+  weight: ["200", "300", "400", "500", "600", "700", "800", "900"],
   subsets: ["latin"],
 });
 
@@ -32,7 +32,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           }}
         >
           <GlobalStyles />
-          <NotificationsProvider>
+          <NotificationsProvider position="top-right">
             <Component {...pageProps} />
           </NotificationsProvider>
         </MantineProvider>
