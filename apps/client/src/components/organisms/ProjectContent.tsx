@@ -7,16 +7,33 @@ import {
   Title,
   TypographyStylesProvider,
 } from "@mantine/core";
+import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
-import { ProjectResponse } from "shared";
+import { useRouter } from "next/router";
+
+import { QUERY_KEYS } from "@/utils/constants";
+import { ProjectService } from "@/utils/services/ProjectService";
 
 import { Avatar } from "../atoms/Avatar";
 import { Comments } from "./Comments";
 
-export function ProjectContent({ project }: { project: ProjectResponse }) {
+export function ProjectContent() {
   const { classes } = styles();
 
-  const { title, description, content, tags, user, updatedAt } = project;
+  const {
+    query: { slug },
+    isReady,
+  } = useRouter();
+
+  const { data } = useQuery({
+    queryKey: [QUERY_KEYS.PROJECT, slug],
+    queryFn: () => ProjectService.findOne(slug as string),
+    enabled: isReady,
+  });
+
+  if (!data) return null;
+
+  const { title, description, content, tags, user, updatedAt } = data;
 
   return (
     <Box px={40} p={10} className={classes.main}>
@@ -25,7 +42,7 @@ export function ProjectContent({ project }: { project: ProjectResponse }) {
           <Avatar
             mr={6}
             size="lg"
-            src={user?.avatar}
+            src={data.user?.avatar}
             color="teal"
             alt="Avatar"
             className={classes.avatar}
