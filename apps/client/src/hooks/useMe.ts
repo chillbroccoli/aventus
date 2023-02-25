@@ -1,11 +1,9 @@
-import { useEffect, useState } from "react";
-import { JwtPayloadUser } from "shared";
-
 import { RequestError } from "@/utils/services/APIService";
 import { UserService } from "@/utils/services/UserService";
+import { useMeStore } from "@/utils/stores/useMeStore";
 
 export function useMe() {
-  const [me, setMe] = useState<JwtPayloadUser | null>(null);
+  const setMe = useMeStore((state) => state.setMe);
 
   const fetchMe = async () => {
     try {
@@ -16,9 +14,5 @@ export function useMe() {
     }
   };
 
-  useEffect(() => {
-    fetchMe();
-  }, []);
-
-  return { me };
+  return { fetchMe };
 }
