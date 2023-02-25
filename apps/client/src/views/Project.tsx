@@ -10,11 +10,13 @@ import { ProjectService } from "@/utils/services/ProjectService";
 export function ProjectView() {
   const {
     query: { slug },
+    isReady,
   } = useRouter();
 
   const { data } = useQuery({
     queryKey: ["project", slug],
     queryFn: () => ProjectService.findOne(slug as string),
+    enabled: isReady,
   });
 
   return (
