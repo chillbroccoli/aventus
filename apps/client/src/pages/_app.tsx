@@ -7,7 +7,11 @@ import Head from "next/head";
 
 const queryClient = new QueryClient();
 
+import { useEffect } from "react";
+
+import { useMe } from "@/hooks/useMe";
 import { GlobalStyles } from "@/styles/global";
+import { useMeStore } from "@/utils/stores/useMeStore";
 
 const poppins = Poppins({
   weight: ["200", "300", "400", "500", "600", "700", "800", "900"],
@@ -15,6 +19,8 @@ const poppins = Poppins({
 });
 
 function MyApp({ Component, pageProps }: AppProps) {
+  useFetchUser();
+
   return (
     <>
       <Head>
@@ -42,3 +48,14 @@ function MyApp({ Component, pageProps }: AppProps) {
 }
 
 export default MyApp;
+
+const useFetchUser = () => {
+  const { fetchMe } = useMe();
+  const me = useMeStore((state) => state.me);
+
+  useEffect(() => {
+    if (typeof window !== undefined && !me) {
+      fetchMe();
+    }
+  }, [fetchMe, me]);
+};
