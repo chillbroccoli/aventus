@@ -4,11 +4,12 @@ import { useQuery } from "@tanstack/react-query";
 import { MainLayout } from "@/components/layouts/MainLayout";
 import { Tags } from "@/components/molecules/Tags";
 import { ProjectsFeed } from "@/components/organisms/ProjectsFeed";
+import { QUERY_KEYS } from "@/utils/constants";
 import { ProjectService } from "@/utils/services/ProjectService";
 
 export function HomeView() {
   const { data } = useQuery({
-    queryKey: ["projects"],
+    queryKey: [QUERY_KEYS.PROJECTS],
     queryFn: ProjectService.findAll,
   });
 

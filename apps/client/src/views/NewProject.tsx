@@ -18,7 +18,7 @@ import { Input } from "@/components/atoms/Input";
 import { TagSelect } from "@/components/atoms/TagSelect";
 import { MainLayout } from "@/components/layouts/MainLayout";
 import { TextEditor } from "@/components/molecules/TextEditor";
-import { newProjectTextEditorDefaultContent } from "@/utils/constants";
+import { MUTATION_KEYS, newProjectTextEditorDefaultContent } from "@/utils/constants";
 import { ProjectService } from "@/utils/services/ProjectService";
 import { RoutingService } from "@/utils/services/RoutingService";
 
@@ -26,7 +26,7 @@ export function NewProjectView() {
   const router = useRouter();
 
   const { mutateAsync } = useMutation({
-    mutationKey: ["createProject"],
+    mutationKey: [MUTATION_KEYS.CREATE_PROJECT],
     mutationFn: ProjectService.create,
     onSuccess: (data) => {
       showNotification({

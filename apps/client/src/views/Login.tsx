@@ -10,6 +10,7 @@ import { ClientRoutes, LoginUserInput, loginUserSchema } from "shared";
 import { Input } from "@/components/atoms/Input";
 import { AuthLayout } from "@/components/layouts/AuthLayout";
 import { useMe } from "@/hooks/useMe";
+import { MUTATION_KEYS } from "@/utils/constants";
 import { UserService } from "@/utils/services/UserService";
 
 export function LoginView() {
@@ -20,6 +21,7 @@ export function LoginView() {
   const { fetchMe } = useMe();
 
   const { mutateAsync } = useMutation({
+    mutationKey: [MUTATION_KEYS.LOGIN],
     mutationFn: UserService.login,
     onSuccess: async () => {
       await fetchMe();

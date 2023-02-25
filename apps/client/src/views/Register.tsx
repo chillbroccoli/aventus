@@ -9,6 +9,7 @@ import { ClientRoutes, CreateUserInput, createUserSchema } from "shared";
 
 import { Input } from "@/components/atoms/Input";
 import { AuthLayout } from "@/components/layouts/AuthLayout";
+import { MUTATION_KEYS } from "@/utils/constants";
 import { UserService } from "@/utils/services/UserService";
 
 export function RegisterView() {
@@ -17,6 +18,7 @@ export function RegisterView() {
   const router = useRouter();
 
   const { mutateAsync } = useMutation({
+    mutationKey: [MUTATION_KEYS.REGISTER],
     mutationFn: UserService.register,
     onSuccess: () => {
       showNotification({
