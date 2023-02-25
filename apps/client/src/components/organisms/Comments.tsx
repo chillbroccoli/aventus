@@ -6,8 +6,8 @@ import { useRouter } from "next/router";
 import { FormProvider, useForm } from "react-hook-form";
 import { CreateCommentInput, createCommentSchema } from "shared";
 
-import { useMe } from "@/hooks/useMe";
 import { CommentService } from "@/utils/services/CommentService";
+import { useMeStore } from "@/utils/stores/useMeStore";
 
 import { Avatar } from "../atoms/Avatar";
 import { Input } from "../atoms/Input";
@@ -16,9 +16,10 @@ import { CommentCard } from "../molecules/CommentCard";
 export function Comments() {
   const {
     query: { slug },
+    isReady,
   } = useRouter();
 
-  const { me } = useMe();
+  const me = useMeStore((state) => state.me);
 
   const methods = useForm<CreateCommentInput>({
     resolver: zodResolver(createCommentSchema),
@@ -29,6 +30,7 @@ export function Comments() {
   const { data } = useQuery({
     queryKey: ["comments", slug],
     queryFn: () => CommentService.findAll(slug as string),
+    enabled: isReady,
   });
 
   const { mutateAsync } = useMutation({
