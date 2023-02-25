@@ -11,9 +11,11 @@ export const ProjectController = {
       const projects = await ProjectService.findAll();
 
       return reply.code(200).send(projects);
-    } catch (err: any) {
+    } catch (err: unknown) {
       logger.error(err);
-      return reply.code(400).send({ message: err.message });
+      if (err instanceof Error) {
+        return reply.code(500).send({ message: err.message });
+      }
     }
   },
 
@@ -28,9 +30,11 @@ export const ProjectController = {
       }
 
       return reply.code(200).send(project);
-    } catch (err: any) {
+    } catch (err: unknown) {
       logger.error(err);
-      return reply.code(400).send({ message: err.message });
+      if (err instanceof Error) {
+        return reply.code(500).send({ message: err.message });
+      }
     }
   },
 
@@ -48,9 +52,11 @@ export const ProjectController = {
       }
 
       return reply.code(200).send(stats);
-    } catch (err: any) {
+    } catch (err: unknown) {
       logger.error(err);
-      return reply.code(400).send({ message: err.message });
+      if (err instanceof Error) {
+        return reply.code(500).send({ message: err.message });
+      }
     }
   },
 
@@ -60,16 +66,14 @@ export const ProjectController = {
     try {
       const user = request.user;
 
-      if (!user) {
-        return reply.code(401).send({ message: "Unauthorized" });
-      }
-
       const project = await ProjectService.createOne({ ...body, userId: user.id });
 
       return reply.code(201).send(project);
-    } catch (err: any) {
+    } catch (err: unknown) {
       logger.error(err);
-      return reply.code(400).send({ message: err.message });
+      if (err instanceof Error) {
+        return reply.code(500).send({ message: err.message });
+      }
     }
   },
 
@@ -77,16 +81,14 @@ export const ProjectController = {
     try {
       const user = request.user;
 
-      if (!user) {
-        return reply.code(401).send({ message: "Unauthorized" });
-      }
-
       const projects = await ProjectService.getUsersProjects(user.id);
 
       return reply.code(200).send(projects);
-    } catch (err: any) {
+    } catch (err: unknown) {
       logger.error(err);
-      return reply.code(400).send({ message: err.message });
+      if (err instanceof Error) {
+        return reply.code(500).send({ message: err.message });
+      }
     }
   },
 
@@ -97,9 +99,11 @@ export const ProjectController = {
       const comments = await ProjectService.getComments(slug);
 
       return reply.code(200).send(comments);
-    } catch (err: any) {
+    } catch (err: unknown) {
       logger.error(err);
-      return reply.code(400).send({ message: err.message });
+      if (err instanceof Error) {
+        return reply.code(500).send({ message: err.message });
+      }
     }
   },
 
@@ -113,16 +117,14 @@ export const ProjectController = {
     try {
       const user = request.user;
 
-      if (!user) {
-        return reply.code(401).send({ message: "Unauthorized" });
-      }
-
       const comment = await ProjectService.createComment({ ...body, userId: user.id, slug });
 
       return reply.code(201).send(comment);
-    } catch (err: any) {
+    } catch (err: unknown) {
       logger.error(err);
-      return reply.code(400).send({ message: err.message });
+      if (err instanceof Error) {
+        return reply.code(500).send({ message: err.message });
+      }
     }
   },
 
@@ -135,10 +137,6 @@ export const ProjectController = {
     try {
       const user = request.user;
 
-      if (!user) {
-        return reply.code(401).send({ message: "Unauthorized" });
-      }
-
       const comment = await ProjectService.findOneComment(id);
 
       if (!comment) {
@@ -146,15 +144,17 @@ export const ProjectController = {
       }
 
       if (comment.userId !== user.id) {
-        return reply.code(401).send({ message: "Unauthorized" });
+        return reply.code(403).send({ message: "Unauthorized" });
       }
 
       await ProjectService.deleteComment(id);
 
-      return reply.code(200).send({ message: "Comment deleted" });
-    } catch (err: any) {
+      return reply.code(204).send();
+    } catch (err: unknown) {
       logger.error(err);
-      return reply.code(400).send({ message: err.message });
+      if (err instanceof Error) {
+        return reply.code(500).send({ message: err.message });
+      }
     }
   },
 
@@ -164,10 +164,6 @@ export const ProjectController = {
     try {
       const user = request.user;
 
-      if (!user) {
-        return reply.code(401).send({ message: "Unauthorized" });
-      }
-
       const project = await ProjectService.likeProject(slug, user.id);
 
       if (!project) {
@@ -175,9 +171,11 @@ export const ProjectController = {
       }
 
       return reply.code(200).send(project);
-    } catch (err: any) {
+    } catch (err: unknown) {
       logger.error(err);
-      return reply.code(400).send({ message: err.message });
+      if (err instanceof Error) {
+        return reply.code(500).send({ message: err.message });
+      }
     }
   },
 
@@ -190,10 +188,6 @@ export const ProjectController = {
     try {
       const user = request.user;
 
-      if (!user) {
-        return reply.code(401).send({ message: "Unauthorized" });
-      }
-
       const project = await ProjectService.bookmarkProject(slug, user.id);
 
       if (!project) {
@@ -201,9 +195,11 @@ export const ProjectController = {
       }
 
       return reply.code(200).send(project);
-    } catch (err: any) {
+    } catch (err: unknown) {
       logger.error(err);
-      return reply.code(400).send({ message: err.message });
+      if (err instanceof Error) {
+        return reply.code(500).send({ message: err.message });
+      }
     }
   },
 };
