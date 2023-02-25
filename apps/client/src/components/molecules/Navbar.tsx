@@ -5,12 +5,12 @@ import { ClientRoutes } from "shared/constants";
 import { Logo } from "@/components/atoms/Logo";
 import { SearchBar } from "@/components/atoms/SearchBar";
 import { Profile } from "@/components/molecules/Profile";
-import { useMe } from "@/hooks/useMe";
+import { useMeStore } from "@/utils/stores/useMeStore";
 
 export function Navbar() {
   const { classes } = styles();
 
-  const { me } = useMe();
+  const me = useMeStore((state) => state.me);
 
   return (
     <Box px={20} py={12} className={classes.navbar}>
