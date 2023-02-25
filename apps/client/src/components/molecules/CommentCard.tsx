@@ -9,11 +9,12 @@ import { MUTATION_KEYS, QUERY_KEYS } from "@/utils/constants";
 import { dayjs } from "@/utils/dayjs";
 import { CommentService } from "@/utils/services/CommentService";
 import { useMeStore } from "@/utils/stores/useMeStore";
+import { ParamsWithSlug } from "@/utils/types";
 
 export function CommentCard({ comment }: { comment: CommentResponse }) {
-  const {
-    query: { slug },
-  } = useRouter();
+  const router = useRouter();
+
+  const { slug } = router.query as ParamsWithSlug;
 
   const { classes } = styles();
 
@@ -23,7 +24,7 @@ export function CommentCard({ comment }: { comment: CommentResponse }) {
 
   const { mutate } = useMutation({
     mutationKey: [MUTATION_KEYS.DELETE_COMMENT, comment.id],
-    mutationFn: () => CommentService.deleteOne(slug as string, comment.id),
+    mutationFn: () => CommentService.deleteOne(slug, comment.id),
     onSuccess: () => {
       showNotification({
         title: "Comment deleted",

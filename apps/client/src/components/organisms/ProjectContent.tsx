@@ -13,6 +13,7 @@ import { useRouter } from "next/router";
 
 import { QUERY_KEYS } from "@/utils/constants";
 import { ProjectService } from "@/utils/services/ProjectService";
+import { ParamsWithSlug } from "@/utils/types";
 
 import { Avatar } from "../atoms/Avatar";
 import { Comments } from "./Comments";
@@ -20,15 +21,14 @@ import { Comments } from "./Comments";
 export function ProjectContent() {
   const { classes } = styles();
 
-  const {
-    query: { slug },
-    isReady,
-  } = useRouter();
+  const router = useRouter();
+
+  const { slug } = router.query as ParamsWithSlug;
 
   const { data } = useQuery({
     queryKey: [QUERY_KEYS.PROJECT, slug],
     queryFn: () => ProjectService.findOne(slug as string),
-    enabled: isReady,
+    enabled: router.isReady,
   });
 
   if (!data) return null;

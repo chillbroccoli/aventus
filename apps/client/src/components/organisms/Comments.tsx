@@ -9,16 +9,16 @@ import { CreateCommentInput, createCommentSchema } from "shared";
 import { MUTATION_KEYS, QUERY_KEYS } from "@/utils/constants";
 import { CommentService } from "@/utils/services/CommentService";
 import { useMeStore } from "@/utils/stores/useMeStore";
+import { ParamsWithSlug } from "@/utils/types";
 
 import { Avatar } from "../atoms/Avatar";
 import { Input } from "../atoms/Input";
 import { CommentCard } from "../molecules/CommentCard";
 
 export function Comments() {
-  const {
-    query: { slug },
-    isReady,
-  } = useRouter();
+  const router = useRouter();
+
+  const { slug } = router.query as ParamsWithSlug;
 
   const me = useMeStore((state) => state.me);
 
@@ -31,7 +31,7 @@ export function Comments() {
   const { data } = useQuery({
     queryKey: [QUERY_KEYS.COMMENTS, slug],
     queryFn: () => CommentService.findAll(slug as string),
-    enabled: isReady,
+    enabled: router.isReady,
   });
 
   const { mutateAsync } = useMutation({

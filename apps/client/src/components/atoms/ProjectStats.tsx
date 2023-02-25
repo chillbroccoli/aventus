@@ -12,12 +12,12 @@ import { useRouter } from "next/router";
 import { MUTATION_KEYS, QUERY_KEYS } from "@/utils/constants";
 import { ProjectService } from "@/utils/services/ProjectService";
 import { useMeStore } from "@/utils/stores/useMeStore";
+import { ParamsWithSlug } from "@/utils/types";
 
 export function ProjectStats() {
-  const {
-    query: { slug },
-    isReady,
-  } = useRouter();
+  const router = useRouter();
+
+  const { slug } = router.query as ParamsWithSlug;
 
   const me = useMeStore((state) => state.me);
 
@@ -25,13 +25,13 @@ export function ProjectStats() {
 
   const { data } = useQuery({
     queryKey: [QUERY_KEYS.PROJECT_STATS, slug],
-    queryFn: () => ProjectService.getProjectStats(slug as string),
-    enabled: isReady,
+    queryFn: () => ProjectService.getProjectStats(slug),
+    enabled: router.isReady,
   });
 
   const { mutate: like } = useMutation({
     mutationKey: [MUTATION_KEYS.LIKE_PROJECT, slug],
-    mutationFn: () => ProjectService.likeProject(slug as string),
+    mutationFn: () => ProjectService.likeProject(slug),
     onSuccess: () => {
       queryClient.invalidateQueries([QUERY_KEYS.PROJECT_STATS, slug]);
     },
@@ -39,7 +39,7 @@ export function ProjectStats() {
 
   const { mutate: bookmark } = useMutation({
     mutationKey: [MUTATION_KEYS.BOOKMARK_PROJECT, slug],
-    mutationFn: () => ProjectService.bookmarkProject(slug as string),
+    mutationFn: () => ProjectService.bookmarkProject(slug),
     onSuccess: () => {
       queryClient.invalidateQueries([QUERY_KEYS.PROJECT_STATS, slug]);
     },
