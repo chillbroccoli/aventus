@@ -5,20 +5,22 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { ClientRoutes } from "shared";
 
-import { useMe } from "@/hooks/useMe";
 import { profileNav } from "@/utils/constants";
 import { UserService } from "@/utils/services/UserService";
+import { useMeStore } from "@/utils/stores/useMeStore";
 
 import { Avatar } from "../atoms/Avatar";
 
 export function Profile() {
-  const { me } = useMe();
+  const me = useMeStore((state) => state.me);
+  const setMe = useMeStore((state) => state.setMe);
   const router = useRouter();
   const { classes } = styles();
 
   const { mutate } = useMutation({
     mutationFn: UserService.logout,
     onSuccess: () => {
+      setMe(null);
       showNotification({
         title: "Success",
         message: "You have been logged out",
