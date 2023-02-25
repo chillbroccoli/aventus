@@ -5,9 +5,9 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { CommentResponse } from "shared";
 
-import { useMe } from "@/hooks/useMe";
 import { dayjs } from "@/utils/dayjs";
 import { CommentService } from "@/utils/services/CommentService";
+import { useMeStore } from "@/utils/stores/useMeStore";
 
 export function CommentCard({ comment }: { comment: CommentResponse }) {
   const {
@@ -16,7 +16,7 @@ export function CommentCard({ comment }: { comment: CommentResponse }) {
 
   const { classes } = styles();
 
-  const { me } = useMe();
+  const me = useMeStore((state) => state.me);
 
   const queryClient = useQueryClient();
 
