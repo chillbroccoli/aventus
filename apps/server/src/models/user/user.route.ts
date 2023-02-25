@@ -79,11 +79,5 @@ export async function userRoutes(server: FastifyInstance) {
 
   server.post("/logout", UserController.logout);
 
-  server.get(
-    "/me",
-    {
-      onRequest: [server.authenticate],
-    },
-    UserController.me
-  );
+  server.get("/me", UserController.me);
 }
