@@ -6,7 +6,7 @@ export async function decorators(server: FastifyInstance) {
     try {
       return await request.jwtVerify();
     } catch (err) {
-      return reply.send(err);
+      return reply.code(401).send({ message: "You need to be logged in" });
     }
   });
 
@@ -15,11 +15,11 @@ export async function decorators(server: FastifyInstance) {
       const user = await request.jwtVerify<JwtPayloadUser>();
 
       if (user.role !== "ADMIN") {
-        return reply.code(401).send({ message: "Unauthorized" });
+        return reply.code(403).send({ message: "Unauthorized" });
       }
       return user;
     } catch (err) {
-      return reply.send(err);
+      return reply.code(401).send({ message: "You need to be logged in" });
     }
   });
 }
