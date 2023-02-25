@@ -9,21 +9,23 @@ import {
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 
-import { useMe } from "@/hooks/useMe";
 import { ProjectService } from "@/utils/services/ProjectService";
+import { useMeStore } from "@/utils/stores/useMeStore";
 
 export function ProjectStats() {
   const {
     query: { slug },
+    isReady,
   } = useRouter();
 
-  const { me } = useMe();
+  const me = useMeStore((state) => state.me);
 
   const queryClient = useQueryClient();
 
   const { data } = useQuery({
     queryKey: ["projectStats", slug],
     queryFn: () => ProjectService.getProjectStats(slug as string),
+    enabled: isReady,
   });
 
   const { mutate: like } = useMutation({
