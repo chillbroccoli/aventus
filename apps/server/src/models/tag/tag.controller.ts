@@ -10,9 +10,11 @@ export const TagController = {
       const tags = await TagService.findAll();
 
       return reply.code(200).send(tags);
-    } catch (err: any) {
+    } catch (err: unknown) {
       logger.error(err);
-      return reply.code(400).send({ message: err.message });
+      if (err instanceof Error) {
+        return reply.code(500).send({ message: err.message });
+      }
     }
   },
 
@@ -23,9 +25,11 @@ export const TagController = {
       const tag = await TagService.createOne(body);
 
       return reply.code(201).send(tag);
-    } catch (err: any) {
+    } catch (err: unknown) {
       logger.error(err);
-      return reply.code(400).send({ message: err.message });
+      if (err instanceof Error) {
+        return reply.code(500).send({ message: err.message });
+      }
     }
   },
 
@@ -53,9 +57,11 @@ export const TagController = {
       });
 
       return reply.code(200).send(updatedTag);
-    } catch (err: any) {
+    } catch (err: unknown) {
       logger.error(err);
-      return reply.code(400).send({ message: err.message });
+      if (err instanceof Error) {
+        return reply.code(500).send({ message: err.message });
+      }
     }
   },
 
@@ -77,9 +83,11 @@ export const TagController = {
       await TagService.deleteOne(id);
 
       return reply.code(204).send();
-    } catch (err: any) {
+    } catch (err: unknown) {
       logger.error(err);
-      return reply.code(400).send({ message: err.message });
+      if (err instanceof Error) {
+        return reply.code(500).send({ message: err.message });
+      }
     }
   },
 };
