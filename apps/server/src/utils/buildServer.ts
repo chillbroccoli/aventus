@@ -27,6 +27,12 @@ declare module "@fastify/jwt" {
 export function buildServer() {
   const server = Fastify();
 
+  server.setErrorHandler(async (error, request, reply) => {
+    if (error instanceof Error) {
+      reply.code(error.statusCode ?? 500).send({ message: error.message });
+    }
+  });
+
   addSchemas(server);
   registerModules(server);
   decorators(server);
