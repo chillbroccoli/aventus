@@ -10,9 +10,11 @@ export const UserController = {
       const users = await UserService.findAll();
 
       return reply.code(200).send(users);
-    } catch (err: any) {
+    } catch (err: unknown) {
       logger.error(err);
-      return reply.code(400).send({ message: err.message });
+      if (err instanceof Error) {
+        return reply.code(500).send({ message: err.message });
+      }
     }
   },
 
@@ -32,9 +34,11 @@ export const UserController = {
       const user = await UserService.createOne(body);
 
       return reply.code(201).send(user);
-    } catch (err: any) {
+    } catch (err: unknown) {
       logger.error(err);
-      return reply.code(400).send({ message: err.message });
+      if (err instanceof Error) {
+        return reply.code(500).send({ message: err.message });
+      }
     }
   },
 
@@ -56,9 +60,11 @@ export const UserController = {
       await UserService.deleteOne(id);
 
       return reply.code(204).send();
-    } catch (err: any) {
+    } catch (err: unknown) {
       logger.error(err);
-      return reply.code(400).send({ message: err.message });
+      if (err instanceof Error) {
+        return reply.code(500).send({ message: err.message });
+      }
     }
   },
 
@@ -69,9 +75,11 @@ export const UserController = {
       await UserService.deleteOne(String(id));
 
       return reply.code(204).send();
-    } catch (err: any) {
+    } catch (err: unknown) {
       logger.error(err);
-      return reply.code(400).send({ message: err.message });
+      if (err instanceof Error) {
+        return reply.code(500).send({ message: err.message });
+      }
     }
   },
 
@@ -111,15 +119,17 @@ export const UserController = {
         })
         .code(200)
         .send({ accessToken });
-    } catch (err: any) {
+    } catch (err: unknown) {
       logger.error(err);
-      return reply.code(400).send({ message: err.message });
+      if (err instanceof Error) {
+        return reply.code(500).send({ message: err.message });
+      }
     }
   },
 
   logout: async (request: FastifyRequest, reply: FastifyReply) => {
     return reply
-      .clearCookie("accessToken", {
+      .clearCookie(process.env.COOKIE_NAME as string, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "lax",
@@ -132,15 +142,18 @@ export const UserController = {
 
   me: async (request: FastifyRequest, reply: FastifyReply) => {
     try {
-      const user = request.user;
+      const user = await request.jwtVerify();
 
       if (!user) {
         return reply.code(200).send(null);
       }
 
       return reply.code(200).send(user);
-    } catch (err: any) {
-      return reply.code(400).send({ message: err.message });
+    } catch (err: unknown) {
+      logger.error(err);
+      if (err instanceof Error) {
+        return reply.code(500).send({ message: err.message });
+      }
     }
   },
 };
