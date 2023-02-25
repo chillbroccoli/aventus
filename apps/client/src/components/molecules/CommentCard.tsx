@@ -5,6 +5,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { CommentResponse } from "shared";
 
+import { MUTATION_KEYS, QUERY_KEYS } from "@/utils/constants";
 import { dayjs } from "@/utils/dayjs";
 import { CommentService } from "@/utils/services/CommentService";
 import { useMeStore } from "@/utils/stores/useMeStore";
@@ -21,15 +22,15 @@ export function CommentCard({ comment }: { comment: CommentResponse }) {
   const queryClient = useQueryClient();
 
   const { mutate } = useMutation({
-    mutationKey: ["deleteComment", comment.id],
+    mutationKey: [MUTATION_KEYS.DELETE_COMMENT, comment.id],
     mutationFn: () => CommentService.deleteOne(slug as string, comment.id),
     onSuccess: () => {
       showNotification({
         title: "Comment deleted",
         message: "Your comment has been deleted",
       });
-      queryClient.invalidateQueries(["comments", slug]);
-      queryClient.invalidateQueries(["projectStats", slug]);
+      queryClient.invalidateQueries([QUERY_KEYS.COMMENTS, slug]);
+      queryClient.invalidateQueries([QUERY_KEYS.PROJECT_STATS, slug]);
     },
   });
 

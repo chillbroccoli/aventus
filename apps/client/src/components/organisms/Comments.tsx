@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { FormProvider, useForm } from "react-hook-form";
 import { CreateCommentInput, createCommentSchema } from "shared";
 
+import { MUTATION_KEYS, QUERY_KEYS } from "@/utils/constants";
 import { CommentService } from "@/utils/services/CommentService";
 import { useMeStore } from "@/utils/stores/useMeStore";
 
@@ -28,13 +29,13 @@ export function Comments() {
   const queryClient = useQueryClient();
 
   const { data } = useQuery({
-    queryKey: ["comments", slug],
+    queryKey: [QUERY_KEYS.COMMENTS, slug],
     queryFn: () => CommentService.findAll(slug as string),
     enabled: isReady,
   });
 
   const { mutateAsync } = useMutation({
-    mutationKey: ["createComment", slug],
+    mutationKey: [MUTATION_KEYS.CREATE_COMMENT, slug],
     mutationFn: (input: CreateCommentInput) => CommentService.create(slug as string, input),
     onSuccess: () => {
       showNotification({
@@ -42,8 +43,8 @@ export function Comments() {
         message: "Your comment has been created",
       });
       methods.reset();
-      queryClient.invalidateQueries(["projectStats", slug]);
-      queryClient.invalidateQueries(["comments", slug]);
+      queryClient.invalidateQueries([QUERY_KEYS.COMMENTS, slug]);
+      queryClient.invalidateQueries([QUERY_KEYS.PROJECT_STATS, slug]);
     },
   });
 

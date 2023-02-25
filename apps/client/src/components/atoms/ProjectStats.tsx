@@ -9,6 +9,7 @@ import {
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 
+import { MUTATION_KEYS, QUERY_KEYS } from "@/utils/constants";
 import { ProjectService } from "@/utils/services/ProjectService";
 import { useMeStore } from "@/utils/stores/useMeStore";
 
@@ -23,24 +24,24 @@ export function ProjectStats() {
   const queryClient = useQueryClient();
 
   const { data } = useQuery({
-    queryKey: ["projectStats", slug],
+    queryKey: [QUERY_KEYS.PROJECT_STATS, slug],
     queryFn: () => ProjectService.getProjectStats(slug as string),
     enabled: isReady,
   });
 
   const { mutate: like } = useMutation({
-    mutationKey: ["likeProject", slug],
+    mutationKey: [MUTATION_KEYS.LIKE_PROJECT, slug],
     mutationFn: () => ProjectService.likeProject(slug as string),
     onSuccess: () => {
-      queryClient.invalidateQueries(["projectStats", slug]);
+      queryClient.invalidateQueries([QUERY_KEYS.PROJECT_STATS, slug]);
     },
   });
 
   const { mutate: bookmark } = useMutation({
-    mutationKey: ["bookmarkProject", slug],
+    mutationKey: [MUTATION_KEYS.BOOKMARK_PROJECT, slug],
     mutationFn: () => ProjectService.bookmarkProject(slug as string),
     onSuccess: () => {
-      queryClient.invalidateQueries(["projectStats", slug]);
+      queryClient.invalidateQueries([QUERY_KEYS.PROJECT_STATS, slug]);
     },
   });
 

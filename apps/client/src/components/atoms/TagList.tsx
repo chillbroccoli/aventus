@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { ClientRoutes } from "shared/constants";
 
+import { QUERY_KEYS } from "@/utils/constants";
 import { RoutingService } from "@/utils/services/RoutingService";
 import { TagService } from "@/utils/services/TagService";
 
@@ -12,7 +13,7 @@ export function TagList() {
   const router = useRouter();
 
   const { data } = useQuery({
-    queryKey: ["tags"],
+    queryKey: [QUERY_KEYS.TAGS],
     queryFn: TagService.findAll,
   });
 

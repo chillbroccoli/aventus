@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { ClientRoutes } from "shared";
 
-import { profileNav } from "@/utils/constants";
+import { MUTATION_KEYS, profileNav } from "@/utils/constants";
 import { UserService } from "@/utils/services/UserService";
 import { useMeStore } from "@/utils/stores/useMeStore";
 
@@ -18,6 +18,7 @@ export function Profile() {
   const { classes } = styles();
 
   const { mutate } = useMutation({
+    mutationKey: [MUTATION_KEYS.LOGOUT],
     mutationFn: UserService.logout,
     onSuccess: () => {
       setMe(null);
