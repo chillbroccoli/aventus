@@ -3,7 +3,7 @@ import { Global } from "@mantine/core";
 export function GlobalStyles() {
   return (
     <Global
-      styles={() => ({
+      styles={(theme) => ({
         "*, *::before, *::after": {
           boxSizing: "border-box",
           margin: 0,
@@ -12,6 +12,7 @@ export function GlobalStyles() {
 
         "html, body": {
           height: "100%",
+          backgroundColor: theme.colors.gray[0],
         },
       })}
     />
