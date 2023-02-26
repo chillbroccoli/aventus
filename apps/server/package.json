@@ -5,7 +5,8 @@
   "main": "src/main.ts",
   "scripts": {
     "dev": "nodemon --watch src --exec ts-node src/main.ts",
-    "build": "tsc",
+    "build": "esbuild src/main.ts --bundle --platform=node --outfile=dist/main.js --external:nock --external:aws-sdk --external:mock-aws-s3",
+    "start": "node dist/src/main.js",
     "db:generate": "prisma generate",
     "db:push": "dotenv -e ../../.env -- prisma db push",
     "db:seed": "dotenv -e ../../.env -- prisma db seed"
@@ -23,6 +24,7 @@
     "@prisma/client": "^4.10.1",
     "argon2": "^0.30.3",
     "dayjs": "^1.11.7",
+    "esbuild": "^0.17.10",
     "fastify": "^4.13.0",
     "fastify-zod": "^1.2.0",
     "pino": "^8.10.0",
@@ -30,7 +32,7 @@
     "prisma": "^4.10.1",
     "qs": "^6.11.0",
     "query-string": "^8.1.0",
-    "shared": "*",
+    "shared": "workspace:*",
     "slugify": "^1.6.5",
     "zod": "^3.20.6",
     "zod-to-json-schema": "^3.20.4"
