@@ -24,6 +24,12 @@ export const ProjectService = {
     })) as ProjectResponse;
   },
 
+  delete: async (slug: string) => {
+    return await APIService.delete([APIRoutes.PROJECT, { slug }], {
+      body: {},
+    });
+  },
+
   getProjectStats: async (slug: string) => {
     return (await APIService.get([APIRoutes.PROJECT_STATS, { slug }])) as ProjectStatsResponse;
   },
