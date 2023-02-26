@@ -1,6 +1,6 @@
 import { Box, Button, Container, createStyles, Flex } from "@mantine/core";
 import Link from "next/link";
-import { ClientRoutes } from "shared/constants";
+import { ClientRoutes } from "shared";
 
 import { Logo } from "@/components/atoms/Logo";
 import { SearchBar } from "@/components/atoms/SearchBar";
@@ -48,6 +48,7 @@ export function Navbar() {
 
 const styles = createStyles((theme) => ({
   navbar: {
+    backgroundColor: theme.white,
     boxShadow: theme.shadows.lg,
   },
 }));
