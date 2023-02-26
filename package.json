@@ -8,12 +8,15 @@
   ],
   "scripts": {
     "build": "turbo run build",
+    "start": "turbo run start",
     "dev": "dotenv -- turbo dev",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "db:seed": "yarn workspace server db:seed",
     "client": "yarn workspace client",
-    "server": "yarn workspace server"
+    "server": "yarn workspace server",
+    "db:push": "turbo db:push",
+    "db:generate": "turbo db:generate",
+    "db:seed": "turbo db:seed"
   },
   "devDependencies": {
     "eslint-config-custom": "*",
