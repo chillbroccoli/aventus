@@ -10,6 +10,7 @@ export enum MUTATION_KEYS {
   LIKE_PROJECT = "likeProject",
   BOOKMARK_PROJECT = "bookmarkProject",
   CREATE_PROJECT = "createProject",
+  DELETE_PROJECT = "deleteProject",
   CREATE_COMMENT = "createComment",
   DELETE_COMMENT = "deleteComment",
   LOGOUT = "logout",
