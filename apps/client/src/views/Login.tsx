@@ -44,7 +44,7 @@ export function LoginView() {
 
   return (
     <AuthLayout>
-      <Flex direction="column" align="center">
+      <Flex direction="column" align="center" mb={30}>
         <Title order={1} fw={500} color="gray.8">
           Welcome back
         </Title>
