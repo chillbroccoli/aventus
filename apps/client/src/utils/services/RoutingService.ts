@@ -1,5 +1,5 @@
 import { RouteParameters } from "express-serve-static-core";
-import { APIRoutes, ClientRoutes } from "shared/constants";
+import { APIRoutes, ClientRoutes } from "shared";
 
 export type RouteWithParams<T extends string> = keyof RouteParameters<T> extends never
   ? T
