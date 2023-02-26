@@ -1,7 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { CreateTagInput, ParamsWithId } from "shared/schemas";
 
-import { logger } from "../../utils/logger";
 import { TagService } from "./tag.service";
 
 export const TagController = {
@@ -11,10 +10,7 @@ export const TagController = {
 
       return reply.code(200).send(tags);
     } catch (err: unknown) {
-      logger.error(err);
-      if (err instanceof Error) {
-        return reply.code(500).send({ message: err.message });
-      }
+      reply.send(err);
     }
   },
 
@@ -26,10 +22,7 @@ export const TagController = {
 
       return reply.code(201).send(tag);
     } catch (err: unknown) {
-      logger.error(err);
-      if (err instanceof Error) {
-        return reply.code(500).send({ message: err.message });
-      }
+      reply.send(err);
     }
   },
 
@@ -58,10 +51,7 @@ export const TagController = {
 
       return reply.code(200).send(updatedTag);
     } catch (err: unknown) {
-      logger.error(err);
-      if (err instanceof Error) {
-        return reply.code(500).send({ message: err.message });
-      }
+      reply.send(err);
     }
   },
 
@@ -84,10 +74,7 @@ export const TagController = {
 
       return reply.code(204).send();
     } catch (err: unknown) {
-      logger.error(err);
-      if (err instanceof Error) {
-        return reply.code(500).send({ message: err.message });
-      }
+      reply.send(err);
     }
   },
 };

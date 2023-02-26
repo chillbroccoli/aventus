@@ -1,7 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { CreateUserInput, LoginUserInput, ParamsWithId } from "shared/schemas";
 
-import { logger } from "../../utils/logger";
 import { UserService } from "./user.service";
 
 export const UserController = {
@@ -11,10 +10,7 @@ export const UserController = {
 
       return reply.code(200).send(users);
     } catch (err: unknown) {
-      logger.error(err);
-      if (err instanceof Error) {
-        return reply.code(500).send({ message: err.message });
-      }
+      reply.send(err);
     }
   },
 
@@ -35,10 +31,7 @@ export const UserController = {
 
       return reply.code(201).send(user);
     } catch (err: unknown) {
-      logger.error(err);
-      if (err instanceof Error) {
-        return reply.code(500).send({ message: err.message });
-      }
+      reply.send(err);
     }
   },
 
@@ -61,10 +54,7 @@ export const UserController = {
 
       return reply.code(204).send();
     } catch (err: unknown) {
-      logger.error(err);
-      if (err instanceof Error) {
-        return reply.code(500).send({ message: err.message });
-      }
+      reply.send(err);
     }
   },
 
@@ -76,10 +66,7 @@ export const UserController = {
 
       return reply.code(204).send();
     } catch (err: unknown) {
-      logger.error(err);
-      if (err instanceof Error) {
-        return reply.code(500).send({ message: err.message });
-      }
+      reply.send(err);
     }
   },
 
@@ -120,10 +107,7 @@ export const UserController = {
         .code(200)
         .send({ accessToken });
     } catch (err: unknown) {
-      logger.error(err);
-      if (err instanceof Error) {
-        return reply.code(500).send({ message: err.message });
-      }
+      reply.send(err);
     }
   },
 
@@ -150,10 +134,7 @@ export const UserController = {
 
       return reply.code(200).send(user);
     } catch (err: unknown) {
-      logger.error(err);
-      if (err instanceof Error) {
-        return reply.code(500).send({ message: err.message });
-      }
+      reply.send(err);
     }
   },
 };

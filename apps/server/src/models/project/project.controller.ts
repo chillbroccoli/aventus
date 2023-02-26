@@ -2,7 +2,6 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { CreateProjectInput } from "shared";
 import { CreateCommentInput, ParamsWithIdAndSlug, ParamsWithSlug } from "shared/schemas";
 
-import { logger } from "../../utils/logger";
 import { ProjectService } from "./project.service";
 
 export const ProjectController = {
@@ -12,10 +11,7 @@ export const ProjectController = {
 
       return reply.code(200).send(projects);
     } catch (err: unknown) {
-      logger.error(err);
-      if (err instanceof Error) {
-        return reply.code(500).send({ message: err.message });
-      }
+      reply.send(err);
     }
   },
 
@@ -31,10 +27,7 @@ export const ProjectController = {
 
       return reply.code(200).send(project);
     } catch (err: unknown) {
-      logger.error(err);
-      if (err instanceof Error) {
-        return reply.code(500).send({ message: err.message });
-      }
+      reply.send(err);
     }
   },
 
@@ -53,10 +46,7 @@ export const ProjectController = {
 
       return reply.code(200).send(stats);
     } catch (err: unknown) {
-      logger.error(err);
-      if (err instanceof Error) {
-        return reply.code(500).send({ message: err.message });
-      }
+      reply.send(err);
     }
   },
 
@@ -70,10 +60,7 @@ export const ProjectController = {
 
       return reply.code(201).send(project);
     } catch (err: unknown) {
-      logger.error(err);
-      if (err instanceof Error) {
-        return reply.code(500).send({ message: err.message });
-      }
+      reply.send(err);
     }
   },
 
@@ -85,10 +72,7 @@ export const ProjectController = {
 
       return reply.code(200).send(projects);
     } catch (err: unknown) {
-      logger.error(err);
-      if (err instanceof Error) {
-        return reply.code(500).send({ message: err.message });
-      }
+      reply.send(err);
     }
   },
 
@@ -100,10 +84,7 @@ export const ProjectController = {
 
       return reply.code(200).send(comments);
     } catch (err: unknown) {
-      logger.error(err);
-      if (err instanceof Error) {
-        return reply.code(500).send({ message: err.message });
-      }
+      reply.send(err);
     }
   },
 
@@ -121,10 +102,7 @@ export const ProjectController = {
 
       return reply.code(201).send(comment);
     } catch (err: unknown) {
-      logger.error(err);
-      if (err instanceof Error) {
-        return reply.code(500).send({ message: err.message });
-      }
+      reply.send(err);
     }
   },
 
@@ -151,10 +129,7 @@ export const ProjectController = {
 
       return reply.code(204).send();
     } catch (err: unknown) {
-      logger.error(err);
-      if (err instanceof Error) {
-        return reply.code(500).send({ message: err.message });
-      }
+      reply.send(err);
     }
   },
 
@@ -172,10 +147,7 @@ export const ProjectController = {
 
       return reply.code(200).send(project);
     } catch (err: unknown) {
-      logger.error(err);
-      if (err instanceof Error) {
-        return reply.code(500).send({ message: err.message });
-      }
+      reply.send(err);
     }
   },
 
@@ -196,10 +168,7 @@ export const ProjectController = {
 
       return reply.code(200).send(project);
     } catch (err: unknown) {
-      logger.error(err);
-      if (err instanceof Error) {
-        return reply.code(500).send({ message: err.message });
-      }
+      reply.send(err);
     }
   },
 };

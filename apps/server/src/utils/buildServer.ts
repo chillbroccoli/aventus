@@ -1,10 +1,11 @@
 import { JWT } from "@fastify/jwt";
-import Fastify from "fastify";
+import Fastify, { FastifyReply, FastifyRequest } from "fastify";
 import { JwtPayloadUser } from "shared";
 
 import { addSchemas } from "./buildJsonSchemas";
 import { decorators } from "./decorators";
 import { hooks } from "./hooks";
+import { logger } from "./logger";
 import { registerModules } from "./registerModules";
 import { registerRoutes } from "./registerRoutes";
 
@@ -27,10 +28,15 @@ declare module "@fastify/jwt" {
 export function buildServer() {
   const server = Fastify();
 
-  server.setErrorHandler(async (error, request, reply) => {
-    if (error instanceof Error) {
-      reply.code(error.statusCode ?? 500).send({ message: error.message });
-    }
+  server.setErrorHandler(async (error: Error, request: FastifyRequest, reply: FastifyReply) => {
+    const statusCode = reply.statusCode !== 200 ? reply.statusCode : 500;
+    const errorResponse = {
+      message: error.message,
+      stack: process.env.NODE_ENV === "production" ? undefined : error.stack,
+    };
+    reply.code(statusCode);
+    reply.send(errorResponse);
+    logger.error(errorResponse);
   });
 
   addSchemas(server);
