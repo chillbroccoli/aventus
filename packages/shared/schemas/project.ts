@@ -5,7 +5,7 @@ import { userResponseSchema } from "./user";
 export const createProjectSchema = z.object({
   title: z
     .string({ required_error: "Title is required" })
-    .min(6, "Title must be at least 6 characters long"),
+    .min(4, "Title must be at least 6 characters long"),
   description: z
     .string({ required_error: "Description is required" })
     .min(50, "Description must be at least 50 characters long"),
