@@ -8,11 +8,13 @@ export const config = {
 };
 
 const proxy = httpProxy.createProxyServer();
+// somehow with turbo build, cannot resolve env variable, only for next app, workaround till found solution
+const url = process.env["API_URL"] || "http://localhost:4000";
 
 export default async function requestHandler(req: NextApiRequest, res: NextApiResponse) {
   return new Promise(() => {
     proxy.web(req, res, {
-      target: process.env["NEXT_PUBLIC_API_HOST"],
+      target: url,
       autoRewrite: false,
       selfHandleResponse: false,
       changeOrigin: true,
