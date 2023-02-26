@@ -4,12 +4,9 @@
   "description": "",
   "main": "src/main.ts",
   "scripts": {
-    "dev": "nodemon --watch src --exec ts-node src/main.ts",
-    "build": "esbuild src/main.ts --bundle --platform=node --outfile=dist/main.js --external:nock --external:aws-sdk --external:mock-aws-s3",
-    "start": "node dist/src/main.js",
-    "db:generate": "prisma generate",
-    "db:push": "dotenv -e ../../.env -- prisma db push",
-    "db:seed": "dotenv -e ../../.env -- prisma db seed"
+    "dev": "tsup src/main.ts --format cjs --watch --onSuccess \"node dist/main.js\"",
+    "build": "tsup src/main.ts --format cjs",
+    "start": "node dist/main.js"
   },
   "keywords": [],
   "author": "",
@@ -21,18 +18,16 @@
     "@fastify/jwt": "^6.5.0",
     "@fastify/swagger": "^8.3.1",
     "@fastify/swagger-ui": "^1.4.0",
-    "@prisma/client": "^4.10.1",
     "argon2": "^0.30.3",
+    "database": "*",
     "dayjs": "^1.11.7",
-    "esbuild": "^0.17.10",
     "fastify": "^4.13.0",
     "fastify-zod": "^1.2.0",
     "pino": "^8.10.0",
     "pino-pretty": "^9.3.0",
-    "prisma": "^4.10.1",
     "qs": "^6.11.0",
     "query-string": "^8.1.0",
-    "shared": "workspace:*",
+    "shared": "*",
     "slugify": "^1.6.5",
     "zod": "^3.20.6",
     "zod-to-json-schema": "^3.20.4"
@@ -43,11 +38,7 @@
     "@types/qs": "^6.9.7",
     "dotenv-cli": "latest",
     "nodemon": "^2.0.20",
-    "ts-node": "^10.9.1",
-    "ts-node-dev": "^2.0.0",
-    "typescript": "^4.9.5"
-  },
-  "prisma": {
-    "seed": "ts-node prisma/seed.ts"
+    "typescript": "^4.9.5",
+    "tsup": "^6.6.3"
   }
 }
