@@ -5,13 +5,13 @@ import { CreateCommentInput, ParamsWithIdAndSlug, ParamsWithSlug } from "shared/
 import { ProjectService } from "./project.service";
 
 export const ProjectController = {
-  findAll: async (request: FastifyRequest, reply: FastifyReply) => {
+  findAll: async (_request: FastifyRequest, reply: FastifyReply) => {
     try {
       const projects = await ProjectService.findAll();
 
       return reply.code(200).send(projects);
     } catch (err: unknown) {
-      reply.send(err);
+      return reply.send(err);
     }
   },
 
@@ -27,7 +27,7 @@ export const ProjectController = {
 
       return reply.code(200).send(project);
     } catch (err: unknown) {
-      reply.send(err);
+      return reply.send(err);
     }
   },
 
@@ -46,7 +46,7 @@ export const ProjectController = {
 
       return reply.code(200).send(stats);
     } catch (err: unknown) {
-      reply.send(err);
+      return reply.send(err);
     }
   },
 
@@ -60,7 +60,31 @@ export const ProjectController = {
 
       return reply.code(201).send(project);
     } catch (err: unknown) {
-      reply.send(err);
+      return reply.send(err);
+    }
+  },
+
+  deleteOne: async (request: FastifyRequest<{ Params: ParamsWithSlug }>, reply: FastifyReply) => {
+    const { slug } = request.params;
+
+    try {
+      const user = request.user;
+
+      const project = await ProjectService.findOne(slug);
+
+      if (!project) {
+        return reply.code(404).send({ message: "Project not found" });
+      }
+
+      if (project.user.id !== user.id) {
+        return reply.code(403).send({ message: "Unauthorized" });
+      }
+
+      await ProjectService.deleteOne(slug);
+
+      return reply.code(204).send();
+    } catch (err: unknown) {
+      return reply.send(err);
     }
   },
 
@@ -72,7 +96,7 @@ export const ProjectController = {
 
       return reply.code(200).send(projects);
     } catch (err: unknown) {
-      reply.send(err);
+      return reply.send(err);
     }
   },
 
@@ -84,7 +108,7 @@ export const ProjectController = {
 
       return reply.code(200).send(comments);
     } catch (err: unknown) {
-      reply.send(err);
+      return reply.send(err);
     }
   },
 
@@ -102,7 +126,7 @@ export const ProjectController = {
 
       return reply.code(201).send(comment);
     } catch (err: unknown) {
-      reply.send(err);
+      return reply.send(err);
     }
   },
 
@@ -129,7 +153,7 @@ export const ProjectController = {
 
       return reply.code(204).send();
     } catch (err: unknown) {
-      reply.send(err);
+      return reply.send(err);
     }
   },
 
@@ -147,7 +171,7 @@ export const ProjectController = {
 
       return reply.code(200).send(project);
     } catch (err: unknown) {
-      reply.send(err);
+      return reply.send(err);
     }
   },
 
@@ -168,7 +192,7 @@ export const ProjectController = {
 
       return reply.code(200).send(project);
     } catch (err: unknown) {
-      reply.send(err);
+      return reply.send(err);
     }
   },
 };
