@@ -1,4 +1,4 @@
-import { CreateTagInput, UpdateTagInput } from "shared/schemas";
+import { CreateTagInput, UpdateTagInput } from "shared";
 
 import { prisma } from "../../utils/db";
 

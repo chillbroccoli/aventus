@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { CreateTagInput, ParamsWithId } from "shared/schemas";
+import { CreateTagInput, ParamsWithId } from "shared";
 
 import { TagService } from "./tag.service";
 

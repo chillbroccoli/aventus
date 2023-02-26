@@ -1,6 +1,10 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { CreateProjectInput } from "shared";
-import { CreateCommentInput, ParamsWithIdAndSlug, ParamsWithSlug } from "shared/schemas";
+import {
+  CreateCommentInput,
+  CreateProjectInput,
+  ParamsWithIdAndSlug,
+  ParamsWithSlug,
+} from "shared";
 
 import { ProjectService } from "./project.service";
 

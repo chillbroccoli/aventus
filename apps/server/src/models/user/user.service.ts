@@ -1,5 +1,5 @@
 import * as argon2 from "argon2";
-import { CreateUserInput } from "shared/schemas";
+import { CreateUserInput } from "shared";
 
 import { prisma } from "../../utils/db";
 

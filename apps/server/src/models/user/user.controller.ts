@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { CreateUserInput, LoginUserInput, ParamsWithId } from "shared/schemas";
+import { CreateUserInput, LoginUserInput, ParamsWithId } from "shared";
 
 import { UserService } from "./user.service";
 

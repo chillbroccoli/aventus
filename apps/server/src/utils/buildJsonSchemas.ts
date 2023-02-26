@@ -16,7 +16,7 @@ import {
   tagResponseSchema,
   updateTagSchema,
   userResponseSchema,
-} from "shared/schemas";
+} from "shared";
 
 export const { schemas: paramsSchemas, $ref: $paramsRef } = buildJsonSchemas(
   {
