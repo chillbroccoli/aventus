@@ -39,5 +39,6 @@ const styles = createStyles((theme) => ({
   sidebar: {
     boxShadow: theme.shadows.lg,
     border: `1px solid ${theme.colors.gray[2]}`,
+    backgroundColor: theme.white,
   },
 }));
