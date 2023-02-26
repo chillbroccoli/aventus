@@ -86,5 +86,6 @@ const styles = createStyles((theme) => ({
     border: `1px solid ${theme.colors.gray[3]}`,
     borderRadius: theme.radius.sm,
     boxShadow: theme.shadows.sm,
+    backgroundColor: theme.white,
   },
 }));
