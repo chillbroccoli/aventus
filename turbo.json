@@ -6,6 +6,10 @@
       "dependsOn": ["^build", "^db:generate"],
       "outputs": ["dist/**", ".next/**"]
     },
+    "start": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", ".next/**"]
+    },
     "lint": {
       "outputs": []
     },
@@ -17,6 +21,9 @@
       "cache": false
     },
     "db:push": {
+      "cache": false
+    },
+    "db:seed": {
       "cache": false
     }
   }
