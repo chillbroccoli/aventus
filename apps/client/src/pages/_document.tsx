@@ -8,8 +8,13 @@ export default class _Document extends Document {
 
   render() {
     return (
-      <Html>
+      <Html lang="en">
         <Head />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+          name="description"
+          content="Aventus, an application where you can post you project ideas, project ideas for your or someone's next project, made for all of us developers, that cannot come up with idea what to do, what to build."
+        />
         <body>
           <Main />
           <NextScript />
