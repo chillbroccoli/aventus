@@ -38,7 +38,7 @@ export function ProjectInfoPanel({ project }: { project?: ProjectResponse }) {
   const { user } = project;
 
   return (
-    <Box px={14} p={10}>
+    <Box px={14} p={10} className={classes.main}>
       {user.id === me?.id && (
         <Flex direction="column" gap={10}>
           <Button variant="outline" color="orange" fullWidth>
@@ -87,6 +87,13 @@ export function ProjectInfoPanel({ project }: { project?: ProjectResponse }) {
 }
 
 const styles = createStyles((theme) => ({
+  main: {
+    backgroundColor: theme.white,
+    boxShadow: theme.shadows.xs,
+    borderRadius: theme.radius.sm,
+    border: `1px solid ${theme.colors.gray[3]}`,
+  },
+
   popover: {
     border: `1px solid ${theme.colors.gray[4]}`,
   },
