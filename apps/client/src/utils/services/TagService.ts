@@ -1,5 +1,4 @@
-import { APIRoutes } from "shared/constants";
-import { Tag } from "shared/types";
+import { APIRoutes, Tag } from "shared";
 
 import { APIService } from "./APIService";
 
