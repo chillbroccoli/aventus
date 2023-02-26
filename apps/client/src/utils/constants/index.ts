@@ -1,4 +1,4 @@
-import { ClientRoutes } from "shared/constants";
+import { ClientRoutes } from "shared";
 
 export const profileNav = [
   { name: "Settings", href: ClientRoutes.SETTINGS },
