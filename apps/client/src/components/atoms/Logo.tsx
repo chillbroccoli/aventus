@@ -1,6 +1,6 @@
 import { Box, createStyles, Text } from "@mantine/core";
 import Link from "next/link";
-import { ClientRoutes } from "shared/constants";
+import { ClientRoutes } from "shared";
 
 export function Logo() {
   const { classes } = styles();

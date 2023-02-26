@@ -1,7 +1,7 @@
 import { createStyles, Flex, ScrollArea, Text, UnstyledButton } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import { ClientRoutes } from "shared/constants";
+import { ClientRoutes } from "shared";
 
 import { QUERY_KEYS } from "@/utils/constants";
 import { RoutingService } from "@/utils/services/RoutingService";
