@@ -32,6 +32,7 @@ export function Comments() {
     queryKey: [QUERY_KEYS.COMMENTS, slug],
     queryFn: () => CommentService.findAll(slug as string),
     enabled: router.isReady,
+    refetchOnWindowFocus: false,
   });
 
   const { mutateAsync } = useMutation({

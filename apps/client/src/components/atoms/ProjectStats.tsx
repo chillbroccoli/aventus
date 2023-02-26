@@ -27,6 +27,7 @@ export function ProjectStats() {
     queryKey: [QUERY_KEYS.PROJECT_STATS, slug],
     queryFn: () => ProjectService.getProjectStats(slug),
     enabled: router.isReady,
+    refetchOnWindowFocus: false,
   });
 
   const { mutate: like } = useMutation({

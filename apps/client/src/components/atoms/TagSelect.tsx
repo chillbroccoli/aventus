@@ -11,6 +11,8 @@ export function TagSelect() {
   const { data } = useQuery({
     queryKey: [QUERY_KEYS.TAGS],
     queryFn: TagService.findAll,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
   });
 
   const options = (data || [])?.map((tag) => ({ value: String(tag.id), label: tag.name }));
