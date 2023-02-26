@@ -115,6 +115,16 @@ export const ProjectService = {
     return project;
   },
 
+  deleteOne: async (slug: string) => {
+    const project = await prisma.project.delete({
+      where: {
+        slug,
+      },
+    });
+
+    return project;
+  },
+
   getUsersProjects: async (userId: number) => {
     const projects = await prisma.project.findMany({
       where: {
