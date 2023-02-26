@@ -1,10 +1,13 @@
-import fastifyCookie from "@fastify/cookie";
-import fastifyCors from "@fastify/cors";
-import fastifyJwt from "@fastify/jwt";
+import cookie from "@fastify/cookie";
+import cors from "@fastify/cors";
+import helmet from "@fastify/helmet";
+import jwt from "@fastify/jwt";
 import { FastifyInstance } from "fastify";
 
 export async function registerModules(server: FastifyInstance) {
-  server.register(fastifyJwt, {
+  server.register(helmet);
+
+  server.register(jwt, {
     secret: process.env.JWT_SECRET as string,
     cookie: {
       cookieName: process.env.COOKIE_NAME as string,
@@ -12,12 +15,12 @@ export async function registerModules(server: FastifyInstance) {
     },
   });
 
-  server.register(fastifyCors, {
+  server.register(cors, {
     origin: process.env.CLIENT_URL as string,
     credentials: true,
   });
 
-  server.register(fastifyCookie, {
+  server.register(cookie, {
     secret: process.env.COOKIE_SECRET as string,
     hook: "onRequest",
     parseOptions: {},
