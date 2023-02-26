@@ -6,6 +6,28 @@ import { ProjectController } from "./project.controller";
 export async function projectRoutes(server: FastifyInstance) {
   server.get("/", ProjectController.findAll);
 
+  server.post(
+    "/",
+    {
+      onRequest: [server.authenticate],
+      schema: {
+        body: $projectRef("createProjectSchema"),
+      },
+    },
+    ProjectController.createOne
+  );
+
+  server.delete(
+    "/:slug",
+    {
+      onRequest: [server.authenticate],
+      schema: {
+        params: $paramsRef("paramsWithSlugSchema"),
+      },
+    },
+    ProjectController.deleteOne
+  );
+
   server.get(
     "/:slug",
     {
@@ -91,17 +113,6 @@ export async function projectRoutes(server: FastifyInstance) {
       },
     },
     ProjectController.deleteComment
-  );
-
-  server.post(
-    "/",
-    {
-      onRequest: [server.authenticate],
-      schema: {
-        body: $projectRef("createProjectSchema"),
-      },
-    },
-    ProjectController.createOne
   );
 
   server.get(
