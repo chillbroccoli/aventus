@@ -1,7 +1,7 @@
 import { CreateCommentInput, CreateProjectInput } from "shared";
-import slugify from "slugify";
 
 import { prisma } from "../../utils/db";
+import { getSlug } from "../../utils/getSlug";
 
 export const ProjectService = {
   findAll: async () => {
@@ -93,7 +93,7 @@ export const ProjectService = {
     const project = await prisma.project.create({
       data: {
         title: input.title,
-        slug: slugify(input.title, { lower: true, replacement: "-" }),
+        slug: getSlug(input.title),
         description: input.description,
         content: input.content,
         tags: {
