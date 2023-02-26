@@ -15,6 +15,7 @@ export function Tags() {
 
 const styles = createStyles((theme) => ({
   main: {
+    backgroundColor: theme.white,
     boxShadow: theme.shadows.lg,
     borderRadius: theme.radius.sm,
     border: `1px solid ${theme.colors.gray[3]}`,
