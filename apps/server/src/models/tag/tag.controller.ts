@@ -4,13 +4,13 @@ import { CreateTagInput, ParamsWithId } from "shared/schemas";
 import { TagService } from "./tag.service";
 
 export const TagController = {
-  findAll: async (request: FastifyRequest, reply: FastifyReply) => {
+  findAll: async (_request: FastifyRequest, reply: FastifyReply) => {
     try {
       const tags = await TagService.findAll();
 
       return reply.code(200).send(tags);
     } catch (err: unknown) {
-      reply.send(err);
+      return reply.send(err);
     }
   },
 
@@ -22,7 +22,7 @@ export const TagController = {
 
       return reply.code(201).send(tag);
     } catch (err: unknown) {
-      reply.send(err);
+      return reply.send(err);
     }
   },
 
@@ -51,7 +51,7 @@ export const TagController = {
 
       return reply.code(200).send(updatedTag);
     } catch (err: unknown) {
-      reply.send(err);
+      return reply.send(err);
     }
   },
 
@@ -74,7 +74,7 @@ export const TagController = {
 
       return reply.code(204).send();
     } catch (err: unknown) {
-      reply.send(err);
+      return reply.send(err);
     }
   },
 };
