@@ -1,11 +1,11 @@
 import { Box, Flex } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 
-import { ProjectCard } from "@/components/molecules/ProjectCard";
+import { ProjectCard } from "@/components/project/ProjectCard";
 import { QUERY_KEYS } from "@/utils/constants";
 import { ProjectService } from "@/utils/services/ProjectService";
 
-export function ProjectsFeed() {
+export function Feed() {
   const { data } = useQuery({
     queryKey: [QUERY_KEYS.PROJECTS],
     queryFn: ProjectService.findAll,

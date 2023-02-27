@@ -7,8 +7,8 @@ import { useRouter } from "next/router";
 import { FormProvider, useForm } from "react-hook-form";
 import { ClientRoutes, LoginUserInput, loginUserSchema } from "shared";
 
-import { Input } from "@/components/atoms/Input";
-import { AuthLayout } from "@/components/layouts/AuthLayout";
+import { Input } from "@/components/Input";
+import { AuthLayout } from "@/layouts/AuthLayout";
 import { useMe } from "@/hooks/useMe";
 import { MUTATION_KEYS } from "@/utils/constants";
 import { UserService } from "@/utils/services/UserService";

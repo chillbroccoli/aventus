@@ -2,9 +2,9 @@ import { Box, Button, Container, createStyles, Flex } from "@mantine/core";
 import Link from "next/link";
 import { ClientRoutes } from "shared";
 
-import { Logo } from "@/components/atoms/Logo";
-import { SearchBar } from "@/components/atoms/SearchBar";
-import { Profile } from "@/components/molecules/Profile";
+import { Logo } from "@/components/Logo";
+import { Profile } from "@/components/Profile";
+import { SearchBar } from "@/components/SearchBar";
 import { useMeStore } from "@/utils/stores/useMeStore";
 
 export function Navbar() {

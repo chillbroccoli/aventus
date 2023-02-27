@@ -10,10 +10,10 @@ import {
 import dayjs from "dayjs";
 import { ProjectResponse } from "shared";
 
-import { Avatar } from "@/components/atoms/Avatar";
-import { Comments } from "@/components/organisms/Comments";
+import { Avatar } from "@/components/Avatar";
+import { Comments } from "@/components/comment/Comments";
 
-export function ProjectContent({ project }: { project?: ProjectResponse }) {
+export function Project({ project }: { project?: ProjectResponse }) {
   const { classes } = styles();
 
   if (!project) return null;

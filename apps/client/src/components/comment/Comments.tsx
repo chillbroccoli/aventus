@@ -6,9 +6,9 @@ import { useRouter } from "next/router";
 import { FormProvider, useForm } from "react-hook-form";
 import { CreateCommentInput, createCommentSchema } from "shared";
 
-import { Avatar } from "@/components/atoms/Avatar";
-import { Input } from "@/components/atoms/Input";
-import { CommentCard } from "@/components/molecules/CommentCard";
+import { Avatar } from "@/components/Avatar";
+import { CommentBox } from "@/components/comment/CommentBox";
+import { Input } from "@/components/Input";
 import { MUTATION_KEYS, QUERY_KEYS } from "@/utils/constants";
 import { CommentService } from "@/utils/services/CommentService";
 import { useMeStore } from "@/utils/stores/useMeStore";
@@ -79,7 +79,7 @@ export function Comments() {
 
       <Box>
         <Flex direction="column">
-          {data && data.map((comment) => <CommentCard key={comment.id} comment={comment} />)}
+          {data && data.map((comment) => <CommentBox key={comment.id} comment={comment} />)}
         </Flex>
       </Box>
     </Box>

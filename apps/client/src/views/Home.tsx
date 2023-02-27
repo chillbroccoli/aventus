@@ -1,8 +1,8 @@
 import { Container, Grid } from "@mantine/core";
 
-import { MainLayout } from "@/components/layouts/MainLayout";
-import { Tags } from "@/components/molecules/Tags";
-import { ProjectsFeed } from "@/components/organisms/ProjectsFeed";
+import { Feed } from "@/components/project/Feed";
+import { Tags } from "@/components/tag/Tags";
+import { MainLayout } from "@/layouts/MainLayout";
 
 export function HomeView() {
   return (
@@ -13,7 +13,7 @@ export function HomeView() {
             <Tags />
           </Grid.Col>
           <Grid.Col span={7}>
-            <ProjectsFeed />
+            <Feed />
           </Grid.Col>
           <Grid.Col span={2}>3</Grid.Col>
         </Grid>

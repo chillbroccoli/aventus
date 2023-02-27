@@ -1,6 +1,6 @@
 import { Box, createStyles, Title } from "@mantine/core";
 
-import { TagList } from "@/components/atoms/TagList";
+import { TagList } from "@/components/tag/TagList";
 
 export function Tags() {
   const { classes } = styles();

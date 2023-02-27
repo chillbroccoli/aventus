@@ -1,17 +1,18 @@
-import { ActionIcon, Avatar, Box, Button, createStyles, Flex, Popover, Text } from "@mantine/core";
+import { ActionIcon, Box, Button, createStyles, Flex, Popover, Text } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { IconDots } from "@tabler/icons-react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { CommentResponse } from "shared";
 
+import { Avatar } from "@/components/Avatar";
 import { MUTATION_KEYS, QUERY_KEYS } from "@/utils/constants";
 import { dayjs } from "@/utils/dayjs";
 import { CommentService } from "@/utils/services/CommentService";
 import { useMeStore } from "@/utils/stores/useMeStore";
 import { ParamsWithSlug } from "@/utils/types";
 
-export function CommentCard({ comment }: { comment: CommentResponse }) {
+export function CommentBox({ comment }: { comment: CommentResponse }) {
   const router = useRouter();
 
   const { slug } = router.query as ParamsWithSlug;

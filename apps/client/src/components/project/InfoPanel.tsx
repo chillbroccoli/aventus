@@ -10,7 +10,7 @@ import { ProjectService } from "@/utils/services/ProjectService";
 import { useMeStore } from "@/utils/stores/useMeStore";
 import { ParamsWithSlug } from "@/utils/types";
 
-export function ProjectInfoPanel({ project }: { project?: ProjectResponse }) {
+export function InfoPanel({ project }: { project?: ProjectResponse }) {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
   const { classes } = styles();

@@ -3,8 +3,8 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { ClientRoutes } from "shared";
 
-import { MainLayout } from "@/components/layouts/MainLayout";
-import { ProjectsFeed } from "@/components/organisms/ProjectsFeed";
+import { MainLayout } from "@/layouts/MainLayout";
+import { Feed } from "@/components/project/Feed";
 
 export function TagView() {
   const { classes } = styles();
@@ -26,7 +26,7 @@ export function TagView() {
             </Flex>
           </Grid.Col>
           <Grid.Col span={7}>
-            <ProjectsFeed />
+            <Feed />
           </Grid.Col>
           <Grid.Col span={2}></Grid.Col>
         </Grid>

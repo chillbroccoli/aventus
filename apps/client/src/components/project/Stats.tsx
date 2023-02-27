@@ -14,7 +14,7 @@ import { ProjectService } from "@/utils/services/ProjectService";
 import { useMeStore } from "@/utils/stores/useMeStore";
 import { ParamsWithSlug } from "@/utils/types";
 
-export function ProjectStats() {
+export function Stats() {
   const router = useRouter();
 
   const { slug } = router.query as ParamsWithSlug;

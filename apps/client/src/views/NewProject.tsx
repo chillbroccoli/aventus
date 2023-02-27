@@ -7,19 +7,16 @@ import { useRouter } from "next/router";
 import { FormProvider, useForm } from "react-hook-form";
 import { ClientRoutes, CreateProjectInput, createProjectSchema } from "shared";
 
-import { Input } from "@/components/atoms/Input";
-import { TagSelect } from "@/components/atoms/TagSelect";
-import { MainLayout } from "@/components/layouts/MainLayout";
+import { Input } from "@/components/Input";
+import { TagSelect } from "@/components/tag/TagSelect";
+import { MainLayout } from "@/layouts/MainLayout";
 import { MUTATION_KEYS } from "@/utils/constants";
 import { ProjectService } from "@/utils/services/ProjectService";
 import { RoutingService } from "@/utils/services/RoutingService";
 
-const TextEditor = dynamic(
-  () => import("../components/molecules/TextEditor").then((mod) => mod.TextEditor),
-  {
-    ssr: false,
-  }
-);
+const TextEditor = dynamic(() => import("../components/TextEditor").then((mod) => mod.TextEditor), {
+  ssr: false,
+});
 
 export function NewProjectView() {
   const router = useRouter();
