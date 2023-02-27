@@ -2,13 +2,13 @@
 
 - [ ] Implement infinite query for Projects Feed, take only 5 projects, then fetch more projects, after user scroll
 - [ ] Implement displaying projects for specific tag
-- [ ] Export Forms to Form components
+- [x] Export Forms to Form components
 - [ ] Remove `Title` components where they are not needed, change their order where needed
 - [ ] Add `refetchOnWindowsFocus: false` to useQueries where it could help
-- [ ] Move `comments`, from `Project` resource, to it's own resource
+- [ ] Server, move `comments`, from `Project` resource, to it's own resource
 - [ ] Fix `.env` variables problem when building next app
 - [x] Move `Project` prefix specific components, to new folders, e.g `atoms/ProjectComponent` to `atoms/project/Component`
-- [ ] Change naming convenction for services in client app e.g
+- [x] Change naming convenction for services in client app e.g
       `APIService` -> `Fetcher`
       and then have one `api` file to export all services e.g
       `api.project.findOne`
