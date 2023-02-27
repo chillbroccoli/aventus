@@ -5,7 +5,7 @@ export type RouteWithParams<T extends string> = keyof RouteParameters<T> extends
   ? T
   : [T, RouteParameters<T>];
 
-export const RoutingService = {
+export const Routing = {
   getInterpolatedRoute<T extends ClientRoutes | APIRoutes>(route: RouteWithParams<T>) {
     const [path, params] = parseRouteWithParams(route);
     return params

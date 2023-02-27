@@ -3,7 +3,7 @@ import qs from "qs";
 import { ParsedQuery } from "query-string";
 import { APIRoutes } from "shared";
 
-import { RouteWithParams, RoutingService } from "./RoutingService";
+import { RouteWithParams, Routing } from "./Routing";
 
 type RequestMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 type RequestOptions = {
@@ -14,7 +14,10 @@ type RequestOptions = {
 export class RequestError extends Error {
   public status: number;
 
-  constructor(public response: Response, public errors: Record<string, unknown>) {
+  constructor(
+    public response: Response,
+    public errors: Record<string, unknown>
+  ) {
     super(response.statusText);
     this.name = "RequestError";
     this.status = response.status;
@@ -22,7 +25,9 @@ export class RequestError extends Error {
     this.errors = errors;
 
     if (errors?.message) {
-      const message = ("message" in errors && (errors.message as string)) || "Something went wrong";
+      const message =
+        ("message" in errors && (errors.message as string)) ||
+        "Something went wrong";
       showNotification({
         title: "Error",
         message,
@@ -33,7 +38,9 @@ export class RequestError extends Error {
     if (errors?.errors) {
       const errorsData = errors.errors as Record<string, unknown>[];
       errorsData.forEach((error) => {
-        const message = ("message" in error && (error.message as string)) || "Something went wrong";
+        const message =
+          ("message" in error && (error.message as string)) ||
+          "Something went wrong";
         showNotification({
           title: "Error",
           message,
@@ -44,13 +51,15 @@ export class RequestError extends Error {
   }
 }
 
-export class APIService {
+export class Fetcher {
   private static async request<T extends APIRoutes>(
     endpoint: RouteWithParams<T>,
     method: RequestMethod,
     options: RequestOptions = {}
   ) {
-    const url = `${RoutingService.getInterpolatedRoute(endpoint)}?${qs.stringify(options?.query)}`;
+    const url = `${Routing.getInterpolatedRoute(endpoint)}?${qs.stringify(
+      options?.query
+    )}`;
 
     const requestBody = {
       headers: {
@@ -69,7 +78,11 @@ export class APIService {
 
     if (response.status >= 400) throw new RequestError(response, data);
 
-    return data;
+    return {
+      json: data as unknown,
+      ok: response.ok,
+      code: response.status,
+    };
   }
 
   public static async get<T extends APIRoutes>(
