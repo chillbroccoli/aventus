@@ -23,10 +23,6 @@ export const UserController = {
     const body = request.body;
 
     try {
-      if (body.password !== body.confirmPassword) {
-        return reply.code(401).send({ message: "Passwords do not match" });
-      }
-
       const user = await UserService.createOne(body);
 
       return reply.code(201).send(user);
