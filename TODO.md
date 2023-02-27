@@ -1,3 +1,5 @@
+# Todos
+
 - [ ] Implement infinite query for Projects Feed, take only 5 projects, then fetch more projects, after user scroll
 - [ ] Implement displaying projects for specific tag
 - [ ] Export Forms to Form components
@@ -14,3 +16,4 @@
 - [ ] If possible add absolute paths for server app
 - [ ] Refactor components in client, move chunks of code if it does make sense
 - [ ] add middleware for client to redirect users when they try to access protected routes
+- [ ] add schemas for server routes, body/response etc
