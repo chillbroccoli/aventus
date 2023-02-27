@@ -10,8 +10,8 @@ import {
 import dayjs from "dayjs";
 import { ProjectResponse } from "shared";
 
-import { Avatar } from "../atoms/Avatar";
-import { Comments } from "./Comments";
+import { Avatar } from "@/components/atoms/Avatar";
+import { Comments } from "@/components/organisms/Comments";
 
 export function ProjectContent({ project }: { project?: ProjectResponse }) {
   const { classes } = styles();

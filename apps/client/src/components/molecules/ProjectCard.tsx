@@ -3,10 +3,9 @@ import dayjs from "dayjs";
 import Link from "next/link";
 import { ClientRoutes, ProjectResponse } from "shared";
 
+import { Avatar } from "@/components/atoms/Avatar";
 import { trimLongText } from "@/utils/helpers/trimLongText";
 import { RoutingService } from "@/utils/services/RoutingService";
-
-import { Avatar } from "../atoms/Avatar";
 
 export function ProjectCard({ project }: { project: ProjectResponse }) {
   const { classes } = styles();

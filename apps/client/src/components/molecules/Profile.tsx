@@ -5,11 +5,10 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { ClientRoutes } from "shared";
 
+import { Avatar } from "@/components/atoms/Avatar";
 import { MUTATION_KEYS, profileNav } from "@/utils/constants";
 import { UserService } from "@/utils/services/UserService";
 import { useMeStore } from "@/utils/stores/useMeStore";
-
-import { Avatar } from "../atoms/Avatar";
 
 export function Profile() {
   const me = useMeStore((state) => state.me);
