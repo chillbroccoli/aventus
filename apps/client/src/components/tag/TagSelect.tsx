@@ -1,21 +1,20 @@
 import { Flex, MultiSelect, Text } from "@mantine/core";
-import { useQuery } from "@tanstack/react-query";
 import { Controller, useFormContext } from "react-hook-form";
 
-import { QUERY_KEYS } from "@/utils/constants";
-import { TagService } from "@/utils/services/TagService";
+import { api } from "@/utils/api";
 
 export function TagSelect() {
   const { control } = useFormContext();
 
-  const { data } = useQuery({
-    queryKey: [QUERY_KEYS.TAGS],
-    queryFn: TagService.findAll,
+  const { data } = api.tag.useAll({
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
   });
 
-  const options = (data || [])?.map((tag) => ({ value: String(tag.id), label: tag.name }));
+  const options = (data || [])?.map((tag) => ({
+    value: String(tag.id),
+    label: tag.name,
+  }));
 
   return (
     <Controller

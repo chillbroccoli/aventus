@@ -1,5 +1,7 @@
-import { RequestError } from "@/utils/services/APIService";
-import { UserService } from "@/utils/services/UserService";
+import { APIRoutes, JwtPayloadUser } from "shared";
+
+import { RequestError } from "@/utils/api/Fetcher";
+import { Fetcher } from "@/utils/api/Fetcher";
 import { useMeStore } from "@/utils/stores/useMeStore";
 
 export function useMe() {
@@ -7,7 +9,8 @@ export function useMe() {
 
   const fetchMe = async () => {
     try {
-      const data = await UserService.me();
+      const data = (await Fetcher.get(APIRoutes.ME))
+        .json as JwtPayloadUser | null;
       setMe(data);
     } catch (e) {
       if (e instanceof RequestError) setMe(null);

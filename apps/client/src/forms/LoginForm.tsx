@@ -1,24 +1,20 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, Flex } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
-import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { FormProvider, useForm } from "react-hook-form";
 import { ClientRoutes, LoginUserInput, loginUserSchema } from "shared";
 
 import { Input } from "@/components/Input";
 import { useMe } from "@/hooks/useMe";
-import { MUTATION_KEYS } from "@/utils/constants";
-import { UserService } from "@/utils/services/UserService";
+import { api } from "@/utils/api";
 
 export function LoginForm() {
   const router = useRouter();
 
   const { fetchMe } = useMe();
 
-  const { mutateAsync } = useMutation({
-    mutationKey: [MUTATION_KEYS.LOGIN],
-    mutationFn: UserService.login,
+  const { mutateAsync } = api.user.useLogin({
     onSuccess: async () => {
       await fetchMe();
       showNotification({
@@ -34,8 +30,8 @@ export function LoginForm() {
     resolver: zodResolver(loginUserSchema),
   });
 
-  const onSubmit = async (data: LoginUserInput) => {
-    await mutateAsync(data);
+  const onSubmit = async (input: LoginUserInput) => {
+    await mutateAsync(input);
   };
 
   return (

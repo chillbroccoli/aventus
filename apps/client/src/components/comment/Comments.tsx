@@ -1,11 +1,9 @@
 import { Box, Divider, Flex, Title } from "@mantine/core";
-import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 
 import { CommentBox } from "@/components/comment/CommentBox";
 import { NewCommentForm } from "@/forms/NewCommentForm";
-import { QUERY_KEYS } from "@/utils/constants";
-import { CommentService } from "@/utils/services/CommentService";
+import { api } from "@/utils/api";
 import { ParamsWithSlug } from "@/utils/types";
 
 export function Comments() {
@@ -13,12 +11,7 @@ export function Comments() {
 
   const { slug } = router.query as ParamsWithSlug;
 
-  const { data } = useQuery({
-    queryKey: [QUERY_KEYS.COMMENTS, slug],
-    queryFn: () => CommentService.findAll(slug),
-    enabled: router.isReady,
-    refetchOnWindowFocus: false,
-  });
+  const { data } = api.comment.useAll({ slug });
 
   return (
     <Box mt={20}>
@@ -30,7 +23,10 @@ export function Comments() {
 
       <Box>
         <Flex direction="column">
-          {data && data.map((comment) => <CommentBox key={comment.id} comment={comment} />)}
+          {data &&
+            data.map((comment) => (
+              <CommentBox key={comment.id} comment={comment} />
+            ))}
         </Flex>
       </Box>
     </Box>

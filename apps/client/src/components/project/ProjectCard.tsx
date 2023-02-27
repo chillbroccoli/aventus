@@ -4,8 +4,8 @@ import Link from "next/link";
 import { ClientRoutes, ProjectResponse } from "shared";
 
 import { Avatar } from "@/components/Avatar";
+import { Routing } from "@/utils/api/Routing";
 import { trimLongText } from "@/utils/helpers/trimLongText";
-import { RoutingService } from "@/utils/services/RoutingService";
 
 export function ProjectCard({ project }: { project: ProjectResponse }) {
   const { classes } = styles();
@@ -30,7 +30,10 @@ export function ProjectCard({ project }: { project: ProjectResponse }) {
       <Flex direction="column" mt={14}>
         <Box>
           <Link
-            href={RoutingService.getInterpolatedRoute([ClientRoutes.PROJECT, { slug }])}
+            href={Routing.getInterpolatedRoute([
+              ClientRoutes.PROJECT,
+              { slug },
+            ])}
             className={classes.link}
           >
             <Title order={3} fw={600}>

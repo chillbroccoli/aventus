@@ -1,24 +1,30 @@
-import { Button, createStyles, Divider, Flex, Popover, Text, UnstyledButton } from "@mantine/core";
+import {
+  Button,
+  createStyles,
+  Divider,
+  Flex,
+  Popover,
+  Text,
+  UnstyledButton,
+} from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
-import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { ClientRoutes } from "shared";
 
 import { Avatar } from "@/components/Avatar";
-import { MUTATION_KEYS, profileNav } from "@/utils/constants";
-import { UserService } from "@/utils/services/UserService";
+import { api } from "@/utils/api";
+import { profileNav } from "@/utils/constants";
 import { useMeStore } from "@/utils/stores/useMeStore";
 
 export function Profile() {
+  const { classes } = styles();
+  const router = useRouter();
+
   const me = useMeStore((state) => state.me);
   const setMe = useMeStore((state) => state.setMe);
-  const router = useRouter();
-  const { classes } = styles();
 
-  const { mutate } = useMutation({
-    mutationKey: [MUTATION_KEYS.LOGOUT],
-    mutationFn: UserService.logout,
+  const { mutate } = api.user.useLogout({
     onSuccess: () => {
       setMe(null);
       showNotification({

@@ -1,10 +1,17 @@
-import { Button, Container, createStyles, Flex, Grid, Title } from "@mantine/core";
+import {
+  Button,
+  Container,
+  createStyles,
+  Flex,
+  Grid,
+  Title,
+} from "@mantine/core";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { ClientRoutes } from "shared";
 
-import { MainLayout } from "@/layouts/MainLayout";
 import { Feed } from "@/components/project/Feed";
+import { MainLayout } from "@/layouts/MainLayout";
 
 export function TagView() {
   const { classes } = styles();
@@ -20,7 +27,11 @@ export function TagView() {
               <Title transform="capitalize" mb={8}>
                 {router.query?.tag}
               </Title>
-              <Button component={Link} href={ClientRoutes.NEW_PROJECT} color="teal">
+              <Button
+                component={Link}
+                href={ClientRoutes.NEW_PROJECT}
+                color="teal"
+              >
                 New Project
               </Button>
             </Flex>

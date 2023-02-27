@@ -1,13 +1,11 @@
 import { Container, Grid } from "@mantine/core";
-import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 
 import { InfoPanel } from "@/components/project/InfoPanel";
 import { Project } from "@/components/project/Project";
 import { Stats } from "@/components/project/Stats";
 import { MainLayout } from "@/layouts/MainLayout";
-import { QUERY_KEYS } from "@/utils/constants";
-import { ProjectService } from "@/utils/services/ProjectService";
+import { api } from "@/utils/api";
 import { ParamsWithSlug } from "@/utils/types";
 
 export function ProjectView() {
@@ -15,12 +13,13 @@ export function ProjectView() {
 
   const { slug } = router.query as ParamsWithSlug;
 
-  const { data } = useQuery({
-    queryKey: [QUERY_KEYS.PROJECT, slug],
-    queryFn: () => ProjectService.findOne(slug),
-    enabled: router.isReady,
-    refetchOnWindowFocus: false,
-  });
+  const { data } = api.project.useOne(
+    { slug },
+    {
+      enabled: router.isReady,
+      refetchOnWindowFocus: false,
+    }
+  );
 
   return (
     <MainLayout>

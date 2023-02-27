@@ -6,11 +6,11 @@ import {
   IconHeartFilled,
   IconMessage2,
 } from "@tabler/icons-react";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 
-import { MUTATION_KEYS, QUERY_KEYS } from "@/utils/constants";
-import { ProjectService } from "@/utils/services/ProjectService";
+import { api } from "@/utils/api";
+import { QUERY_KEYS } from "@/utils/constants";
 import { useMeStore } from "@/utils/stores/useMeStore";
 import { ParamsWithSlug } from "@/utils/types";
 
@@ -23,41 +23,40 @@ export function Stats() {
 
   const queryClient = useQueryClient();
 
-  const { data } = useQuery({
-    queryKey: [QUERY_KEYS.PROJECT_STATS, slug],
-    queryFn: () => ProjectService.getProjectStats(slug),
-    enabled: router.isReady,
-    refetchOnWindowFocus: false,
-  });
+  const { data } = api.project.useProjectStats(
+    { slug },
+    {
+      enabled: router.isReady,
+      refetchOnWindowFocus: false,
+    }
+  );
 
-  const { mutate: like } = useMutation({
-    mutationKey: [MUTATION_KEYS.LIKE_PROJECT, slug],
-    mutationFn: () => ProjectService.likeProject(slug),
+  const { mutate: like } = api.project.useLike({
     onSuccess: () => {
       queryClient.invalidateQueries([QUERY_KEYS.PROJECT_STATS, slug]);
     },
   });
 
-  const { mutate: bookmark } = useMutation({
-    mutationKey: [MUTATION_KEYS.BOOKMARK_PROJECT, slug],
-    mutationFn: () => ProjectService.bookmarkProject(slug),
+  const { mutate: bookmark } = api.project.useBookmark({
     onSuccess: () => {
       queryClient.invalidateQueries([QUERY_KEYS.PROJECT_STATS, slug]);
     },
   });
 
   const isLiked = data?.likes?.find((like) => like.userId === me?.id);
-  const isBookmarked = data?.bookmarks?.find((bookmark) => bookmark.userId === me?.id);
+  const isBookmarked = data?.bookmarks?.find(
+    (bookmark) => bookmark.userId === me?.id
+  );
 
   return (
     <Flex direction="column" gap={20}>
       <Flex direction="column" align="center" justify="center">
         {isLiked ? (
-          <ActionIcon color="red.5" onClick={() => like()}>
+          <ActionIcon color="red.5" onClick={() => like({ slug })}>
             <IconHeartFilled size={26} />
           </ActionIcon>
         ) : (
-          <ActionIcon onClick={() => like()}>
+          <ActionIcon onClick={() => like({ slug })}>
             <IconHeart size={26} />
           </ActionIcon>
         )}
@@ -76,11 +75,11 @@ export function Stats() {
       </Flex>
       <Flex direction="column" align="center" justify="center">
         {isBookmarked ? (
-          <ActionIcon onClick={() => bookmark()} color="indigo.5">
+          <ActionIcon onClick={() => bookmark({ slug })} color="indigo.5">
             <IconBookmarkOff size={26} />
           </ActionIcon>
         ) : (
-          <ActionIcon onClick={() => bookmark()}>
+          <ActionIcon onClick={() => bookmark({ slug })}>
             <IconBookmark size={26} />
           </ActionIcon>
         )}

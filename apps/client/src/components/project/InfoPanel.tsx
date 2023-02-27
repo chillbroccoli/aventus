@@ -1,12 +1,10 @@
 import { Box, Button, createStyles, Flex, Popover, Text } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
-import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { ClientRoutes, ProjectResponse } from "shared";
 
-import { MUTATION_KEYS } from "@/utils/constants";
-import { ProjectService } from "@/utils/services/ProjectService";
+import { api } from "@/utils/api";
 import { useMeStore } from "@/utils/stores/useMeStore";
 import { ParamsWithSlug } from "@/utils/types";
 
@@ -21,9 +19,7 @@ export function InfoPanel({ project }: { project?: ProjectResponse }) {
 
   const me = useMeStore((state) => state.me);
 
-  const { mutate: deleteProject } = useMutation({
-    mutationKey: [MUTATION_KEYS.DELETE_PROJECT],
-    mutationFn: () => ProjectService.delete(slug),
+  const { mutate: deleteProject } = api.project.useDelete({
     onSuccess: () => {
       showNotification({
         title: "Project deleted",
@@ -65,7 +61,11 @@ export function InfoPanel({ project }: { project?: ProjectResponse }) {
               <Flex direction="column" align="center" p={6} gap={10}>
                 <Text>Are you sure?</Text>
                 <Flex gap={10}>
-                  <Button onClick={() => deleteProject()} color="red" fullWidth>
+                  <Button
+                    onClick={() => deleteProject({ slug })}
+                    color="red"
+                    fullWidth
+                  >
                     Delete
                   </Button>
                   <Button

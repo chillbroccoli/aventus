@@ -1,21 +1,22 @@
-import { createStyles, Flex, ScrollArea, Text, UnstyledButton } from "@mantine/core";
-import { useQuery } from "@tanstack/react-query";
+import {
+  createStyles,
+  Flex,
+  ScrollArea,
+  Text,
+  UnstyledButton,
+} from "@mantine/core";
 import { useRouter } from "next/router";
 import { ClientRoutes } from "shared";
 
-import { QUERY_KEYS } from "@/utils/constants";
-import { RoutingService } from "@/utils/services/RoutingService";
-import { TagService } from "@/utils/services/TagService";
+import { api } from "@/utils/api";
+import { Routing } from "@/utils/api/Routing";
 
 export function TagList() {
   const { classes } = styles();
 
   const router = useRouter();
 
-  const { data } = useQuery({
-    queryKey: [QUERY_KEYS.TAGS],
-    queryFn: TagService.findAll,
-  });
+  const { data } = api.tag.useAll();
 
   return (
     <ScrollArea className={classes.container}>
@@ -28,7 +29,10 @@ export function TagList() {
               className={classes.tagButton}
               onClick={() =>
                 router.push(
-                  RoutingService.getInterpolatedRoute([ClientRoutes.TAG, { tag: tag.name }])
+                  Routing.getInterpolatedRoute([
+                    ClientRoutes.TAG,
+                    { tag: tag.name },
+                  ])
                 )
               }
             >

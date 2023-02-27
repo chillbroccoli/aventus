@@ -1,21 +1,17 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, Flex } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
-import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { FormProvider, useForm } from "react-hook-form";
 import { ClientRoutes, CreateUserInput, createUserSchema } from "shared";
 
 import { Input } from "@/components/Input";
-import { MUTATION_KEYS } from "@/utils/constants";
-import { UserService } from "@/utils/services/UserService";
+import { api } from "@/utils/api";
 
 export function RegisterForm() {
   const router = useRouter();
 
-  const { mutateAsync } = useMutation({
-    mutationKey: [MUTATION_KEYS.REGISTER],
-    mutationFn: UserService.register,
+  const { mutateAsync } = api.user.useRegister({
     onSuccess: () => {
       showNotification({
         title: "Success",
@@ -30,8 +26,8 @@ export function RegisterForm() {
     resolver: zodResolver(createUserSchema),
   });
 
-  const onSubmit = async (data: CreateUserInput) => {
-    await mutateAsync(data);
+  const onSubmit = async (input: CreateUserInput) => {
+    await mutateAsync(input);
   };
 
   return (
@@ -51,7 +47,11 @@ export function RegisterForm() {
             <Input.Password name="password" label="Password" required />
           </Box>
           <Box>
-            <Input.Password name="confirmPassword" label="Confirm password" required />
+            <Input.Password
+              name="confirmPassword"
+              label="Confirm password"
+              required
+            />
           </Box>
           <Box mt={14}>
             <Button type="submit" fullWidth>

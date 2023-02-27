@@ -1,14 +1,18 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Avatar, Box, Button, Flex } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { FormProvider, useForm } from "react-hook-form";
-import { CreateCommentInput, createCommentSchema, ParamsWithSlug } from "shared";
+import {
+  CreateCommentInput,
+  createCommentSchema,
+  ParamsWithSlug,
+} from "shared";
 
 import { Input } from "@/components/Input";
-import { MUTATION_KEYS, QUERY_KEYS } from "@/utils/constants";
-import { CommentService } from "@/utils/services/CommentService";
+import { api } from "@/utils/api";
+import { QUERY_KEYS } from "@/utils/constants";
 import { useMeStore } from "@/utils/stores/useMeStore";
 
 export function NewCommentForm() {
@@ -24,19 +28,20 @@ export function NewCommentForm() {
 
   const queryClient = useQueryClient();
 
-  const { mutateAsync } = useMutation({
-    mutationKey: [MUTATION_KEYS.CREATE_COMMENT, slug],
-    mutationFn: (input: CreateCommentInput) => CommentService.create(slug, input),
-    onSuccess: () => {
-      showNotification({
-        title: "Comment created",
-        message: "Your comment has been created",
-      });
-      methods.reset();
-      queryClient.invalidateQueries([QUERY_KEYS.COMMENTS, slug]);
-      queryClient.invalidateQueries([QUERY_KEYS.PROJECT_STATS, slug]);
-    },
-  });
+  const { mutateAsync } = api.comment.useCreate(
+    { slug },
+    {
+      onSuccess: () => {
+        showNotification({
+          title: "Comment created",
+          message: "Your comment has been created",
+        });
+        methods.reset();
+        queryClient.invalidateQueries([QUERY_KEYS.COMMENTS, slug]);
+        queryClient.invalidateQueries([QUERY_KEYS.PROJECT_STATS, slug]);
+      },
+    }
+  );
 
   const onSubmit = async (input: CreateCommentInput) => {
     await mutateAsync(input);
