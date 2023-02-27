@@ -81,7 +81,10 @@ export const UserController = {
         return reply.code(404).send({ message: "User not found" });
       }
 
-      const isPasswordValid = await UserService.comparePassword(body.password, user.password);
+      const isPasswordValid = await UserService.comparePassword(
+        body.password,
+        user.password
+      );
 
       if (!isPasswordValid) {
         return reply.code(401).send({ message: "Invalid password" });

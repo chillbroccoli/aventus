@@ -1,4 +1,12 @@
-import { ActionIcon, Box, createStyles, Flex, List, Popover, Text } from "@mantine/core";
+import {
+  ActionIcon,
+  Box,
+  createStyles,
+  Flex,
+  List,
+  Popover,
+  Text,
+} from "@mantine/core";
 import { RichTextEditor } from "@mantine/tiptap";
 import { Link } from "@mantine/tiptap";
 import { IconHelp } from "@tabler/icons-react";
@@ -83,12 +91,15 @@ function Component({ content, onChange }: TextEditorProps) {
         <Popover.Dropdown>
           <Flex direction="column" p={4} gap={6}>
             <Text color="gray.8">Example structure...</Text>
-            <Text color="gray.8">(Not all points need to be met, just an example structure)</Text>
+            <Text color="gray.8">
+              (Not all points need to be met, just an example structure)
+            </Text>
             <List>
               <List.Item>Project Instructions</List.Item>
               <List.Item>User Stories</List.Item>
               <List.Item>
-                Ideas, e.g, this [package / library / framework] might be useful for this project
+                Ideas, e.g, this [package / library / framework] might be useful
+                for this project
               </List.Item>
               <List.Item>Helpful Links</List.Item>
               <List.Item>Example Projects</List.Item>

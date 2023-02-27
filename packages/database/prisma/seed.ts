@@ -98,9 +98,11 @@ export const seed = async () => {
     create: {
       name: "admin",
       email: "admin@example.com",
-      password: "$argon2i$v=19$m=16,t=2,p=1$QjVPd25hZ3VBWVVENktMMg$Lyuxbq0Qa3c0H1t+RGtM2A",
+      password:
+        "$argon2i$v=19$m=16,t=2,p=1$QjVPd25hZ3VBWVVENktMMg$Lyuxbq0Qa3c0H1t+RGtM2A",
       role: "ADMIN",
-      avatar: "https://pbs.twimg.com/profile_images/1498042411444051975/JLTc5ngd_400x400.jpg",
+      avatar:
+        "https://pbs.twimg.com/profile_images/1498042411444051975/JLTc5ngd_400x400.jpg",
     },
   });
 };

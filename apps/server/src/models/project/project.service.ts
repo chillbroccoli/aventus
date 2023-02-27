@@ -156,7 +156,9 @@ export const ProjectService = {
     return comment;
   },
 
-  createComment: async (input: CreateCommentInput & { userId: number; slug: string }) => {
+  createComment: async (
+    input: CreateCommentInput & { userId: number; slug: string }
+  ) => {
     const comment = await prisma.comment.create({
       data: {
         content: input.content,
@@ -262,7 +264,9 @@ export const ProjectService = {
       throw new Error("Project not found");
     }
 
-    const isBookmarked = project.bookmarks.find((bookmark) => bookmark.userId === userId);
+    const isBookmarked = project.bookmarks.find(
+      (bookmark) => bookmark.userId === userId
+    );
 
     if (isBookmarked) {
       const bookmark = await prisma.bookmark.delete({

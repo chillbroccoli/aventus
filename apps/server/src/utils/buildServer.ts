@@ -28,16 +28,18 @@ declare module "@fastify/jwt" {
 export function buildServer() {
   const server = Fastify();
 
-  server.setErrorHandler(async (error: Error, _request: FastifyRequest, reply: FastifyReply) => {
-    const statusCode = reply.statusCode !== 200 ? reply.statusCode : 500;
-    const errorResponse = {
-      message: error.message,
-      stack: process.env.NODE_ENV === "production" ? undefined : error.stack,
-    };
-    reply.code(statusCode);
-    reply.send(errorResponse);
-    logger.error(errorResponse);
-  });
+  server.setErrorHandler(
+    async (error: Error, _request: FastifyRequest, reply: FastifyReply) => {
+      const statusCode = reply.statusCode !== 200 ? reply.statusCode : 500;
+      const errorResponse = {
+        message: error.message,
+        stack: process.env.NODE_ENV === "production" ? undefined : error.stack,
+      };
+      reply.code(statusCode);
+      reply.send(errorResponse);
+      logger.error(errorResponse);
+    }
+  );
 
   addSchemas(server);
   registerModules(server);

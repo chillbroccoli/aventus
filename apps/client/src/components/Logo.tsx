@@ -8,7 +8,12 @@ export function Logo() {
   return (
     <Box>
       <Link href={ClientRoutes.HOME} className={classes.link}>
-        <Text fz="xl" fw={500} variant="gradient" gradient={{ from: "teal", to: "green", deg: 45 }}>
+        <Text
+          fz="xl"
+          fw={500}
+          variant="gradient"
+          gradient={{ from: "teal", to: "green", deg: 45 }}
+        >
           Aventus
         </Text>
       </Link>

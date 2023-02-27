@@ -19,7 +19,10 @@ export const ProjectController = {
     }
   },
 
-  findOne: async (request: FastifyRequest<{ Params: ParamsWithSlug }>, reply: FastifyReply) => {
+  findOne: async (
+    request: FastifyRequest<{ Params: ParamsWithSlug }>,
+    reply: FastifyReply
+  ) => {
     const { slug } = request.params;
 
     try {
@@ -54,13 +57,19 @@ export const ProjectController = {
     }
   },
 
-  createOne: async (request: FastifyRequest<{ Body: CreateProjectInput }>, reply: FastifyReply) => {
+  createOne: async (
+    request: FastifyRequest<{ Body: CreateProjectInput }>,
+    reply: FastifyReply
+  ) => {
     const body = request.body;
 
     try {
       const user = request.user;
 
-      const project = await ProjectService.createOne({ ...body, userId: user.id });
+      const project = await ProjectService.createOne({
+        ...body,
+        userId: user.id,
+      });
 
       return reply.code(201).send(project);
     } catch (err: unknown) {
@@ -68,7 +77,10 @@ export const ProjectController = {
     }
   },
 
-  deleteOne: async (request: FastifyRequest<{ Params: ParamsWithSlug }>, reply: FastifyReply) => {
+  deleteOne: async (
+    request: FastifyRequest<{ Params: ParamsWithSlug }>,
+    reply: FastifyReply
+  ) => {
     const { slug } = request.params;
 
     try {
@@ -104,7 +116,10 @@ export const ProjectController = {
     }
   },
 
-  getComments: async (request: FastifyRequest<{ Params: ParamsWithSlug }>, reply: FastifyReply) => {
+  getComments: async (
+    request: FastifyRequest<{ Params: ParamsWithSlug }>,
+    reply: FastifyReply
+  ) => {
     const { slug } = request.params;
 
     try {
@@ -117,7 +132,10 @@ export const ProjectController = {
   },
 
   createComment: async (
-    request: FastifyRequest<{ Params: ParamsWithSlug; Body: CreateCommentInput }>,
+    request: FastifyRequest<{
+      Params: ParamsWithSlug;
+      Body: CreateCommentInput;
+    }>,
     reply: FastifyReply
   ) => {
     const { slug } = request.params;
@@ -126,7 +144,11 @@ export const ProjectController = {
     try {
       const user = request.user;
 
-      const comment = await ProjectService.createComment({ ...body, userId: user.id, slug });
+      const comment = await ProjectService.createComment({
+        ...body,
+        userId: user.id,
+        slug,
+      });
 
       return reply.code(201).send(comment);
     } catch (err: unknown) {
@@ -161,7 +183,10 @@ export const ProjectController = {
     }
   },
 
-  likeProject: async (request: FastifyRequest<{ Params: ParamsWithSlug }>, reply: FastifyReply) => {
+  likeProject: async (
+    request: FastifyRequest<{ Params: ParamsWithSlug }>,
+    reply: FastifyReply
+  ) => {
     const { slug } = request.params;
 
     try {

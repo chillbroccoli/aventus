@@ -1,12 +1,13 @@
 import { RouteParameters } from "express-serve-static-core";
 import { APIRoutes, ClientRoutes } from "shared";
 
-export type RouteWithParams<T extends string> = keyof RouteParameters<T> extends never
-  ? T
-  : [T, RouteParameters<T>];
+export type RouteWithParams<T extends string> =
+  keyof RouteParameters<T> extends never ? T : [T, RouteParameters<T>];
 
 export const Routing = {
-  getInterpolatedRoute<T extends ClientRoutes | APIRoutes>(route: RouteWithParams<T>) {
+  getInterpolatedRoute<T extends ClientRoutes | APIRoutes>(
+    route: RouteWithParams<T>
+  ) {
     const [path, params] = parseRouteWithParams(route);
     return params
       ? Object.entries(params).reduce(

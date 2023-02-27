@@ -14,7 +14,10 @@ export const TagController = {
     }
   },
 
-  createOne: async (request: FastifyRequest<{ Body: CreateTagInput }>, reply: FastifyReply) => {
+  createOne: async (
+    request: FastifyRequest<{ Body: CreateTagInput }>,
+    reply: FastifyReply
+  ) => {
     const body = request.body;
 
     try {

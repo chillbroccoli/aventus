@@ -1,6 +1,10 @@
 import { FastifyInstance } from "fastify";
 
-import { $commentRef, $paramsRef, $projectRef } from "../../utils/buildJsonSchemas";
+import {
+  $commentRef,
+  $paramsRef,
+  $projectRef,
+} from "../../utils/buildJsonSchemas";
 import { ProjectController } from "./project.controller";
 
 export async function projectRoutes(server: FastifyInstance) {

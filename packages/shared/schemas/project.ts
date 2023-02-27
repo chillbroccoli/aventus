@@ -22,8 +22,12 @@ export const projectResponseSchema = z.object({
   description: z.string(),
   content: z.string(),
   tags: z.array(z.object({ id: z.number(), name: z.string() })),
-  likes: z.array(z.object({ id: z.number(), userId: z.number(), projectId: z.number() })),
-  bookmarks: z.array(z.object({ id: z.number(), userId: z.number(), projectId: z.number() })),
+  likes: z.array(
+    z.object({ id: z.number(), userId: z.number(), projectId: z.number() })
+  ),
+  bookmarks: z.array(
+    z.object({ id: z.number(), userId: z.number(), projectId: z.number() })
+  ),
   user: userResponseSchema,
   createdAt: z.string(),
   updatedAt: z.string(),
@@ -33,8 +37,12 @@ export const projectResponseSchema = z.object({
 });
 
 export const projectStatsSchema = z.object({
-  likes: z.array(z.object({ id: z.number(), userId: z.number(), projectId: z.number() })),
-  bookmarks: z.array(z.object({ id: z.number(), userId: z.number(), projectId: z.number() })),
+  likes: z.array(
+    z.object({ id: z.number(), userId: z.number(), projectId: z.number() })
+  ),
+  bookmarks: z.array(
+    z.object({ id: z.number(), userId: z.number(), projectId: z.number() })
+  ),
   _count: z.object({
     comments: z.number(),
     likes: z.number(),
