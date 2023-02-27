@@ -17,7 +17,7 @@ export function ProjectView() {
 
   const { data } = useQuery({
     queryKey: [QUERY_KEYS.PROJECT, slug],
-    queryFn: () => ProjectService.findOne(slug as string),
+    queryFn: () => ProjectService.findOne(slug),
     enabled: router.isReady,
     refetchOnWindowFocus: false,
   });
