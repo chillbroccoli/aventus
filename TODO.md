@@ -7,7 +7,7 @@
 - [ ] Add `refetchOnWindowsFocus: false` to useQueries where it could help
 - [ ] Move `comments`, from `Project` resource, to it's own resource
 - [ ] Fix `.env` variables problem when building next app
-- [ ] Move `Project` prefix specific components, to new folders, e.g `atoms/ProjectComponent` to `atoms/project/Component`
+- [x] Move `Project` prefix specific components, to new folders, e.g `atoms/ProjectComponent` to `atoms/project/Component`
 - [ ] Change naming convenction for services in client app e.g
       `APIService` -> `Fetcher`
       and then have one `api` file to export all services e.g
