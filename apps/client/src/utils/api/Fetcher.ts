@@ -1,4 +1,3 @@
-import { showNotification } from "@mantine/notifications";
 import qs from "qs";
 import { ParsedQuery } from "query-string";
 import { APIRoutes } from "shared";
@@ -26,13 +25,8 @@ export class RequestError extends Error {
 
     const message =
       ("message" in errors && (errors.message as string)) ||
-      "Something went wrong";
-
-    showNotification({
-      title: "Error",
-      message,
-      color: "red",
-    });
+      "Something went wrong 😢";
+    this.message = message;
   }
 }
 
