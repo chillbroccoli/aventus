@@ -18,11 +18,16 @@ import { QUERY_KEYS } from "@/utils/constants";
 import { Fetcher, RequestError } from "../Fetcher";
 
 export const project = {
-  useAll: (options?: UseQueryOptions<ProjectResponse[], RequestError>) => {
+  useAll: (
+    query?: { tag: string },
+    options?: UseQueryOptions<ProjectResponse[], RequestError>
+  ) => {
     return useQuery<ProjectResponse[], RequestError>(
       [QUERY_KEYS.PROJECTS],
       async () => {
-        const { json } = await Fetcher.get(APIRoutes.PROJECTS);
+        const { json } = await Fetcher.get(APIRoutes.PROJECTS, {
+          query,
+        });
 
         return json as ProjectResponse[];
       },
@@ -61,9 +66,7 @@ export const project = {
     options?: MutationOptions<void, RequestError, { slug: string }>
   ) => {
     return useMutation(async ({ slug }: { slug: string }) => {
-      await Fetcher.delete([APIRoutes.PROJECT, { slug }], {
-        body: {},
-      });
+      await Fetcher.delete([APIRoutes.PROJECT, { slug }]);
     }, options);
   },
 
@@ -86,9 +89,7 @@ export const project = {
     options?: MutationOptions<LikeResponse, RequestError, { slug: string }>
   ) => {
     return useMutation(async ({ slug }: { slug: string }) => {
-      const { json } = await Fetcher.post([APIRoutes.LIKE_PROJECT, { slug }], {
-        body: {},
-      });
+      const { json } = await Fetcher.post([APIRoutes.LIKE_PROJECT, { slug }]);
 
       return json as LikeResponse;
     }, options);
@@ -98,12 +99,10 @@ export const project = {
     options?: MutationOptions<BookmarkResponse, RequestError, { slug: string }>
   ) => {
     return useMutation(async ({ slug }: { slug: string }) => {
-      const { json } = await Fetcher.post(
-        [APIRoutes.BOOKMARK_PROJECT, { slug }],
-        {
-          body: {},
-        }
-      );
+      const { json } = await Fetcher.post([
+        APIRoutes.BOOKMARK_PROJECT,
+        { slug },
+      ]);
 
       return json as BookmarkResponse;
     }, options);
