@@ -6,7 +6,7 @@ import { MainLayout } from "@/layouts/MainLayout";
 import { api } from "@/utils/api";
 
 export function HomeView() {
-  const { data } = api.project.useAll();
+  const { data, isLoading } = api.project.useAll();
 
   return (
     <MainLayout>
@@ -16,7 +16,7 @@ export function HomeView() {
             <Tags />
           </Grid.Col>
           <Grid.Col span={7}>
-            <Feed data={data} />
+            <Feed data={data?.data} isLoading={isLoading} />
           </Grid.Col>
           <Grid.Col span={2}>3</Grid.Col>
         </Grid>
