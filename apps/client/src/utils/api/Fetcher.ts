@@ -24,30 +24,15 @@ export class RequestError extends Error {
     this.response = response;
     this.errors = errors;
 
-    if (errors?.message) {
-      const message =
-        ("message" in errors && (errors.message as string)) ||
-        "Something went wrong";
-      showNotification({
-        title: "Error",
-        message,
-        color: "red",
-      });
-    }
+    const message =
+      ("message" in errors && (errors.message as string)) ||
+      "Something went wrong";
 
-    if (errors?.errors) {
-      const errorsData = errors.errors as Record<string, unknown>[];
-      errorsData.forEach((error) => {
-        const message =
-          ("message" in error && (error.message as string)) ||
-          "Something went wrong";
-        showNotification({
-          title: "Error",
-          message,
-          color: "red",
-        });
-      });
-    }
+    showNotification({
+      title: "Error",
+      message,
+      color: "red",
+    });
   }
 }
 
@@ -65,7 +50,7 @@ export class Fetcher {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(options.body),
+      ...(options?.body && { body: JSON.stringify(options.body) }),
     };
 
     const response = await fetch(url, {
