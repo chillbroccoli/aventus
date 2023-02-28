@@ -17,3 +17,5 @@
 - [ ] Refactor components in client, move chunks of code if it does make sense
 - [ ] add middleware for client to redirect users when they try to access protected routes
 - [ ] add schemas for server routes, body/response etc
+- [ ] fix problems with refetching comments
+- [ ] update readme.md
