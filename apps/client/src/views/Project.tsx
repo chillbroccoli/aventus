@@ -28,10 +28,10 @@ export function ProjectView() {
           <Grid.Col span={1}>
             <Stats />
           </Grid.Col>
-          <Grid.Col span={9}>
+          <Grid.Col span={8}>
             <Project project={data} />
           </Grid.Col>
-          <Grid.Col span={2}>
+          <Grid.Col span={3}>
             <InfoPanel project={data} />
           </Grid.Col>
         </Grid>
