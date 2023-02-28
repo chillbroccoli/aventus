@@ -1,7 +1,7 @@
 import { Container, Grid } from "@mantine/core";
 import { useRouter } from "next/router";
 
-import { InfoPanel } from "@/components/project/InfoPanel";
+import { AuthorCard } from "@/components/author/AuthorCard";
 import { Project } from "@/components/project/Project";
 import { Stats } from "@/components/project/Stats";
 import { MainLayout } from "@/layouts/MainLayout";
@@ -32,7 +32,7 @@ export function ProjectView() {
             <Project project={data} />
           </Grid.Col>
           <Grid.Col span={3}>
-            <InfoPanel project={data} />
+            <AuthorCard project={data} />
           </Grid.Col>
         </Grid>
       </Container>
