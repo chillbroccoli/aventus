@@ -4,8 +4,15 @@ import { prisma } from "../../utils/db";
 import { getSlug } from "../../utils/getSlug";
 
 export const ProjectService = {
-  findAll: async () => {
+  findAll: async (query?: { tag: string }) => {
     const projects = await prisma.project.findMany({
+      where: {
+        tags: {
+          some: {
+            name: query?.tag,
+          },
+        },
+      },
       include: {
         tags: true,
         user: true,
