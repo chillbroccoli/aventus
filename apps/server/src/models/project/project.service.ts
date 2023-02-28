@@ -15,29 +15,6 @@ export const ProjectService = {
       },
       include: {
         tags: true,
-        user: true,
-        likes: true,
-        bookmarks: true,
-      },
-      orderBy: {
-        createdAt: "desc",
-      },
-    });
-
-    return projects;
-  },
-
-  findOne: async (slug: string) => {
-    const project = await prisma.project.findUnique({
-      where: {
-        slug,
-      },
-      select: {
-        id: true,
-        slug: true,
-        tags: true,
-        likes: true,
-        bookmarks: true,
         user: {
           select: {
             id: true,
@@ -49,16 +26,57 @@ export const ProjectService = {
             updatedAt: true,
           },
         },
-        title: true,
-        description: true,
-        content: true,
-        createdAt: true,
-        updatedAt: true,
-        _count: {
-          select: {
-            comments: true,
+        likes: true,
+        bookmarks: true,
+        _count: true,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    const total = await prisma.project.count({
+      where: {
+        tags: {
+          some: {
+            name: query?.tag,
           },
         },
+      },
+      select: {
+        _all: true,
+      },
+    });
+
+    return {
+      data: projects,
+      meta: {
+        total,
+      },
+    };
+  },
+
+  findOne: async (slug: string) => {
+    const project = await prisma.project.findUnique({
+      where: {
+        slug,
+      },
+      include: {
+        tags: true,
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            avatar: true,
+            role: true,
+            createdAt: true,
+            updatedAt: true,
+          },
+        },
+        likes: true,
+        bookmarks: true,
+        _count: true,
       },
     });
 
