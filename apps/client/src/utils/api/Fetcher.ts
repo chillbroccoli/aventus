@@ -50,13 +50,13 @@ export class Fetcher {
       headers: {
         "Content-Type": "application/json",
       },
-      ...(options?.body && { body: JSON.stringify(options.body) }),
+      body: JSON.stringify(options.body),
     };
 
     const response = await fetch(url, {
       method,
       credentials: "include",
-      ...requestBody,
+      ...(options.body && requestBody),
     });
 
     const data = await response.json().catch(() => ({}));
