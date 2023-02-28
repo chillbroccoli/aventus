@@ -12,11 +12,21 @@ import { ClientRoutes } from "shared";
 
 import { Feed } from "@/components/project/Feed";
 import { MainLayout } from "@/layouts/MainLayout";
+import { api } from "@/utils/api";
 
 export function TagView() {
   const { classes } = styles();
 
   const router = useRouter();
+
+  const { tag } = router.query as { tag: string };
+
+  const { data } = api.project.useAll(
+    { tag },
+    {
+      enabled: router.isReady,
+    }
+  );
 
   return (
     <MainLayout>
@@ -37,7 +47,7 @@ export function TagView() {
             </Flex>
           </Grid.Col>
           <Grid.Col span={7}>
-            <Feed />
+            <Feed data={data} />
           </Grid.Col>
           <Grid.Col span={2}></Grid.Col>
         </Grid>

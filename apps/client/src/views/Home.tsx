@@ -3,8 +3,11 @@ import { Container, Grid } from "@mantine/core";
 import { Feed } from "@/components/project/Feed";
 import { Tags } from "@/components/tag/Tags";
 import { MainLayout } from "@/layouts/MainLayout";
+import { api } from "@/utils/api";
 
 export function HomeView() {
+  const { data } = api.project.useAll();
+
   return (
     <MainLayout>
       <Container size="lg" mt={20}>
@@ -13,7 +16,7 @@ export function HomeView() {
             <Tags />
           </Grid.Col>
           <Grid.Col span={7}>
-            <Feed />
+            <Feed data={data} />
           </Grid.Col>
           <Grid.Col span={2}>3</Grid.Col>
         </Grid>
