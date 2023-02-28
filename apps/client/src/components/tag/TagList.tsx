@@ -51,7 +51,7 @@ export function TagList() {
 
 const styles = createStyles((theme) => ({
   container: {
-    height: 500,
+    height: 505,
   },
 
   tagButton: {
