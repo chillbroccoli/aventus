@@ -40,9 +40,7 @@ export const comment = {
     options?: MutationOptions<void, RequestError, { id: number }>
   ) => {
     return useMutation(async ({ id }: { id: number }) => {
-      await Fetcher.delete([APIRoutes.COMMENT, { slug, id: String(id) }], {
-        body: {},
-      });
+      await Fetcher.delete([APIRoutes.COMMENT, { slug, id: String(id) }]);
     }, options);
   },
 };
