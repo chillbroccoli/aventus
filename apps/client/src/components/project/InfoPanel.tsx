@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { ClientRoutes, ProjectResponse } from "shared";
 
+import { AuthorCard } from "@/components/author/AuthorCard";
 import { api } from "@/utils/api";
 import { useMeStore } from "@/utils/stores/useMeStore";
 import { ParamsWithSlug } from "@/utils/types";
@@ -34,7 +35,8 @@ export function InfoPanel({ project }: { project?: ProjectResponse }) {
   const { user } = project;
 
   return (
-    <Box px={14} p={10} className={classes.main}>
+    <Box className={classes.main}>
+      <AuthorCard user={user} />
       {user.id === me?.id && (
         <Flex direction="column" gap={10}>
           <Button variant="outline" color="orange" fullWidth>
