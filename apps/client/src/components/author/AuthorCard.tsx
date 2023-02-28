@@ -1,19 +1,37 @@
-import { Avatar, Flex, Text } from "@mantine/core";
-import { JwtPayloadUser } from "shared";
+import { createStyles, Flex, Text } from "@mantine/core";
+import dayjs from "dayjs";
+import { ProjectResponse } from "shared";
 
-export function AuthorCard({ user }: { user: JwtPayloadUser }) {
+import { Avatar } from "../Avatar";
+
+export function AuthorCard({ project }: { project?: ProjectResponse }) {
+  const { classes } = styles();
+
+  if (!project) return null;
+
+  const { user, createdAt } = project;
+
   return (
-    <Flex>
+    <Flex px={10} py={14} className={classes.main}>
       <Avatar src={user?.avatar} alt={user.name} />
 
-      <Flex direction="column">
-        <Text transform="capitalize" fw={500} color="gray.8">
+      <Flex direction="column" ml={10}>
+        <Text fw={500} color="gray.8">
           {user.name}
         </Text>
         <Text fz="xs" fw={300} color="gray.6">
-          {user.email}
+          {dayjs(createdAt).format("MMM D, YYYY")}
         </Text>
       </Flex>
     </Flex>
   );
 }
+
+const styles = createStyles((theme) => ({
+  main: {
+    backgroundColor: theme.white,
+    boxShadow: theme.shadows.xs,
+    borderRadius: theme.radius.sm,
+    border: `1px solid ${theme.colors.gray[3]}`,
+  },
+}));
