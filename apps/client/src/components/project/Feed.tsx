@@ -13,6 +13,9 @@ export function Feed({
   data?: ProjectResponse[];
   isLoading?: boolean;
 }) {
+  if (isLoading && !data?.length) return <Spinner />;
+  if (!isLoading && !data?.length) return <EmptyState />;
+
   return (
     <Box>
       <Flex direction="column" gap={20}>
@@ -22,8 +25,6 @@ export function Feed({
             <ProjectCard key={project.id} project={project} />
           ))}
       </Flex>
-      {isLoading && !data?.length && <Spinner />}
-      {!isLoading && !data?.length && <EmptyState />}
     </Box>
   );
 }
