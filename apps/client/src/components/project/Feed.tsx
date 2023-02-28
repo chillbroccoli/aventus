@@ -4,7 +4,15 @@ import { ProjectResponse } from "shared";
 import { EmptyState } from "@/components/project/EmptyState";
 import { ProjectCard } from "@/components/project/ProjectCard";
 
-export function Feed({ data }: { data?: ProjectResponse[] }) {
+import { Spinner } from "../Spinner";
+
+export function Feed({
+  data,
+  isLoading,
+}: {
+  data?: ProjectResponse[];
+  isLoading?: boolean;
+}) {
   return (
     <Box>
       <Flex direction="column" gap={20}>
@@ -14,7 +22,8 @@ export function Feed({ data }: { data?: ProjectResponse[] }) {
             <ProjectCard key={project.id} project={project} />
           ))}
       </Flex>
-      {!data?.length && <EmptyState />}
+      {isLoading && !data?.length && <Spinner />}
+      {!isLoading && !data?.length && <EmptyState />}
     </Box>
   );
 }
