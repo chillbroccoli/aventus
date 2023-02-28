@@ -9,9 +9,12 @@ import {
 import { ProjectService } from "./project.service";
 
 export const ProjectController = {
-  findAll: async (_request: FastifyRequest, reply: FastifyReply) => {
+  findAll: async (
+    request: FastifyRequest<{ Querystring: { tag: string } }>,
+    reply: FastifyReply
+  ) => {
     try {
-      const projects = await ProjectService.findAll();
+      const projects = await ProjectService.findAll(request.query);
 
       return reply.code(200).send(projects);
     } catch (err: unknown) {
