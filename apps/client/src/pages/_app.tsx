@@ -1,16 +1,14 @@
 import { MantineProvider } from "@mantine/core";
 import { NotificationsProvider } from "@mantine/notifications";
 import { Poppins } from "@next/font/google";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClientProvider } from "@tanstack/react-query";
 import { AppProps } from "next/app";
 import Head from "next/head";
-
-const queryClient = new QueryClient();
-
 import { useEffect } from "react";
 
 import { useMe } from "@/hooks/useMe";
 import { GlobalStyles } from "@/styles/global";
+import { queryClient } from "@/utils/queryClient";
 import { useMeStore } from "@/utils/stores/useMeStore";
 
 const poppins = Poppins({
