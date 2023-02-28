@@ -10,6 +10,7 @@ import {
   CreateProjectInput,
   LikeResponse,
   ProjectResponse,
+  ProjectsResponse,
   ProjectStatsResponse,
 } from "shared";
 
@@ -20,16 +21,16 @@ import { Fetcher, RequestError } from "../Fetcher";
 export const project = {
   useAll: (
     query?: { tag: string },
-    options?: UseQueryOptions<ProjectResponse[], RequestError>
+    options?: UseQueryOptions<ProjectsResponse, RequestError>
   ) => {
-    return useQuery<ProjectResponse[], RequestError>(
+    return useQuery<ProjectsResponse, RequestError>(
       [QUERY_KEYS.PROJECTS],
       async () => {
         const { json } = await Fetcher.get(APIRoutes.PROJECTS, {
           query,
         });
 
-        return json as ProjectResponse[];
+        return json as ProjectsResponse;
       },
       options
     );
