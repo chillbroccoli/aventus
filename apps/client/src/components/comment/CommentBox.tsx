@@ -60,7 +60,7 @@ export function CommentBox({ comment }: { comment: CommentResponse }) {
             </Text>
           </Flex>
           {comment.user.id === user?.id && (
-            <Popover position="bottom" shadow="md">
+            <Popover position="top" shadow="md">
               <Popover.Target>
                 <ActionIcon>
                   <IconDots size={18} />
