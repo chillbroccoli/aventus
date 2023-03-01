@@ -25,3 +25,5 @@ export enum ClientRoutes {
   NEW_PROJECT = "/projects/new",
   MY_PROJECTS = "/projects/my-projects",
 }
+
+export const PROTECTED_ROUTES = [ClientRoutes.SETTINGS];
