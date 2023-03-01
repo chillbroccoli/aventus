@@ -10,6 +10,13 @@ export const userCore = {
   avatar: z.string().optional(),
 };
 
+export const userProfile = {
+  ...userCore,
+  bio: z.string().optional(),
+  location: z.string().optional(),
+  websiteUrl: z.string().optional(),
+};
+
 export const createUserSchema = z
   .object({
     ...userCore,
@@ -23,6 +30,10 @@ export const createUserSchema = z
     path: ["confirmPassword"],
   });
 
+export const updateUserProfileSchema = z.object({
+  ...userProfile,
+});
+
 export const loginUserSchema = z.object({
   email: z
     .string({ required_error: "Email is required" })
@@ -33,7 +44,7 @@ export const loginUserSchema = z.object({
 });
 
 export const userResponseSchema = z.object({
-  ...userCore,
+  ...userProfile,
   id: z.number(),
   role: z.string(),
   createdAt: z.date(),
@@ -54,3 +65,5 @@ export type CreateUserInput = z.infer<typeof createUserSchema>;
 export type LoginUserInput = z.infer<typeof loginUserSchema>;
 export type JwtPayloadUser = z.infer<typeof jwtPayloadUserSchema>;
 export type LoginResponse = z.infer<typeof loginResponseSchema>;
+export type UserResponse = z.infer<typeof userResponseSchema>;
+export type UpdateUserProfileInput = z.infer<typeof updateUserProfileSchema>;
