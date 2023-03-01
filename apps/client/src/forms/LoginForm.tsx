@@ -6,17 +6,16 @@ import { FormProvider, useForm } from "react-hook-form";
 import { ClientRoutes, LoginUserInput, loginUserSchema } from "shared";
 
 import { Input } from "@/components/Input";
-import { useMe } from "@/hooks/useMe";
 import { api } from "@/utils/api";
+import { QUERY_KEYS } from "@/utils/constants";
+import { queryClient } from "@/utils/queryClient";
 
 export function LoginForm() {
   const router = useRouter();
 
-  const { fetchMe } = useMe();
-
   const { mutateAsync } = api.user.useLogin({
     onSuccess: async () => {
-      await fetchMe();
+      queryClient.invalidateQueries([QUERY_KEYS.USER_DETAILS]);
       showNotification({
         title: "Success",
         message: "You have successfully logged in",
