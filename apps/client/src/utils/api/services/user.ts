@@ -3,24 +3,39 @@ import { UseQueryOptions } from "@tanstack/react-query";
 import {
   APIRoutes,
   CreateUserInput,
-  JwtPayloadUser,
   LoginResponse,
   LoginUserInput,
+  UpdateUserProfileInput,
+  UserResponse,
 } from "shared";
+
+import { QUERY_KEYS } from "@/utils/constants";
 
 import { Fetcher, RequestError } from "../Fetcher";
 
 export const user = {
-  useMe: (options?: UseQueryOptions<JwtPayloadUser | null, RequestError>) => {
-    return useQuery<JwtPayloadUser | null, RequestError>(
-      [APIRoutes.ME],
+  useUserDetails: (options?: UseQueryOptions<UserResponse, RequestError>) => {
+    return useQuery<UserResponse, RequestError>(
+      [QUERY_KEYS.USER_DETAILS],
       async () => {
-        const { json } = await Fetcher.get(APIRoutes.ME);
+        const { json } = await Fetcher.get(APIRoutes.DETAILS);
 
-        return json as JwtPayloadUser | null;
+        return json as UserResponse;
       },
       options
     );
+  },
+
+  useUpdateUserDetails: (
+    options?: MutateOptions<UserResponse, RequestError, UpdateUserProfileInput>
+  ) => {
+    return useMutation(async (body: UpdateUserProfileInput) => {
+      const { json } = await Fetcher.patch(APIRoutes.USERS, {
+        body,
+      });
+
+      return json as UserResponse;
+    }, options);
   },
 
   useRegister: (
