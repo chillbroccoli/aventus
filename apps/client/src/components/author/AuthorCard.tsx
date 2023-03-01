@@ -1,4 +1,4 @@
-import { createStyles, Flex, Text } from "@mantine/core";
+import { createStyles, Divider, Flex, Text } from "@mantine/core";
 import dayjs from "dayjs";
 import { ProjectResponse } from "shared";
 
@@ -12,17 +12,38 @@ export function AuthorCard({ project }: { project?: ProjectResponse }) {
   const { user, createdAt } = project;
 
   return (
-    <Flex px={10} py={14} className={classes.main}>
-      <Avatar src={user?.avatar} alt={user.name} />
+    <Flex direction="column" px={10} py={14} className={classes.main}>
+      <Flex>
+        <Avatar src={user?.avatar} alt={user.name} />
 
-      <Flex direction="column" ml={10}>
-        <Text fw={500} color="gray.8">
-          {user.name}
-        </Text>
-        <Text fz="xs" fw={300} color="gray.6">
-          {dayjs(createdAt).format("MMM D, YYYY")}
-        </Text>
+        <Flex direction="column" ml={10}>
+          <Text fw={500} color="gray.8">
+            {user.name}
+          </Text>
+          <Text fz="xs" fw={300} color="gray.6">
+            {dayjs(createdAt).format("MMM D, YYYY")}
+          </Text>
+        </Flex>
       </Flex>
+
+      {(user.bio || user.location) && <Divider my="sm" />}
+
+      {user?.bio && (
+        <Text fz="sm" color="gray.8" fw={300}>
+          {user?.bio}
+        </Text>
+      )}
+
+      {user?.location && (
+        <Flex direction="column" mt={6}>
+          <Text fz="sm" color="gray.8" fw={500}>
+            Location
+          </Text>
+          <Text fz="sm" color="gray.8" fw={300}>
+            {user?.location}
+          </Text>
+        </Flex>
+      )}
     </Flex>
   );
 }
