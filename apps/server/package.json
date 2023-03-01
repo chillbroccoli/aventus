@@ -38,7 +38,7 @@
     "@types/qs": "^6.9.7",
     "dotenv-cli": "latest",
     "nodemon": "^2.0.20",
-    "typescript": "^4.9.5",
-    "tsup": "^6.6.3"
+    "tsup": "^6.6.3",
+    "typescript": "^4.9.5"
   }
 }
