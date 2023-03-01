@@ -10,23 +10,23 @@ import {
 import { showNotification } from "@mantine/notifications";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { ClientRoutes } from "shared";
+import { ClientRoutes, UserResponse } from "shared";
 
 import { Avatar } from "@/components/Avatar";
 import { api } from "@/utils/api";
-import { profileNav } from "@/utils/constants";
-import { useMeStore } from "@/utils/stores/useMeStore";
+import { profileNav, QUERY_KEYS } from "@/utils/constants";
+import { queryClient } from "@/utils/queryClient";
 
 export function Profile() {
   const { classes } = styles();
   const router = useRouter();
 
-  const me = useMeStore((state) => state.me);
-  const setMe = useMeStore((state) => state.setMe);
+  const user = queryClient.getQueryData<UserResponse>([
+    QUERY_KEYS.USER_DETAILS,
+  ]);
 
   const { mutate } = api.user.useLogout({
     onSuccess: () => {
-      setMe(null);
       showNotification({
         title: "Success",
         message: "You have been logged out",
@@ -35,24 +35,24 @@ export function Profile() {
     },
   });
 
-  if (!me) return null;
+  if (!user) return null;
 
   return (
     <Flex>
       <Popover width={225} position="bottom-end" shadow="md">
         <Popover.Target>
           <UnstyledButton>
-            <Avatar src={me?.avatar} />
+            <Avatar src={user?.avatar} />
           </UnstyledButton>
         </Popover.Target>
         <Popover.Dropdown>
           <Flex direction="column">
             <Flex direction="column">
               <Text transform="capitalize" fw={500} color="gray.8">
-                {me.name}
+                {user?.name}
               </Text>
               <Text fz="xs" fw={300} color="gray.6">
-                {me.email}
+                {user?.email}
               </Text>
             </Flex>
 
