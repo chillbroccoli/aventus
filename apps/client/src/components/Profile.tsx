@@ -31,7 +31,8 @@ export function Profile() {
         title: "Success",
         message: "You have been logged out",
       });
-      router.push(ClientRoutes.LOGIN);
+      queryClient.invalidateQueries([QUERY_KEYS.USER_DETAILS]);
+      router.push(ClientRoutes.HOME);
     },
   });
 
