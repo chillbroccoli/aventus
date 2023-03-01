@@ -48,6 +48,14 @@ export async function userRoutes(server: FastifyInstance) {
     UserController.deleteUserAccount
   );
 
+  server.patch(
+    "/",
+    {
+      onRequest: [server.authenticate],
+    },
+    UserController.updateUserAccount
+  );
+
   server.delete(
     "/:id",
     {
@@ -79,5 +87,5 @@ export async function userRoutes(server: FastifyInstance) {
 
   server.post("/logout", UserController.logout);
 
-  server.get("/me", UserController.me);
+  server.get("/details", UserController.getUserDetails);
 }
