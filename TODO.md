@@ -2,6 +2,7 @@
 
 - [ ] Implement infinite query for Projects Feed, take only 5 projects, then fetch more projects, after user scroll
 - [ ] Updating project
+- [ ] Updating comment
 - [x] Implement displaying projects for specific tag
 - [x] Export Forms to Form components
 - [ ] Remove `Title` components where they are not needed, change their order where needed
