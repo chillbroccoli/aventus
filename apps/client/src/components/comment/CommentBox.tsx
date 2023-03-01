@@ -9,15 +9,14 @@ import {
 } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { IconDots } from "@tabler/icons-react";
-import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import { CommentResponse } from "shared";
+import { CommentResponse, UserResponse } from "shared";
 
 import { Avatar } from "@/components/Avatar";
 import { api } from "@/utils/api";
 import { QUERY_KEYS } from "@/utils/constants";
 import { dayjs } from "@/utils/dayjs";
-import { useMeStore } from "@/utils/stores/useMeStore";
+import { queryClient } from "@/utils/queryClient";
 import { ParamsWithSlug } from "@/utils/types";
 
 export function CommentBox({ comment }: { comment: CommentResponse }) {
@@ -27,9 +26,9 @@ export function CommentBox({ comment }: { comment: CommentResponse }) {
 
   const { classes } = styles();
 
-  const me = useMeStore((state) => state.me);
-
-  const queryClient = useQueryClient();
+  const user = queryClient.getQueryData<UserResponse>([
+    QUERY_KEYS.USER_DETAILS,
+  ]);
 
   const { mutate } = api.comment.useDelete(
     { slug },
@@ -54,13 +53,13 @@ export function CommentBox({ comment }: { comment: CommentResponse }) {
         <Flex justify="space-between">
           <Flex align="end">
             <Text transform="capitalize" color="gray.8">
-              {comment.user.name}
+              {comment.user?.name}
             </Text>
             <Text ml={10} color="gray.6" fz="sm" fw={300}>
               {dayjs(comment.createdAt).fromNow()}
             </Text>
           </Flex>
-          {comment.user.id === me?.id && (
+          {comment.user.id === user?.id && (
             <Popover position="bottom" shadow="md">
               <Popover.Target>
                 <ActionIcon>
