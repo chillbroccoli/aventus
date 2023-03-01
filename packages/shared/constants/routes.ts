@@ -3,7 +3,7 @@ export enum APIRoutes {
   USERS = "/api/users",
   LOGIN = "/api/users/login",
   LOGOUT = "/api/users/logout",
-  ME = "/api/users/me",
+  DETAILS = "/api/users/details",
   PROJECTS = "/api/projects",
   PROJECT = "/api/projects/:slug",
   COMMENTS = "/api/projects/:slug/comments",
