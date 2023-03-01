@@ -5,12 +5,12 @@ import { ClientRoutes } from "shared";
 import { Logo } from "@/components/Logo";
 import { Profile } from "@/components/Profile";
 import { SearchBar } from "@/components/SearchBar";
-import { useMeStore } from "@/utils/stores/useMeStore";
+import { api } from "@/utils/api";
 
 export function Navbar() {
   const { classes } = styles();
 
-  const me = useMeStore((state) => state.me);
+  const { data: user } = api.user.useUserDetails();
 
   return (
     <Box px={20} py={12} className={classes.navbar}>
@@ -22,7 +22,7 @@ export function Navbar() {
           </Flex>
 
           <Flex gap={14}>
-            {me ? (
+            {user ? (
               <Profile />
             ) : (
               <>
