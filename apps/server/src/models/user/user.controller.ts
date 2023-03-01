@@ -1,5 +1,11 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { CreateUserInput, LoginUserInput, ParamsWithId } from "shared";
+import {
+  CreateUserInput,
+  JwtPayloadUser,
+  LoginUserInput,
+  ParamsWithId,
+  UpdateUserProfileInput,
+} from "shared";
 
 import { UserService } from "./user.service";
 
@@ -49,6 +55,26 @@ export const UserController = {
       await UserService.deleteOne(id);
 
       return reply.code(204).send();
+    } catch (err: unknown) {
+      return reply.send(err);
+    }
+  },
+
+  updateUserAccount: async (
+    request: FastifyRequest<{ Body: UpdateUserProfileInput }>,
+    reply: FastifyReply
+  ) => {
+    const body = request.body;
+
+    try {
+      const userId = request.user.id;
+
+      const user = await UserService.updateUserDetails({
+        ...body,
+        userId: String(userId),
+      });
+
+      return reply.code(200).send(user);
     } catch (err: unknown) {
       return reply.send(err);
     }
@@ -123,7 +149,7 @@ export const UserController = {
       .send({ success: true });
   },
 
-  me: async (request: FastifyRequest, reply: FastifyReply) => {
+  getUserDetails: async (request: FastifyRequest, reply: FastifyReply) => {
     try {
       const accessToken = request.cookies[process.env.COOKIE_NAME as string];
 
@@ -131,11 +157,13 @@ export const UserController = {
         return reply.code(200).send(null);
       }
 
-      const user = request.jwt.verify(accessToken);
+      const userPayload = request.jwt.verify<JwtPayloadUser>(accessToken);
 
-      if (!user) {
+      if (!userPayload) {
         return reply.code(200).send(null);
       }
+
+      const user = await UserService.getUserDetails(String(userPayload.id));
 
       return reply.code(200).send(user);
     } catch (err: unknown) {
