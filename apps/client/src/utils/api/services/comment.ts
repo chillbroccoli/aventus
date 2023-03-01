@@ -12,7 +12,7 @@ export const comment = {
     options?: UseQueryOptions<CommentResponse[], RequestError>
   ) => {
     return useQuery<CommentResponse[], RequestError>(
-      [QUERY_KEYS.COMMENTS],
+      [QUERY_KEYS.COMMENTS, slug],
       async () => {
         const { json } = await Fetcher.get([APIRoutes.COMMENTS, { slug }]);
 
