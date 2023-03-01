@@ -6,12 +6,12 @@ import {
   IconHeartFilled,
   IconMessage2,
 } from "@tabler/icons-react";
-import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
+import { UserResponse } from "shared";
 
 import { api } from "@/utils/api";
 import { QUERY_KEYS } from "@/utils/constants";
-import { useMeStore } from "@/utils/stores/useMeStore";
+import { queryClient } from "@/utils/queryClient";
 import { ParamsWithSlug } from "@/utils/types";
 
 export function Stats() {
@@ -19,9 +19,9 @@ export function Stats() {
 
   const { slug } = router.query as ParamsWithSlug;
 
-  const me = useMeStore((state) => state.me);
-
-  const queryClient = useQueryClient();
+  const user = queryClient.getQueryData<UserResponse>([
+    QUERY_KEYS.USER_DETAILS,
+  ]);
 
   const { data } = api.project.useProjectStats(
     { slug },
@@ -43,9 +43,9 @@ export function Stats() {
     },
   });
 
-  const isLiked = data?.likes?.find((like) => like.userId === me?.id);
+  const isLiked = data?.likes?.find((like) => like.userId === user?.id);
   const isBookmarked = data?.bookmarks?.find(
-    (bookmark) => bookmark.userId === me?.id
+    (bookmark) => bookmark.userId === user?.id
   );
 
   return (
