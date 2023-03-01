@@ -5,6 +5,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { AppProps } from "next/app";
 import Head from "next/head";
 
+import { RouteGuard } from "@/components/RouteGuard";
 import { GlobalStyles } from "@/styles/global";
 import { queryClient } from "@/utils/queryClient";
 
@@ -32,7 +33,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         >
           <GlobalStyles />
           <NotificationsProvider position="top-right">
-            <Component {...pageProps} />
+            <RouteGuard>
+              <Component {...pageProps} />
+            </RouteGuard>
           </NotificationsProvider>
         </MantineProvider>
       </QueryClientProvider>
