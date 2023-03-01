@@ -7,17 +7,18 @@ import {
   Title,
   TypographyStylesProvider,
 } from "@mantine/core";
-import { ProjectResponse } from "shared";
+import { ProjectResponse, UserResponse } from "shared";
 
 import { Comments } from "@/components/comment/Comments";
-import { useMeStore } from "@/utils/stores/useMeStore";
+import { QUERY_KEYS } from "@/utils/constants";
+import { queryClient } from "@/utils/queryClient";
 
 import { SettingsMenu } from "./SettingsMenu";
 
 export function Project({ project }: { project?: ProjectResponse }) {
   const { classes } = styles();
 
-  const me = useMeStore((state) => state.me);
+  const me = queryClient.getQueryData<UserResponse>([QUERY_KEYS.USER_DETAILS]);
 
   if (!project) return null;
 
