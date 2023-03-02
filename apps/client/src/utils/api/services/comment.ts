@@ -1,6 +1,11 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { MutationOptions, UseQueryOptions } from "@tanstack/react-query";
-import { APIRoutes, CommentResponse, CreateCommentInput } from "shared";
+import {
+  APIRoutes,
+  CommentResponse,
+  CreateCommentInput,
+  UpdateCommentInput,
+} from "shared";
 
 import { QUERY_KEYS } from "@/utils/constants";
 
@@ -41,6 +46,22 @@ export const comment = {
   ) => {
     return useMutation(async ({ id }: { id: number }) => {
       await Fetcher.delete([APIRoutes.COMMENT, { slug, id: String(id) }]);
+    }, options);
+  },
+
+  useUpdate: (
+    { slug, id }: { slug: string; id: number },
+    options?: MutationOptions<CommentResponse, RequestError, UpdateCommentInput>
+  ) => {
+    return useMutation(async (body: UpdateCommentInput) => {
+      const { json } = await Fetcher.patch(
+        [APIRoutes.COMMENT, { slug, id: String(id) }],
+        {
+          body,
+        }
+      );
+
+      return json as CommentResponse;
     }, options);
   },
 };
