@@ -1,5 +1,7 @@
 import {
   MutationOptions,
+  useInfiniteQuery,
+  UseInfiniteQueryOptions,
   useMutation,
   useQuery,
   UseQueryOptions,
@@ -10,6 +12,7 @@ import {
   CreateProjectInput,
   LikeResponse,
   ProjectResponse,
+  ProjectsFeedResponse,
   ProjectsResponse,
   ProjectStatsResponse,
 } from "shared";
@@ -19,6 +22,29 @@ import { QUERY_KEYS } from "@/utils/constants";
 import { Fetcher, RequestError } from "../Fetcher";
 
 export const project = {
+  useFeed: (
+    query?: { limit?: number; cursor?: number; tag?: string },
+    options?: UseInfiniteQueryOptions<ProjectsFeedResponse, RequestError>
+  ) => {
+    return useInfiniteQuery<ProjectsFeedResponse, RequestError>(
+      [QUERY_KEYS.FEED],
+      async ({ pageParam }) => {
+        const { json } = await Fetcher.get(APIRoutes.FEED, {
+          query: {
+            ...query,
+            cursor: query?.cursor || pageParam,
+          },
+        });
+
+        return json as ProjectsFeedResponse;
+      },
+      {
+        ...options,
+        getNextPageParam: (lastPage) => lastPage.nextCursor,
+      }
+    );
+  },
+
   useAll: (
     query?: { tag: string },
     options?: UseQueryOptions<ProjectsResponse, RequestError>
