@@ -9,6 +9,33 @@ import {
 import { ProjectService } from "./project.service";
 
 export const ProjectController = {
+  feed: async (
+    request: FastifyRequest<{
+      Querystring: {
+        limit?: string;
+        cursor?: string;
+        tag?: string;
+      };
+    }>,
+    reply: FastifyReply
+  ) => {
+    const limit = request.query.limit ? parseInt(request.query.limit) : 10;
+    const cursor = request.query.cursor;
+    const tag = request.query.tag;
+
+    try {
+      const projects = await ProjectService.feed({
+        limit,
+        cursor,
+        tag,
+      });
+
+      return reply.code(200).send(projects);
+    } catch (err: unknown) {
+      return reply.send(err);
+    }
+  },
+
   findAll: async (
     request: FastifyRequest<{ Querystring: { tag: string } }>,
     reply: FastifyReply
