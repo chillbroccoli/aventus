@@ -1,5 +1,4 @@
 import qs from "qs";
-import { ParsedQuery } from "query-string";
 import { APIRoutes } from "shared";
 
 import { RouteWithParams, Routing } from "./Routing";
@@ -7,7 +6,7 @@ import { RouteWithParams, Routing } from "./Routing";
 type RequestMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 type RequestOptions = {
   body?: Record<string, unknown>;
-  query?: ParsedQuery;
+  query?: Record<string, unknown>;
 };
 
 export class RequestError extends Error {
