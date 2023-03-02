@@ -65,7 +65,13 @@ export const projectStatsSchema = z.object({
   }),
 });
 
+export const projectsFeedResponseSchema = z.object({
+  projects: z.array(projectResponseSchema),
+  nextCursor: z.number().nullable(),
+});
+
 export type CreateProjectInput = z.infer<typeof createProjectSchema>;
 export type ProjectResponse = z.infer<typeof projectResponseSchema>;
 export type ProjectsResponse = z.infer<typeof projectsResponseSchema>;
 export type ProjectStatsResponse = z.infer<typeof projectStatsSchema>;
+export type ProjectsFeedResponse = z.infer<typeof projectsFeedResponseSchema>;
