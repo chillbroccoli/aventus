@@ -1,10 +1,12 @@
+import { Box } from "@mantine/core";
+
 import { Navbar } from "@/components/Navbar";
 
 export function MainLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div>
+    <Box>
       <Navbar />
-      <main>{children}</main>
-    </div>
+      <Box pb={100}>{children}</Box>
+    </Box>
   );
 }
