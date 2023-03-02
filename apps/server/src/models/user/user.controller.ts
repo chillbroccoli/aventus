@@ -86,7 +86,16 @@ export const UserController = {
 
       await UserService.deleteOne(String(id));
 
-      return reply.code(204).send();
+      return reply
+        .clearCookie(process.env.COOKIE_NAME as string, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production",
+          sameSite: "lax",
+          domain: undefined,
+          path: "/",
+        })
+        .code(204)
+        .send();
     } catch (err: unknown) {
       return reply.send(err);
     }
