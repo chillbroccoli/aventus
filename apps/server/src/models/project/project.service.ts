@@ -1,4 +1,8 @@
-import { CreateCommentInput, CreateProjectInput } from "shared";
+import {
+  CreateCommentInput,
+  CreateProjectInput,
+  UpdateCommentInput,
+} from "shared";
 
 import { prisma } from "../../utils/db";
 import { getSlug } from "../../utils/getSlug";
@@ -257,6 +261,21 @@ export const ProjectService = {
             slug: input.slug,
           },
         },
+      },
+    });
+
+    return comment;
+  },
+
+  updateComment: async (input: UpdateCommentInput & { id: string }) => {
+    const { id, ...rest } = input;
+
+    const comment = await prisma.comment.update({
+      where: {
+        id: Number(id),
+      },
+      data: {
+        ...rest,
       },
     });
 

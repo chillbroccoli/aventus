@@ -88,6 +88,23 @@ export async function projectRoutes(server: FastifyInstance) {
     ProjectController.createComment
   );
 
+  server.patch(
+    "/:slug/comments/:id",
+    { onRequest: [server.authenticate] },
+    ProjectController.updateComment
+  );
+
+  server.delete(
+    "/:slug/comments/:id",
+    {
+      onRequest: [server.authenticate],
+      schema: {
+        params: $paramsRef("paramsWithIdAndSlugSchema"),
+      },
+    },
+    ProjectController.deleteComment
+  );
+
   server.post(
     "/:slug/like",
     {
@@ -108,17 +125,6 @@ export async function projectRoutes(server: FastifyInstance) {
       },
     },
     ProjectController.bookmarkProject
-  );
-
-  server.delete(
-    "/:slug/comments/:id",
-    {
-      onRequest: [server.authenticate],
-      schema: {
-        params: $paramsRef("paramsWithIdAndSlugSchema"),
-      },
-    },
-    ProjectController.deleteComment
   );
 
   server.get(

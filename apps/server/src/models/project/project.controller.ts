@@ -4,6 +4,7 @@ import {
   CreateProjectInput,
   ParamsWithIdAndSlug,
   ParamsWithSlug,
+  UpdateCommentInput,
 } from "shared";
 
 import { ProjectService } from "./project.service";
@@ -181,6 +182,40 @@ export const ProjectController = {
       });
 
       return reply.code(201).send(comment);
+    } catch (err: unknown) {
+      return reply.send(err);
+    }
+  },
+
+  updateComment: async (
+    request: FastifyRequest<{
+      Params: ParamsWithIdAndSlug;
+      Body: UpdateCommentInput;
+    }>,
+    reply: FastifyReply
+  ) => {
+    const { id } = request.params;
+    const body = request.body;
+
+    try {
+      const user = request.user;
+
+      const comment = await ProjectService.findOneComment(id);
+
+      if (!comment) {
+        return reply.code(404).send({ message: "Comment not found" });
+      }
+
+      if (comment.userId !== user.id) {
+        return reply.code(403).send({ message: "Unauthorized" });
+      }
+
+      const updatedComment = await ProjectService.updateComment({
+        ...body,
+        id,
+      });
+
+      return reply.code(200).send(updatedComment);
     } catch (err: unknown) {
       return reply.send(err);
     }
