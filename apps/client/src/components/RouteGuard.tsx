@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { ClientRoutes, PROTECTED_ROUTES } from "shared";
 
-import { LoaderLayout } from "@/layouts/LoaderLayout";
+import { LoaderLayout } from "@/components/layouts/LoaderLayout";
 import { api } from "@/utils/api";
 
 export function RouteGuard({ children }: { children: React.ReactNode }) {
