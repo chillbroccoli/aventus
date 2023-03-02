@@ -1,25 +1,25 @@
-import { Alert, Container, Grid } from "@mantine/core";
-import { IconMoodSad } from "@tabler/icons-react";
+import { Container, Grid } from "@mantine/core";
 import { useEffect } from "react";
 
+import { MainLayout } from "@/components/layouts/MainLayout";
 import { Feed } from "@/components/project/Feed";
+import { NotFoundState } from "@/components/project/NotFoundState";
 import { Tags } from "@/components/tag/Tags";
-import { useScrollPosition } from "@/hooks/useScrollPosition";
-import { MainLayout } from "@/layouts/MainLayout";
 import { api } from "@/utils/api";
+import { useScrollPosition } from "@/utils/hooks/useScrollPosition";
 
 export function HomeView() {
   const scrollPosition = useScrollPosition();
 
   const { data, isLoading, hasNextPage, isFetching, fetchNextPage } =
     api.project.useFeed({
-      limit: 10,
+      limit: 5,
     });
 
   const projects = data?.pages.flatMap((page) => page.projects) ?? [];
 
   useEffect(() => {
-    if (scrollPosition > 90 && hasNextPage && !isFetching) {
+    if (scrollPosition > 95 && hasNextPage && !isFetching) {
       fetchNextPage();
     }
   }, [scrollPosition, hasNextPage, isFetching, fetchNextPage]);
@@ -33,16 +33,7 @@ export function HomeView() {
           </Grid.Col>
           <Grid.Col span={7}>
             <Feed data={projects} isLoading={isLoading} />
-            {!hasNextPage && (
-              <Alert
-                variant="filled"
-                mt={20}
-                icon={<IconMoodSad size={20} />}
-                title="That's it"
-              >
-                No more projects to load
-              </Alert>
-            )}
+            {!hasNextPage && <NotFoundState />}
           </Grid.Col>
           <Grid.Col span={2}>3</Grid.Col>
         </Grid>

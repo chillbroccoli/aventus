@@ -14,11 +14,12 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { ClientRoutes } from "shared";
 
+import { MainLayout } from "@/components/layouts/MainLayout";
 import { Feed } from "@/components/project/Feed";
-import { useScrollPosition } from "@/hooks/useScrollPosition";
-import { MainLayout } from "@/layouts/MainLayout";
+import { NotFoundState } from "@/components/project/NotFoundState";
 import { api } from "@/utils/api";
 import { pluralizeCount } from "@/utils/helpers/pluralizeCount";
+import { useScrollPosition } from "@/utils/hooks/useScrollPosition";
 
 export function TagView() {
   const { classes } = styles();
@@ -31,14 +32,14 @@ export function TagView() {
 
   const { data, isLoading, hasNextPage, isFetching, fetchNextPage } =
     api.project.useFeed({
-      limit: 10,
+      limit: 5,
       tag,
     });
 
   const projects = data?.pages.flatMap((page) => page.projects) ?? [];
 
   useEffect(() => {
-    if (scrollPosition > 90 && hasNextPage && !isFetching) {
+    if (scrollPosition > 95 && hasNextPage && !isFetching) {
       fetchNextPage();
     }
   }, [scrollPosition, hasNextPage, isFetching, fetchNextPage]);
@@ -68,6 +69,7 @@ export function TagView() {
           </Grid.Col>
           <Grid.Col span={7}>
             <Feed data={projects} isLoading={isLoading} />
+            {!hasNextPage && <NotFoundState />}
           </Grid.Col>
           <Grid.Col span={2}></Grid.Col>
         </Grid>
