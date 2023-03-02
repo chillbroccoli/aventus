@@ -11,9 +11,11 @@ import {
 import { IconPlus } from "@tabler/icons-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { ClientRoutes } from "shared";
 
 import { Feed } from "@/components/project/Feed";
+import { useScrollPosition } from "@/hooks/useScrollPosition";
 import { MainLayout } from "@/layouts/MainLayout";
 import { api } from "@/utils/api";
 import { pluralizeCount } from "@/utils/helpers/pluralizeCount";
@@ -25,12 +27,21 @@ export function TagView() {
 
   const { tag } = router.query as { tag: string };
 
-  const { data, isLoading } = api.project.useAll(
-    { tag },
-    {
-      enabled: router.isReady,
+  const scrollPosition = useScrollPosition();
+
+  const { data, isLoading, hasNextPage, isFetching, fetchNextPage } =
+    api.project.useFeed({
+      limit: 10,
+      tag,
+    });
+
+  const projects = data?.pages.flatMap((page) => page.projects) ?? [];
+
+  useEffect(() => {
+    if (scrollPosition > 90 && hasNextPage && !isFetching) {
+      fetchNextPage();
     }
-  );
+  }, [scrollPosition, hasNextPage, isFetching, fetchNextPage]);
 
   return (
     <MainLayout>
@@ -52,13 +63,11 @@ export function TagView() {
 
               <Divider my="sm" />
 
-              <Text>
-                {pluralizeCount(data?.meta?.total._all ?? 0, "post")} found
-              </Text>
+              <Text>{pluralizeCount(projects.length ?? 0, "post")} found</Text>
             </Flex>
           </Grid.Col>
           <Grid.Col span={7}>
-            <Feed data={data?.data} isLoading={isLoading} />
+            <Feed data={projects} isLoading={isLoading} />
           </Grid.Col>
           <Grid.Col span={2}></Grid.Col>
         </Grid>
