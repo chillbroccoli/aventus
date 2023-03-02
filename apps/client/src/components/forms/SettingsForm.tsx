@@ -34,6 +34,9 @@ export function SettingsForm() {
 
   const methods = useForm<UpdateUserProfileInput>({
     resolver: zodResolver(updateUserProfileSchema),
+    defaultValues: {
+      avatar: user?.avatar ?? "",
+    },
   });
 
   useEffect(() => {
@@ -68,7 +71,6 @@ export function SettingsForm() {
               </Box>
               <AvatarPicker
                 changeAvatar={(url: string) => methods.setValue("avatar", url)}
-                initialAvatar={methods.getValues("avatar")}
               />
             </Flex>
           </Box>

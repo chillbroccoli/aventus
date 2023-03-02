@@ -12,7 +12,7 @@ import { api } from "@/utils/api";
 import { Routing } from "@/utils/api/Routing";
 
 const TextEditor = dynamic(
-  () => import("../components/TextEditor").then((mod) => mod.TextEditor),
+  () => import("../TextEditor").then((mod) => mod.TextEditor),
   {
     ssr: false,
   }
