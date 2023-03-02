@@ -10,6 +10,8 @@ import { ProjectController } from "./project.controller";
 export async function projectRoutes(server: FastifyInstance) {
   server.get("/", ProjectController.findAll);
 
+  server.get("/feed", ProjectController.feed);
+
   server.post(
     "/",
     {
