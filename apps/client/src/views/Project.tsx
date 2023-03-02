@@ -2,10 +2,10 @@ import { Container, Grid } from "@mantine/core";
 import { useRouter } from "next/router";
 
 import { AuthorCard } from "@/components/author/AuthorCard";
+import { MainLayout } from "@/components/layouts/MainLayout";
 import { Project } from "@/components/project/Project";
 import { Stats } from "@/components/project/Stats";
 import { Spinner } from "@/components/Spinner";
-import { MainLayout } from "@/layouts/MainLayout";
 import { api } from "@/utils/api";
 import { ParamsWithSlug } from "@/utils/types";
 

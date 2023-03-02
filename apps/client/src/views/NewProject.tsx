@@ -1,7 +1,7 @@
 import { Box, Container } from "@mantine/core";
 
-import { NewProjectForm } from "@/forms/NewProjectForm";
-import { MainLayout } from "@/layouts/MainLayout";
+import { NewProjectForm } from "@/components/forms/NewProjectForm";
+import { MainLayout } from "@/components/layouts/MainLayout";
 
 export function NewProjectView() {
   return (

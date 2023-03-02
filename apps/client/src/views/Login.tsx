@@ -2,8 +2,8 @@ import { createStyles, Flex, Title } from "@mantine/core";
 import Link from "next/link";
 import { ClientRoutes } from "shared";
 
-import { LoginForm } from "@/forms/LoginForm";
-import { AuthLayout } from "@/layouts/AuthLayout";
+import { LoginForm } from "@/components/forms/LoginForm";
+import { AuthLayout } from "@/components/layouts/AuthLayout";
 
 export function LoginView() {
   const { classes } = styles();

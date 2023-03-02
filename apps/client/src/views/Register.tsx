@@ -2,8 +2,8 @@ import { createStyles, Flex, Title } from "@mantine/core";
 import Link from "next/link";
 import { ClientRoutes } from "shared";
 
-import { RegisterForm } from "@/forms/RegisterForm";
-import { AuthLayout } from "@/layouts/AuthLayout";
+import { RegisterForm } from "@/components/forms/RegisterForm";
+import { AuthLayout } from "@/components/layouts/AuthLayout";
 
 export function RegisterView() {
   const { classes } = styles();
