@@ -20,10 +20,20 @@ export const userProfile = {
 export const createUserSchema = z
   .object({
     ...userCore,
-    password: z.string({ required_error: "Password is required" }).min(8),
-    confirmPassword: z
-      .string({ required_error: "Confirm password is required" })
-      .min(8),
+    password: z
+      .string({ required_error: "Password is required" })
+      .regex(
+        new RegExp(
+          "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$"
+        ),
+        {
+          message:
+            "Password requires at least 8 characters, at least one uppercase letter, one number, one special character",
+        }
+      ),
+    confirmPassword: z.string({
+      required_error: "Confirm password is required",
+    }),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",
