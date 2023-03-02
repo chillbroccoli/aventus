@@ -12,20 +12,24 @@
   "scripts": {
     "build": "tsup index.ts --format cjs --dts",
     "dev": "tsup index.ts --format esm,cjs --watch --dts",
-    "db:generate": "dotenv -e ../../.env prisma generate",
-    "db:push": "dotenv -e ../../.env prisma db push --skip-generate",
-    "db:seed": "dotenv -e ../../.env prisma db seed"
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push --skip-generate",
+    "db:seed": "prisma db seed",
+    "db:studio": "prisma studio"
   },
   "dependencies": {
-    "@prisma/client": "^4.10.1"
+    "@faker-js/faker": "^7.6.0",
+    "@prisma/client": "^4.10.1",
+    "argon2": "^0.30.3"
   },
   "devDependencies": {
+    "@types/argon2": "^0.15.0",
     "dotenv-cli": "latest",
+    "eslint-config-custom": "*",
     "prisma": "^4.10.1",
     "ts-node": "^10.9.1",
-    "tsup": "^6.6.3",
-    "eslint-config-custom": "*",
-    "tsconfig": "*"
+    "tsconfig": "*",
+    "tsup": "^6.6.3"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
