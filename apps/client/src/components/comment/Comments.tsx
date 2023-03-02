@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { UserResponse } from "shared";
 
 import { CommentBox } from "@/components/comment/CommentBox";
-import { NewCommentForm } from "@/forms/NewCommentForm";
+import { NewCommentForm } from "@/components/forms/NewCommentForm";
 import { api } from "@/utils/api";
 import { QUERY_KEYS } from "@/utils/constants";
 import { queryClient } from "@/utils/queryClient";
