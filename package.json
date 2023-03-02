@@ -14,9 +14,10 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "client": "yarn workspace client",
     "server": "yarn workspace server",
-    "db:push": "turbo db:push",
-    "db:generate": "turbo db:generate",
-    "db:seed": "turbo db:seed",
+    "db:push": "dotenv -- turbo db:push",
+    "db:generate": "dotenv -- turbo db:generate",
+    "db:seed": "dotenv -- turbo db:seed",
+    "db:studio": "dotenv -- turbo db:studio",
     "fmt": "prettier --write \"**/*.{ts,tsx}\""
   },
   "devDependencies": {
