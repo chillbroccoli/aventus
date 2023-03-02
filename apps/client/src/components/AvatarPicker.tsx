@@ -1,23 +1,15 @@
 import { Box, Button, Flex, Image, Popover } from "@mantine/core";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { generateRandomAvatar } from "@/utils/helpers/generateRandomAvatar";
 
 export function AvatarPicker({
   changeAvatar,
-  initialAvatar,
 }: {
   changeAvatar: (url: string) => void;
-  initialAvatar?: string;
 }) {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
-  const [avatarUrl, setAvatarUrl] = useState(
-    initialAvatar ?? generateRandomAvatar()
-  );
-
-  useEffect(() => {
-    if (initialAvatar) setAvatarUrl(initialAvatar);
-  }, [initialAvatar]);
+  const [avatarUrl, setAvatarUrl] = useState(() => generateRandomAvatar());
 
   return (
     <Popover
@@ -48,7 +40,6 @@ export function AvatarPicker({
               fullWidth
               onClick={() => {
                 changeAvatar(avatarUrl);
-                setAvatarUrl(generateRandomAvatar());
                 setIsPopoverOpen(false);
               }}
             >
