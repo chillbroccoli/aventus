@@ -8,26 +8,47 @@ import {
   Text,
   Title,
 } from "@mantine/core";
+import { showNotification } from "@mantine/notifications";
+import { useRouter } from "next/router";
 import { useState } from "react";
+import { ClientRoutes } from "shared";
 
-import { SettingsForm } from "@/forms/SettingsForm";
-import { MainLayout } from "@/layouts/MainLayout";
+import { SettingsForm } from "@/components/forms/SettingsForm";
+import { MainLayout } from "@/components/layouts/MainLayout";
+import { api } from "@/utils/api";
+import { QUERY_KEYS } from "@/utils/constants";
+import { queryClient } from "@/utils/queryClient";
 
 export function SettingsView() {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
   const { classes } = styles();
 
+  const router = useRouter();
+
+  const { mutate } = api.user.useDeleteUserAccount({
+    onSuccess: () => {
+      showNotification({
+        title: "Success",
+        message: "Your account has been deleted",
+      });
+      queryClient.invalidateQueries([QUERY_KEYS.USER_DETAILS]);
+      router.push(ClientRoutes.HOME);
+    },
+  });
+
   return (
     <MainLayout>
       <Container size="lg" mt={20}>
         <Box w="50%" mx="auto">
-          <Title mb={30}>Settings</Title>
+          <Title order={2} mb={30}>
+            Settings
+          </Title>
 
           <SettingsForm />
 
           <Box mt={30}>
-            <Title order={4}>Danger zone</Title>
+            <Title order={3}>Danger zone</Title>
             <Flex
               mt={6}
               px={14}
@@ -69,7 +90,11 @@ export function SettingsView() {
                       >
                         Cancel
                       </Button>
-                      <Button variant="outline" color="red">
+                      <Button
+                        variant="outline"
+                        color="red"
+                        onClick={() => mutate()}
+                      >
                         Delete
                       </Button>
                     </Flex>
