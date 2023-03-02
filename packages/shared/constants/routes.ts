@@ -6,6 +6,7 @@ export enum APIRoutes {
   DETAILS = "/api/users/details",
   PROJECTS = "/api/projects",
   PROJECT = "/api/projects/:slug",
+  FEED = "/api/projects/feed",
   COMMENTS = "/api/projects/:slug/comments",
   COMMENT = "/api/projects/:slug/comments/:id",
   PROJECT_STATS = "/api/projects/:slug/stats",
