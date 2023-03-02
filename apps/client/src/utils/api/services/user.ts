@@ -38,6 +38,12 @@ export const user = {
     }, options);
   },
 
+  useDeleteUserAccount: (options?: MutateOptions<void, RequestError, void>) => {
+    return useMutation(async () => {
+      await Fetcher.delete(APIRoutes.USERS);
+    }, options);
+  },
+
   useRegister: (
     options?: MutateOptions<
       { accessToken: string },
