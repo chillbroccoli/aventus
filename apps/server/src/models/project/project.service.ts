@@ -4,6 +4,60 @@ import { prisma } from "../../utils/db";
 import { getSlug } from "../../utils/getSlug";
 
 export const ProjectService = {
+  feed: async (query: { limit: number; cursor?: string; tag?: string }) => {
+    const { limit, cursor, tag } = query;
+
+    const projects = await prisma.project.findMany({
+      where: {
+        tags: {
+          some: {
+            name: tag,
+          },
+        },
+      },
+      include: {
+        tags: true,
+        likes: true,
+        comments: true,
+        bookmarks: true,
+        _count: true,
+
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            avatar: true,
+            role: true,
+            bio: true,
+            location: true,
+            websiteUrl: true,
+            createdAt: true,
+            updatedAt: true,
+          },
+        },
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+      take: limit + 1,
+      cursor: cursor ? { id: parseInt(cursor) } : undefined,
+    });
+
+    let nextCursor: number | undefined = undefined;
+
+    if (projects.length > limit) {
+      const nextItem = projects.pop() as (typeof projects)[number];
+
+      nextCursor = nextItem.id;
+    }
+
+    return {
+      projects,
+      nextCursor,
+    };
+  },
+
   findAll: async (query?: { tag: string }) => {
     const projects = await prisma.project.findMany({
       where: {
