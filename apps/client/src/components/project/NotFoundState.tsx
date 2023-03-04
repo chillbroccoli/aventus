@@ -9,7 +9,7 @@ export function NotFoundState() {
       icon={<IconMoodSad size={20} />}
       title="That's it"
     >
-      No more projects to load
+      No more projects to be found
     </Alert>
   );
 }
