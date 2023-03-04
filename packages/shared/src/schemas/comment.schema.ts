@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { userResponseSchema } from "./user";
+import { userResponseSchema } from "./user.schema";
 
 export const createCommentSchema = z.object({
   content: z.string().min(1).max(500),

@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { userResponseSchema } from "./user";
+import { userResponseSchema } from "./user.schema";
 
 const projectResponseCore = {
   id: z.number(),
