@@ -9,12 +9,14 @@ import { Spinner } from "../Spinner";
 export function Feed({
   data,
   isLoading,
+  showEmptyState = true,
 }: {
   data?: ProjectResponse[];
   isLoading?: boolean;
+  showEmptyState?: boolean;
 }) {
   if (isLoading && !data?.length) return <Spinner />;
-  if (!isLoading && !data?.length) return <EmptyState />;
+  if (showEmptyState && !isLoading && !data?.length) return <EmptyState />;
 
   return (
     <Box>
