@@ -23,6 +23,18 @@ export async function projectRoutes(server: FastifyInstance) {
     ProjectController.createOne
   );
 
+  server.patch(
+    "/:slug",
+    {
+      onRequest: [server.authenticate],
+      schema: {
+        params: $paramsRef("paramsWithSlugSchema"),
+        body: $projectRef("createProjectSchema"),
+      },
+    },
+    ProjectController.updateOne
+  );
+
   server.delete(
     "/:slug",
     {
