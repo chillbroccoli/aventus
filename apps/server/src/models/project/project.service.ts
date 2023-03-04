@@ -8,11 +8,19 @@ import { prisma } from "../../utils/db";
 import { getSlug } from "../../utils/getSlug";
 
 export const ProjectService = {
-  feed: async (query: { limit: number; cursor?: string; tag?: string }) => {
+  feed: async (query: {
+    limit: number;
+    cursor?: string;
+    tag?: string;
+    query?: string;
+  }) => {
     const { limit, cursor, tag } = query;
 
     const projects = await prisma.project.findMany({
       where: {
+        title: {
+          contains: query.query,
+        },
         tags: {
           some: {
             name: tag,
@@ -192,6 +200,39 @@ export const ProjectService = {
           connect: {
             id: input.userId,
           },
+        },
+      },
+      include: {
+        tags: true,
+        likes: true,
+        bookmarks: true,
+      },
+    });
+
+    return project;
+  },
+
+  updateOne: async (input: CreateProjectInput & { slug: string }) => {
+    const tagsIds = input.tags.map(Number);
+
+    const tags = await prisma.tag.findMany({
+      where: {
+        id: {
+          in: tagsIds,
+        },
+      },
+    });
+
+    const project = await prisma.project.update({
+      where: {
+        slug: input.slug,
+      },
+      data: {
+        title: input.title,
+        description: input.description,
+        content: input.content,
+        tags: {
+          connect: tags.map((tag) => ({ id: tag.id })),
         },
       },
       include: {
