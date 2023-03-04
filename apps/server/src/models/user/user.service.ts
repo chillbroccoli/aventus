@@ -5,7 +5,13 @@ import { prisma } from "../../utils/db";
 
 export const UserService = {
   findAll: async () => {
-    return prisma.user.findMany();
+    return prisma.user.findMany({
+      include: {
+        bookmarks: true,
+        projects: true,
+        comments: true,
+      },
+    });
   },
 
   createOne: async (input: CreateUserInput) => {
