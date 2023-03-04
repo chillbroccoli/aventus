@@ -53,7 +53,7 @@ export async function userRoutes(server: FastifyInstance) {
     {
       onRequest: [server.authenticate],
     },
-    UserController.updateUserAccount
+    UserController.updateUserDetails
   );
 
   server.delete(
