@@ -170,18 +170,6 @@ export const ProjectController = {
     }
   },
 
-  getUsersProjects: async (request: FastifyRequest, reply: FastifyReply) => {
-    try {
-      const user = request.user;
-
-      const projects = await ProjectService.getUsersProjects(user.id);
-
-      return reply.code(200).send(projects);
-    } catch (err: unknown) {
-      return reply.send(err);
-    }
-  },
-
   getComments: async (
     request: FastifyRequest<{ Params: ParamsWithSlug }>,
     reply: FastifyReply
