@@ -8,14 +8,6 @@ export async function userRoutes(server: FastifyInstance) {
     "/",
     {
       onRequest: [server.checkAdmin],
-      schema: {
-        response: {
-          200: {
-            type: "array",
-            items: $userRef("userResponseSchema"),
-          },
-        },
-      },
     },
     UserController.findAll
   );
@@ -88,4 +80,20 @@ export async function userRoutes(server: FastifyInstance) {
   server.post("/logout", UserController.logout);
 
   server.get("/details", UserController.getUserDetails);
+
+  server.get(
+    "/projects",
+    {
+      onRequest: [server.authenticate],
+    },
+    UserController.getUserProjects
+  );
+
+  server.get(
+    "/bookmarks",
+    {
+      onRequest: [server.authenticate],
+    },
+    UserController.getBookmarkedProjects
+  );
 }
