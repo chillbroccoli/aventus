@@ -262,8 +262,23 @@ export const ProjectService = {
       },
       include: {
         tags: true,
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            avatar: true,
+            role: true,
+            bio: true,
+            location: true,
+            websiteUrl: true,
+            createdAt: true,
+            updatedAt: true,
+          },
+        },
         likes: true,
         bookmarks: true,
+        _count: true,
       },
       orderBy: {
         createdAt: "desc",
@@ -439,5 +454,42 @@ export const ProjectService = {
 
       return bookmark;
     }
+  },
+
+  getBookmarkedProjects: async (userId: number) => {
+    const projects = await prisma.project.findMany({
+      where: {
+        bookmarks: {
+          some: {
+            userId,
+          },
+        },
+      },
+      include: {
+        tags: true,
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            avatar: true,
+            role: true,
+            bio: true,
+            location: true,
+            websiteUrl: true,
+            createdAt: true,
+            updatedAt: true,
+          },
+        },
+        likes: true,
+        bookmarks: true,
+        _count: true,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    return projects;
   },
 };
