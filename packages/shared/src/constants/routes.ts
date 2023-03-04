@@ -23,8 +23,10 @@ export enum ClientRoutes {
   TAGS = "/tags",
   TAG = "/tags/:tag",
   PROJECT = "/projects/:slug",
+  EDIT_PROJECT = "/projects/:slug/edit",
   NEW_PROJECT = "/projects/new",
   MY_PROJECTS = "/projects/my-projects",
+  SEARCH = "/search",
 }
 
 export const PROTECTED_ROUTES = [ClientRoutes.SETTINGS];
