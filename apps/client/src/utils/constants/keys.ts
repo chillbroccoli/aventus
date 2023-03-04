@@ -6,4 +6,6 @@ export enum QUERY_KEYS {
   TAGS = "tags",
   COMMENTS = "comments",
   USER_DETAILS = "userDetails",
+  USER_PROJECTS = "userProjects",
+  USER_BOOKMARKS = "userBookmarks",
 }
