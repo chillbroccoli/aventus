@@ -23,7 +23,7 @@ import { Fetcher, RequestError } from "../Fetcher";
 
 export const project = {
   useFeed: (
-    query?: { limit?: number; cursor?: number; tag?: string },
+    query?: { limit?: number; cursor?: number; tag?: string; query?: string },
     options?: UseInfiniteQueryOptions<ProjectsFeedResponse, RequestError>
   ) => {
     return useInfiniteQuery<ProjectsFeedResponse, RequestError>(
@@ -82,6 +82,19 @@ export const project = {
   ) => {
     return useMutation(async (body: CreateProjectInput) => {
       const { json } = await Fetcher.post(APIRoutes.PROJECTS, {
+        body,
+      });
+
+      return json as ProjectResponse;
+    }, options);
+  },
+
+  useUpdate: (
+    { slug }: { slug: string },
+    options?: MutationOptions<ProjectResponse, RequestError, CreateProjectInput>
+  ) => {
+    return useMutation(async (body: CreateProjectInput) => {
+      const { json } = await Fetcher.patch([APIRoutes.PROJECT, { slug }], {
         body,
       });
 
