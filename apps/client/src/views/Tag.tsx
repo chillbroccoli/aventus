@@ -31,10 +31,15 @@ export function TagView() {
   const scrollPosition = useScrollPosition();
 
   const { data, isLoading, hasNextPage, isFetching, fetchNextPage } =
-    api.project.useFeed({
-      limit: 5,
-      tag,
-    });
+    api.project.useFeed(
+      {
+        limit: 5,
+        tag,
+      },
+      {
+        enabled: tag !== undefined,
+      }
+    );
 
   const projects = data?.pages.flatMap((page) => page.projects) ?? [];
 
@@ -69,7 +74,7 @@ export function TagView() {
           </Grid.Col>
           <Grid.Col span={7}>
             <Feed data={projects} isLoading={isLoading} />
-            {!hasNextPage && <NotFoundState />}
+            {!hasNextPage && projects.length && <NotFoundState />}
           </Grid.Col>
           <Grid.Col span={2}></Grid.Col>
         </Grid>
