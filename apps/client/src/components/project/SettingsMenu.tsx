@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { ClientRoutes, ParamsWithSlug } from "shared";
 
 import { api } from "@/utils/api";
+import { Routing } from "@/utils/api/Routing";
 
 export function SettingsMenu() {
   const { classes } = styles();
@@ -32,7 +33,19 @@ export function SettingsMenu() {
       </Menu.Target>
       <Menu.Dropdown>
         <Menu.Label>Project Settings</Menu.Label>
-        <Menu.Item icon={<IconEdit size={20} />}>Edit project</Menu.Item>
+        <Menu.Item
+          icon={<IconEdit size={20} />}
+          onClick={() => {
+            router.push(
+              Routing.getInterpolatedRoute([
+                ClientRoutes.EDIT_PROJECT,
+                { slug },
+              ])
+            );
+          }}
+        >
+          Edit project
+        </Menu.Item>
         <Menu.Item
           icon={<IconTrash size={20} />}
           onClick={() => deleteProject({ slug })}
