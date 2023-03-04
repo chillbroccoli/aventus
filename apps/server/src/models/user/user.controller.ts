@@ -46,13 +46,13 @@ export const UserController = {
     const { id } = request.params;
 
     try {
-      const user = await UserService.findById(id);
+      const user = await UserService.findById(parseInt(id));
 
       if (!user) {
         return reply.code(404).send({ message: "User not found" });
       }
 
-      await UserService.deleteOne(id);
+      await UserService.deleteOne(parseInt(id));
 
       return reply.code(204).send();
     } catch (err: unknown) {
@@ -60,7 +60,7 @@ export const UserController = {
     }
   },
 
-  updateUserAccount: async (
+  updateUserDetails: async (
     request: FastifyRequest<{ Body: UpdateUserProfileInput }>,
     reply: FastifyReply
   ) => {
@@ -71,7 +71,7 @@ export const UserController = {
 
       const user = await UserService.updateUserDetails({
         ...body,
-        userId: String(userId),
+        userId,
       });
 
       return reply.code(200).send(user);
@@ -84,7 +84,7 @@ export const UserController = {
     try {
       const { id } = request.user;
 
-      await UserService.deleteOne(String(id));
+      await UserService.deleteOne(id);
 
       return reply
         .clearCookie(process.env.COOKIE_NAME as string, {
@@ -172,7 +172,7 @@ export const UserController = {
         return reply.code(200).send(null);
       }
 
-      const user = await UserService.getUserDetails(String(userPayload.id));
+      const user = await UserService.getUserDetails(userPayload.id);
 
       return reply.code(200).send(user);
     } catch (err: unknown) {
