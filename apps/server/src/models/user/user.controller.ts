@@ -7,6 +7,7 @@ import {
   UpdateUserProfileInput,
 } from "shared";
 
+import { ProjectService } from "../project/project.service";
 import { UserService } from "./user.service";
 
 export const UserController = {
@@ -175,6 +176,33 @@ export const UserController = {
       const user = await UserService.getUserDetails(userPayload.id);
 
       return reply.code(200).send(user);
+    } catch (err: unknown) {
+      return reply.send(err);
+    }
+  },
+
+  getUserProjects: async (request: FastifyRequest, reply: FastifyReply) => {
+    try {
+      const user = request.user;
+
+      const projects = await ProjectService.getUsersProjects(user.id);
+
+      return reply.code(200).send(projects);
+    } catch (err: unknown) {
+      return reply.send(err);
+    }
+  },
+
+  getBookmarkedProjects: async (
+    request: FastifyRequest,
+    reply: FastifyReply
+  ) => {
+    const userId = request.user.id;
+
+    try {
+      const projects = await ProjectService.getBookmarkedProjects(userId);
+
+      return reply.code(200).send(projects);
     } catch (err: unknown) {
       return reply.send(err);
     }
