@@ -12,6 +12,8 @@ export enum APIRoutes {
   PROJECT_STATS = "/api/projects/:slug/stats",
   LIKE_PROJECT = "/api/projects/:slug/like",
   BOOKMARK_PROJECT = "/api/projects/:slug/bookmark",
+  USER_PROJECTS = "/api/users/projects",
+  USER_BOOKMARKS = "/api/users/bookmarks",
 }
 
 export enum ClientRoutes {
@@ -19,13 +21,13 @@ export enum ClientRoutes {
   LOGIN = "/login",
   REGISTER = "/register",
   SETTINGS = "/settings",
-  READING_LIST = "/reading-list",
   TAGS = "/tags",
   TAG = "/tags/:tag",
   PROJECT = "/projects/:slug",
   EDIT_PROJECT = "/projects/:slug/edit",
   NEW_PROJECT = "/projects/new",
-  MY_PROJECTS = "/projects/my-projects",
+  MY_PROJECTS = "/my-projects",
+  BOOKMARKS = "/bookmarks",
   SEARCH = "/search",
 }
 
