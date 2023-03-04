@@ -23,10 +23,10 @@ export const UserService = {
     return user;
   },
 
-  getUserDetails: async (id: string) => {
+  getUserDetails: async (id: number) => {
     return prisma.user.findUnique({
       where: {
-        id: parseInt(id),
+        id,
       },
       select: {
         id: true,
@@ -43,13 +43,13 @@ export const UserService = {
   },
 
   updateUserDetails: async (
-    input: UpdateUserProfileInput & { userId: string }
+    input: UpdateUserProfileInput & { userId: number }
   ) => {
     const { userId, ...rest } = input;
 
     const user = await prisma.user.update({
       where: {
-        id: parseInt(userId),
+        id: userId,
       },
       data: {
         ...rest,
@@ -59,18 +59,18 @@ export const UserService = {
     return user;
   },
 
-  deleteOne: async (id: string) => {
+  deleteOne: async (id: number) => {
     return await prisma.user.delete({
       where: {
-        id: parseInt(id),
+        id,
       },
     });
   },
 
-  findById: async (id: string) => {
+  findById: async (id: number) => {
     return prisma.user.findUnique({
       where: {
-        id: parseInt(id),
+        id,
       },
     });
   },
