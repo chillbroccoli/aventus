@@ -21,7 +21,7 @@
       added route guard instead
 - [ ] add schemas for server routes, body/response etc
 - [x] fix problems with refetching comments
-- [ ] update readme.md
+- [x] update readme.md
 - [x] proper regex for password
       ~~fix avatar picker with initial value~~
 - [x] add search page
