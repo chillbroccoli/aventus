@@ -5,6 +5,7 @@ import {
   CreateUserInput,
   LoginResponse,
   LoginUserInput,
+  ProjectResponse,
   UpdateUserProfileInput,
   UserResponse,
 } from "shared";
@@ -14,6 +15,34 @@ import { QUERY_KEYS } from "@/utils/constants";
 import { Fetcher, RequestError } from "../Fetcher";
 
 export const user = {
+  useUserProjects: (
+    options?: UseQueryOptions<ProjectResponse[], RequestError>
+  ) => {
+    return useQuery<ProjectResponse[], RequestError>(
+      [QUERY_KEYS.USER_PROJECTS],
+      async () => {
+        const { json } = await Fetcher.get(APIRoutes.USER_PROJECTS);
+
+        return json as ProjectResponse[];
+      },
+      options
+    );
+  },
+
+  useUserBookmarks: (
+    options?: UseQueryOptions<ProjectResponse[], RequestError>
+  ) => {
+    return useQuery<ProjectResponse[], RequestError>(
+      [QUERY_KEYS.USER_BOOKMARKS],
+      async () => {
+        const { json } = await Fetcher.get(APIRoutes.USER_BOOKMARKS);
+
+        return json as ProjectResponse[];
+      },
+      options
+    );
+  },
+
   useUserDetails: (options?: UseQueryOptions<UserResponse, RequestError>) => {
     return useQuery<UserResponse, RequestError>(
       [QUERY_KEYS.USER_DETAILS],
