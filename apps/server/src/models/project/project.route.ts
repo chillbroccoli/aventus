@@ -138,10 +138,4 @@ export async function projectRoutes(server: FastifyInstance) {
     },
     ProjectController.bookmarkProject
   );
-
-  server.get(
-    "/my-projects",
-    { onRequest: [server.authenticate] },
-    ProjectController.getUsersProjects
-  );
 }
